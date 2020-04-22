@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.OutManagerMapper">
+    <select id="getInfo" resultMap="OutManagerMap" parameterType="com.webservice.ahiru.entity.OutManager">
+        SELECT
+        NAME,
+        MANAGER
+
+        FROM V_EMP_OUT
+
+        order by MANAGER
+    </select>
+
+    <resultMap id="OutManagerMap" type="com.webservice.ahiru.entity.OutManager">
+
+        <result property="name" column="NAME" />
+        <result property="manager" column="MANAGER" />
+    </resultMap>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.MEmployeePmMapper">
+    <select id="getInfos" resultMap="MEmployeesMap">
+    SELECT
+        M_EMPLOYEE.NAME,
+        M_EMPLOYEE.EMPLOYEE_NO
+
+        FROM M_EMPLOYEE
+
+        INNER JOIN M_EMP_DTL
+        ON ( ( M_EMPLOYEE.EMPLOYEE_NO = M_EMP_DTL.EMPLOYEE_NO ) AND
+		( M_EMP_DTL.ROLE = '0' OR M_EMP_DTL.ROLE = '1') AND
+		( M_EMPLOYEE.DEL_FG = '0' )  AND ( M_EMP_DTL.DEL_FG = '0' ) )
+    </select>
+
+    <resultMap id="MEmployeesMap" type="com.webservice.ahiru.entity.MEmployeePm">
+        <result property="name" column="NAME" />
+        <result property="employeeNo" column="EMPLOYEE_NO" />
+    </resultMap>
+</mapper>

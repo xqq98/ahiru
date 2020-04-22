@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.MCodeMapper">
+
+    <select id="getMCodeByCode" resultMap="MCodeMap" parameterType="com.webservice.ahiru.entity.MCode">
+        SELECT
+        HANYOU_CODE,
+        HANYOU_CODE_NAME,
+        HANYOU_VALUE,
+        HANYOU_VALUE_NAME,
+        NINIKOUMOKU1,
+        NINIKOMOKUNM1,
+        NINIKOUMOKU2,
+        NINIKOMOKUNM2,
+        NINIKOUMOKU3,
+        NINIKOMOKUNM3,
+        NINIKOUMOKU4,
+        NINIKOMOKUNM4,
+        NINIKOUMOKU5,
+        NINIKOMOKUNM5,
+        DEL_FG,
+        UPD_DT
+        FROM M_CODE
+        where
+        DEL_FG = '0'
+        and HANYOU_CODE = #{hanYouCode}
+    </select>
+
+    <resultMap id="MCodeMap" type="com.webservice.ahiru.entity.MCode">
+        <result property="hanYouCode" column="HANYOU_CODE" />
+        <result property="hanYouCodeName" column="HANYOU_CODE_NAME" />
+        <result property="hanYouValue" column="HANYOU_VALUE" />
+        <result property="hanYouValueName" column="HANYOU_VALUE_NAME" />
+        <result property="niNiKouMoKu1" column="NINIKOUMOKU1" />
+        <result property="niNiKoMoKunm1" column="NINIKOMOKUNM1" />
+        <result property="niNiKouMoKu2" column="NINIKOUMOKU2" />
+        <result property="niNiKoMoKunm2" column="NINIKOMOKUNM2" />
+        <result property="niNiKouMoKu3" column="NINIKOUMOKU3" />
+        <result property="niNiKoMoKunm3" column="NINIKOMOKUNM3" />
+        <result property="niNiKouMoKu4" column="NINIKOUMOKU4" />
+        <result property="niNiKoMoKunm4" column="NINIKOMOKUNM4" />
+        <result property="niNiKouMoKu5" column="NINIKOUMOKU5" />
+        <result property="niNiKoMoKunm5" column="NINIKOMOKUNM5" />
+        <result property="delFg" column="DEL_FG" />
+        <result property="delFg" column="UPD_DT" />
+    </resultMap>
+
+    <select id="getMCode" resultMap="MCodeNameMap" parameterType="com.webservice.ahiru.entity.MCodeName">
+        SELECT
+        HANYOU_VALUE_NAME
+        FROM M_CODE
+        where
+        DEL_FG = '0'
+        and (HANYOU_CODE = 'DEP_ROLE' OR HANYOU_CODE = 'TECH_DIREC' )
+    </select>
+
+    <resultMap id="MCodeNameMap" type="com.webservice.ahiru.entity.MCodeName">
+        <result property="hanYouValueName" column="HANYOU_VALUE_NAME" />
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.PmChosenMapper">
+    <!--    根据三个参数查找数据-->
+    <select id="getPmChosen" resultMap="PmChosenMap" >
+        SELECT
+        ID,
+        NAME,
+        LEVEL,
+        DEP_ROLE,
+        HANYOU_VALUE_NAME,
+        YEAR,
+        PM_NUM,
+        PM_NAME,
+        A1,
+        A2,
+        A3,
+        A4,
+        A5,
+        A6,
+        A7,
+        A8,
+        A9,
+        A10,
+        A11,
+        A12
+
+        FROM
+        V_PM_CHOSEN
+        WHERE
+        1 = 1
+        <!--    判断ID-->
+
+        <if test="id != '' and id !=null">
+            AND (V_PM_CHOSEN.ID = #{id} OR V_PM_CHOSEN.NAME = #{id})
+        </if>
+        <!--    判断PM名字-->
+        <if test="pmName != '' and pmName !=null">
+            AND V_PM_CHOSEN.PM_NAME = #{pmName}
+        </if>
+
+
+        <!--    判断部门-->
+        <if test="hanyouValueName != '' and hanyouValueName !=null">
+            AND V_PM_CHOSEN.HANYOU_VALUE_NAME = #{hanyouValueName}
+        </if>
+        <!--    判断年月-->
+        <if test="year != '' and year !=null">
+            AND V_PM_CHOSEN.YEAR = #{year}
+            <if test="a1 != '' and a1 !=null">
+                AND (V_PM_CHOSEN.A1 = #{a1} OR V_PM_CHOSEN.A1 IS NULL)
+            </if>
+            <if test="a2 != '' and a2 !=null">
+                AND (V_PM_CHOSEN.A2 = #{a2} OR V_PM_CHOSEN.A2 IS NULL)
+            </if>
+            <if test="a3 != '' and a3 !=null">
+                AND (V_PM_CHOSEN.A3 = #{a3} OR V_PM_CHOSEN.A3 IS NULL)
+            </if>
+            <if test="a4 != '' and a4 !=null">
+                AND (V_PM_CHOSEN.A4 = #{a4} OR V_PM_CHOSEN.A4 IS NULL)
+            </if>
+            <if test="a5 != '' and a5 !=null">
+                AND (V_PM_CHOSEN.A5 = #{a5} OR V_PM_CHOSEN.A5 IS NULL)
+            </if>
+            <if test="a6 != '' and a6 !=null">
+                AND (V_PM_CHOSEN.A6 = #{a6} OR V_PM_CHOSEN.A6 IS NULL)
+            </if>
+            <if test="a7 != '' and a7 !=null">
+                AND (V_PM_CHOSEN.A7 = #{a7} OR V_PM_CHOSEN.A7 IS NULL)
+            </if>
+            <if test="a8 != '' and a8 !=null">
+                AND (V_PM_CHOSEN.A8 = #{a8} OR V_PM_CHOSEN.A8 IS NULL)
+            </if>
+            <if test="a9 != '' and a9 !=null">
+                AND (V_PM_CHOSEN.A9 = #{a9} OR V_PM_CHOSEN.A9 IS NULL)
+            </if>
+            <if test="a10 != '' and a10 !=null">
+                AND (V_PM_CHOSEN.A10 = #{a10} OR V_PM_CHOSEN.A10 IS NULL)
+            </if>
+            <if test="a11 != '' and a11 !=null">
+                AND (V_PM_CHOSEN.A11 = #{a11} OR V_PM_CHOSEN.A11 IS NULL)
+            </if>
+            <if test="a12 != '' and a12 !=null">
+                AND (V_PM_CHOSEN.A12 = #{a12} OR V_PM_CHOSEN.A12 IS NULL)
+            </if>
+        </if>
+        <!--    只查询pmname无月份
+        <if test=" a1PmName == '' and a1PmName == null and a2PmName == '' and a2PmName == null and a3PmName == '' and a3PmName == null and a4PmName == '' and a4PmName == null and a5PmName == '' and a5PmName == null and a6PmName == '' and a6PmName == null and a7PmName == '' and a7PmName == null and a8PmName == '' and a8PmName == null and a9PmName == '' and a9PmName == null and a10PmName == '' and a10PmName == null and a11PmName == '' and a11PmName == null and a12PmName == '' and a12PmName == null" >
+            AND ( V_PM_CHOSEN.A1_PM_NAME = #{PmName} OR V_PM_CHOSEN.A2_PM_NAME = #{PmName} OR V_PM_CHOSEN.A3_PM_NAME = #{PmName} OR V_PM_CHOSEN.A4_PM_NAME = #{PmName} OR V_PM_CHOSEN.A5_PM_NAME = #{PmName} OR V_PM_CHOSEN.A6_PM_NAME = #{PmName} OR V_PM_CHOSEN.A7_PM_NAME = #{PmName} OR V_PM_CHOSEN.A8_PM_NAME = #{PmName} OR V_PM_CHOSEN.A9_PM_NAME = #{PmName} OR V_PM_CHOSEN.A1O_PM_NAME = #{PmName} OR V_PM_CHOSEN.A11_PM_NAME = #{PmName} OR V_PM_CHOSEN.A12_PM_NAME = #{PmName} )
+        </if>-->
+    </select>
+
+    <resultMap id="PmChosenMap" type="com.webservice.ahiru.entity.PmChosen">
+        <result property="id" column="ID"/>
+        <result property="name" column="NAME"/>
+        <result property="level" column="LEVEL"/>
+        <result property="depRole" column="DEP_ROLE"/>
+        <result property="hanyouValueName" column="HANYOU_VALUE_NAME"/>
+        <result property="year" column="YEAR"/>
+        <result property="pmNum" column="PM_NUM"/>
+        <result property="pmName" column="PM_NAME"/>
+        <result property="a1" column="A1"/>
+        <result property="a2" column="A2"/>
+        <result property="a3" column="A3"/>
+        <result property="a4" column="A4"/>
+        <result property="a5" column="A5"/>
+        <result property="a6" column="A6"/>
+        <result property="a7" column="A7"/>
+        <result property="a8" column="A8"/>
+        <result property="a9" column="A9"/>
+        <result property="a10" column="A10"/>
+        <result property="a11" column="A11"/>
+        <result property="a12" column="A12"/>
+
+    </resultMap>
+
+</mapper>

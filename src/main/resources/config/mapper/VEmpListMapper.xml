@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.VEmpListMapper">
+    <select id="getInfo" resultMap="VEmpListMap" parameterType="com.webservice.ahiru.entity.VEmpList">
+        SELECT
+        ID,
+        NAME,
+        JOB,
+        LEVEL,
+        INDATE,
+        DEPROLE,
+        TECH,
+        INDEPDATE,
+        OUTDATE,
+        OUTRSN,
+        BPFLG,
+        DEPROLENAME,
+        TECHNAME,
+        a1,
+        a2,
+        a3,
+        a4,
+        a5,
+        a6,
+        a7,
+        a8,
+        a9,
+        a10,
+        a11,
+        a12,
+        a,
+        PMNAME
+        FROM V_EMP_LIST
+        where BPFLG != ''
+        <if test="id != '' and id !=null">
+            and ID = #{id}
+        </if>
+        <if test="a == 0 and a !=null">
+            and a = #{a}
+        </if>
+        <if test="depRoleName != '' and depRoleName !=null">
+            and DEPROLENAME = #{depRoleName}
+        </if>
+        <if test="pmName != '' and pmName !=null">
+            and PMNAME = #{pmName}
+        </if>
+        order by BPFLG,ID
+    </select>
+
+    <resultMap id="VEmpListMap" type="com.webservice.ahiru.entity.VEmpList">
+        <result property="id" column="ID" />
+        <result property="name" column="NAME" />
+        <result property="job" column="JOB" />
+        <result property="level" column="LEVEL" />
+        <result property="inDate" column="INDATE" />
+        <result property="depRole" column="DEPROLE" />
+        <result property="tech" column="TECH" />
+        <result property="indepDate" column="INDEPDATE" />
+        <result property="outDate" column="OUTDATE" />
+        <result property="outRsn" column="OUTRSN" />
+        <result property="BPFlg" column="BPFLG" />
+        <result property="depRoleName" column="DEPROLENAME" />
+        <result property="techName" column="TECHNAME" />
+        <result property="a1" column="a1" />
+        <result property="a2" column="a2" />
+        <result property="a3" column="a3" />
+        <result property="a4" column="a4" />
+        <result property="a5" column="a5" />
+        <result property="a6" column="a6" />
+        <result property="a7" column="a7" />
+        <result property="a8" column="a8" />
+        <result property="a9" column="a9" />
+        <result property="a10" column="a10" />
+        <result property="a11" column="a11" />
+        <result property="a12" column="a12" />
+        <result property="a" column="a" />
+        <result property="pmName" column="PMNAME" />
+    </resultMap>
+</mapper>

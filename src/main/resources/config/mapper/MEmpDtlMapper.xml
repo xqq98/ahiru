@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.MEmpDtlMapper">
+    <select id="getInfo" resultMap="MEmpDtlMap" parameterType="com.webservice.ahiru.entity.MEmpDtl">
+        SELECT
+        EMPLOYEE_NO,
+        WECHAT_ID,
+        ROLE,
+        date_add(now(), interval 8 hour) as CURRENTTIME
+        FROM M_EMP_DTL
+        where
+        <if test="employeeNo != ''">
+            EMPLOYEE_NO = #{employeeNo} AND
+        </if>
+        DEL_FG = '0'
+        order by EMPLOYEE_NO
+    </select>
+
+    <update id="UpdateInfo" parameterType="com.webservice.ahiru.entity.MEmpDtl">
+        UPDATE
+        M_EMP_DTL
+        SET WECHAT_ID = #{weChatId}
+        where
+        <if test="employeeNo != ''">
+            EMPLOYEE_NO = #{employeeNo} AND
+        </if>
+        DEL_FG = '0'
+        order by EMPLOYEE_NO
+    </update>
+
+    <resultMap id="MEmpDtlMap" type="com.webservice.ahiru.entity.MEmpDtl">
+        <result property="employeeNo" column="EMPLOYEE_NO" />
+        <result property="weChatId" column="WECHAT_ID" />
+        <result property="role" column="ROLE" />
+    </resultMap>
+</mapper>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.VEmployeeOutMapper">
+    <select id="getInfo" resultMap="VEmployeeOutMap" parameterType="com.webservice.ahiru.entity.VEmployeeOut">
+        SELECT
+        ID,
+        NAME,
+        COMPANY,
+        VENDOR_COMPANY,
+        MANAGER,
+        WORK_PLACE,
+        BU,
+        DEPARTMENT,
+        EMAIL,
+        AGENT_PHONE,
+        JOB,
+        LEVEL,
+        DEGREE,
+        PROFESSIONAL,
+        STATE,
+        EMPLOYEE_TYPE,
+        IN_SOCIETY_DATE,
+        TURN_POSITIVE_DATE,
+        LEAVING_DATE,
+        COST_CENTER,
+        FUNCTION,
+        EFFECT,
+        PID,
+        CCC,
+        ADMISSION_DT,
+        CONTRACT_DT,
+        --         SCHEDULED_EXIT_DT,
+        SKILLS,
+        ENT_DT,
+        ENT_ID,
+        UPD_DT,
+        UPD_ID,
+        DEL_DT,
+        DEL_ID,
+        DEL_FG
+        FROM V_EMP_OUT
+        where DEL_FG = '1'
+        <if test="id != '' and id !=null">
+            and ID = #{id}
+        </if>
+
+        --         通过部门筛选
+        <if test="bu != '' and bu !=null">
+            and BU = #{bu}
+        </if>
+
+        --         通过pm筛选
+        <if test="manager != '' and manager !=null">
+            and MANAGER = #{manager}
+        </if>
+
+        --         通过离职时间筛选（起始和结束）
+        <if test="startLeaving != '' and startLeaving !=null">
+            and LEAVING_DATE >= #{startLeaving}
+        </if>
+
+        <if test="endLeaving != '' and endLeaving !=null">
+            and #{endLeaving} >= LEAVING_DATE
+        </if>
+        <!--        <if test="id != ''">-->
+        <!--            ID = #{id} AND-->
+        <!--        </if>-->
+        <!--        <if test="bu != '' and id == ''">-->
+        <!--            ID = #{bu} AND-->
+        <!--        </if>-->
+        <!--        <if test="manager != ''">-->
+        <!--            ID = #{manager} AND-->
+        <!--        </if>-->
+
+        order by ID,DEL_FG
+    </select>
+
+    <!--    查询部门-->
+    <select id="getBU" resultMap="BuMap" parameterType="com.webservice.ahiru.entity.VEmployeeOut">
+        SELECT
+        BU
+        FROM V_EMP_OUT
+        order by BU
+    </select>
+
+    <!--    查询领导-->
+    <select id="getMANAGER" resultMap="ManagerMap" parameterType="com.webservice.ahiru.entity.VEmployeeOut">
+        SELECT
+        NAME,
+        MANAGER
+        FROM V_EMP_OUT
+        order by MANAGER
+    </select>
+
+
+    <resultMap id="VEmployeeOutMap" type="com.webservice.ahiru.entity.VEmployeeOut">
+        <result property="id" column="ID" />
+        <result property="name" column="NAME" />
+        <result property="company" column="COMPANY" />
+        <result property="vendorCompany" column="VENDOR_COMPANY" />
+        <result property="manager" column="MANAGER" />
+        <result property="workPlace" column="WORK_PLACE" />
+        <result property="bu" column="BU" />
+        <result property="department" column="DEPARTMENT" />
+        <result property="email" column="EMAIL" />
+        <result property="agentPhone" column="AGENT_PHONE" />
+        <result property="job" column="JOB" />
+        <result property="level" column="LEVEL" />
+        <result property="degree" column="DEGREE" />
+        <result property="professional" column="PROFESSIONAL" />
+        <result property="state" column="STATE" />
+        <result property="employeeType" column="EMPLOYEE_TYPE" />
+        <result property="inSocietyDate" column="IN_SOCIETY_DATE" />
+        <result property="turnPositiveDate" column="TURN_POSITIVE_DATE" />
+        <result property="leavingDate" column="LEAVING_DATE" />
+        <result property="startLeaving" column="START_LEAVING" />
+        <result property="endLeaving" column="END_LEAVING" />
+        <result property="costCenter" column="COST_CENTER" />
+        <result property="function" column="FUNCTION" />
+        <result property="effect" column="EFFECT" />
+        <result property="pid" column="PID" />
+        <result property="ccc" column="CCC" />
+        <result property="admissionDt" column="ADMISSION_DT" />
+        <result property="contractDt" column="CONTRACT_DT" />
+        <!--        <result property="scheduledExitDt" column="SCHEDULED_EXIT_DT" />-->
+        <result property="skills" column="SKILLS" />
+        <result property="entDt" column="ENT_DT" />
+        <result property="entId" column="ENT_ID" />
+        <result property="updDt" column="UPD_DT" />
+        <result property="updId" column="UPD_ID" />
+        <result property="delDt" column="DEL_DT" />
+        <result property="delId" column="DEL_ID" />
+        <result property="delFg" column="DEL_FG" />
+    </resultMap>
+
+    <resultMap id="BuMap" type="com.webservice.ahiru.entity.VEmployeeOut">
+        <result property="name" column="NAME" />
+        <result property="bu" column="BU" />
+    </resultMap>
+
+    <resultMap id="ManagerMap" type="com.webservice.ahiru.entity.VEmployeeOut">
+        <result property="name" column="NAME" />
+        <result property="manager" column="MANAGER" />
+    </resultMap>
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.UPEmpDtlMapper">
+    <select id="getInfo" resultMap="UPEmpDtlMap" parameterType="com.webservice.ahiru.entity.UPEmpDtl">
+        SELECT
+        EMPLOYEE_NO,
+        DEP_ROLE,
+        TECH_DIRECTION,
+        PLAN_LEAVING_DATE,
+        LEAVING_REASON,
+        SCHEDULED_EXIT_DT
+        FROM M_EMP_DTL
+        where
+        <if test="id != ''">
+            EMPLOYEE_NO = #{id} AND
+        </if>
+        DEL_FG = '0'
+        order by EMPLOYEE_NO
+    </select>
+
+    <update id="UpdateEmpInfo" parameterType="com.webservice.ahiru.entity.UPEmpDtl">
+        UPDATE
+        M_EMP_DTL
+
+        SET
+        DEP_ROLE = #{depRole},
+        TECH_DIRECTION = #{tech},
+        PLAN_LEAVING_DATE = #{outDate},
+        LEAVING_REASON = #{outRsn}
+        where
+        <if test="id != ''">
+            EMPLOYEE_NO = #{id} AND
+        </if>
+        DEL_FG = '0'
+        order by EMPLOYEE_NO
+    </update>
+
+    <update id="UpdateBpInfo" parameterType="com.webservice.ahiru.entity.UPEmpDtl">
+        UPDATE
+        M_EMP_DTL
+
+        SET
+        DEP_ROLE = #{depRole},
+        TECH_DIRECTION = #{tech},
+        SCHEDULED_EXIT_DT = #{outDate}
+        where
+        <if test="id != ''">
+            EMPLOYEE_NO = #{id} AND
+        </if>
+        DEL_FG = '0'
+        order by EMPLOYEE_NO
+    </update>
+
+    <resultMap id="UPEmpDtlMap" type="com.webservice.ahiru.entity.UPEmpDtl">
+        <result property="id" column="EMPLOYEE_NO" />
+<!--        <result property="role" column="ROLE" />-->
+        <result property="depRole" column="DEP_ROLE" />
+        <result property="tech" column="TECH_DIRECTION" />
+        <result property="outDate" column="PLAN_LEAVING_DATE" />
+        <result property="outRsn" column="LEAVING_REASON" />
+        <result property="scheduledExitDt" column="SCHEDULED_EXIT_DT" />
+
+    </resultMap>
+</mapper>

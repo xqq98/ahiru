@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.SEVEmpListMapper">
+    <select id="getInfoX" resultMap="SEVEmpListMap" >
+        SELECT
+        ID,
+        NAME,
+        JOB,
+        LEVEL,
+        INDATE,
+        DEPROLE,
+        TECH,
+        OUTDATE,
+        OUTRSN,
+        BPFLG,
+        DEPROLENAME,
+        TECHNAME,
+        a1,
+        a2,
+        a3,
+        a4,
+        a5,
+        a6,
+        a7,
+        a8,
+        a9,
+        a10,
+        a11,
+        a12,
+        a,
+        PMNAME
+        FROM V_EMP_LIST
+        WHERE
+        ID in (SELECT
+        DISTINCT  EMPLOYEE_NO
+        FROM
+        `T_EMP_WORK`
+        WHERE
+        USE_STATUS = '0'
+        and
+        concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) >= #{startDt}
+        and
+        #{endDt} >=	concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) )
+
+    </select>
+
+    <resultMap id="SEVEmpListMap" type="com.webservice.ahiru.entity.SEVEmpList">
+        <result property="id" column="ID" />
+        <result property="name" column="NAME" />
+        <result property="job" column="JOB" />
+        <result property="level" column="LEVEL" />
+        <result property="inDate" column="INDATE" />
+        <result property="depRole" column="DEPROLE" />
+        <result property="tech" column="TECH" />
+        <result property="outDate" column="OUTDATE" />
+        <result property="outRsn" column="OUTRSN" />
+        <result property="BPFlg" column="BPFLG" />
+        <result property="depRoleName" column="DEPROLENAME" />
+        <result property="techName" column="TECHNAME" />
+        <result property="a1" column="a1" />
+        <result property="a2" column="a2" />
+        <result property="a3" column="a3" />
+        <result property="a4" column="a4" />
+        <result property="a5" column="a5" />
+        <result property="a6" column="a6" />
+        <result property="a7" column="a7" />
+        <result property="a8" column="a8" />
+        <result property="a9" column="a9" />
+        <result property="a10" column="a10" />
+        <result property="a11" column="a11" />
+        <result property="a12" column="a12" />
+        <result property="a" column="a" />
+        <result property="pmName" column="PMNAME" />
+    </resultMap>
+
+    <select id="getInfoAll" resultMap="SEVEmpListMap" >
+        SELECT
+        ID,
+        NAME,
+        JOB,
+        LEVEL,
+        INDATE,
+        DEPROLE,
+        TECH,
+        OUTDATE,
+        OUTRSN,
+        BPFLG,
+        DEPROLENAME,
+        TECHNAME,
+        a1,
+        a2,
+        a3,
+        a4,
+        a5,
+        a6,
+        a7,
+        a8,
+        a9,
+        a10,
+        a11,
+        a12,
+        a,
+        PMNAME
+        FROM V_EMP_LIST
+        WHERE
+        BPFLG != ''
+        <if test="name !='' and name !=null " >
+            AND NAME = #{name}
+        </if>
+        <if test="levelList.size>0 and levelList !=null " >
+            AND LEVEL IN
+            <foreach item="level" collection="levelList" index="index" open="(" separator="," close=")">#{level}</foreach>
+        </if>
+        <if test="depRoleNameList.size>0 and depRoleNameList !=null " >
+             AND DEPROLENAME IN
+            <foreach item="depRoleName" collection="depRoleNameList" index="index" open="(" separator="," close=")">#{depRoleName}</foreach>
+        </if>
+        <if test="techNameList.size>0 and techNameList !=null " >
+            AND TECHNAME IN
+            <foreach item="techName" collection="techNameList" index="index" open="(" separator="," close=")">#{techName}</foreach>
+        </if>
+        <if test="pmName !='' and pmName !=null " >
+            AND PMNAME =#{pmName}
+        </if>
+
+    </select>
+</mapper>

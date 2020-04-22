@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.MProjectMapper">
+    <select id="getMProjects" resultMap="MProjectMap">
+        SELECT
+        ID,
+        PM_EMPLOYEE_NO,
+        PROJECT_ID,
+        PROJECT_NAME,
+        CASE_NAME,
+        ENT_DT,
+        ENT_ID,
+        UPD_DT,
+        UPD_ID,
+        DEL_DT,
+        DEL_ID,
+        DEL_FG
+        FROM M_PROJECT
+        where
+        DEL_FG = '0'
+    </select>
+
+    <select id="getMProjectsAll" resultMap="MProjectMap">
+        SELECT
+        ID,
+        PM_EMPLOYEE_NO,
+        PROJECT_ID,
+        PROJECT_NAME,
+        CASE_NAME,
+        ENT_DT,
+        ENT_ID,
+        UPD_DT,
+        UPD_ID,
+        DEL_DT,
+        DEL_ID,
+        DEL_FG
+        FROM M_PROJECT
+        where
+        DEL_FG = '0' AND  CASE_NAME != '0'
+    </select>
+
+    <select id="getMProjectsIdAndName" resultMap="MProjectMap">
+        SELECT
+        PROJECT_ID,
+        PROJECT_NAME
+        FROM M_PROJECT
+        where
+        DEL_FG = '0' AND CASE_NAME = '0'
+    </select>
+
+    <select id="getMProjectById" resultMap="MProjectMap">
+        SELECT
+        PM_EMPLOYEE_NO,
+        PROJECT_ID,
+        PROJECT_NAME,
+        CASE_NAME,
+        ENT_DT,
+        ENT_ID,
+        UPD_DT,
+        UPD_ID,
+        DEL_DT,
+        DEL_ID,
+        DEL_FG
+        FROM M_PROJECT
+        where
+        DEL_FG = '0'
+        and PM_EMPLOYEE_NO = #{pmid} and PROJECT_ID = #{projectid}
+    </select>
+
+    <resultMap id="MProjectMap" type="com.webservice.ahiru.entity.MProject">
+        <result property="pmemployeeno" column="PM_EMPLOYEE_NO" />
+        <result property="projectid" column="PROJECT_ID" />
+        <result property="projectname" column="PROJECT_NAME" />
+        <result property="casename" column="CASE_NAME" />
+        <result property="entdt" column="ENT_DT" />
+        <result property="entid" column="ENT_ID" />
+        <result property="upddt" column="UPD_DT" />
+        <result property="updid" column="UPD_ID" />
+        <result property="deldt" column="DEL_DT" />
+        <result property="delid" column="DEL_ID" />
+        <result property="delfg" column="DEL_FG" />
+        <result property="id" column="ID" />
+    </resultMap>
+
+    <insert id="addMProject">
+        insert into M_PROJECT (
+          PM_EMPLOYEE_NO
+        , PROJECT_ID
+        , PROJECT_NAME
+        , CASE_NAME
+        , ENT_DT
+        , ENT_ID
+        , UPD_DT
+        , UPD_ID
+        , DEL_DT
+        , DEL_ID
+        , DEL_FG)
+        values (
+         #{pmemployeeno}
+        ,#{projectid}
+        ,#{projectname}
+        ,#{casename}
+        ,#{entdt}
+        ,#{entid}
+        ,#{upddt}
+        ,#{updid}
+        ,#{deldt}
+        ,#{delid}
+        ,#{delfg}
+        )
+    </insert>
+
+    <update id="edtMProject">
+        update M_PROJECT
+        <set>
+            PROJECT_NAME = #{projectname}
+            , CASE_NAME = #{casename}
+            , ENT_DT = #{entdt}
+            , ENT_ID = #{entid}
+            , UPD_DT = #{upddt}
+            , UPD_ID = #{updid}
+            , DEL_DT = #{deldt}
+            , DEL_ID = #{delid}
+            , DEL_FG = #{delfg}
+        </set>
+        <where>
+            PM_EMPLOYEE_NO = #{pmemployeeno}
+            and PROJECT_ID = #{projectid}
+            and ID = #{id}
+        </where>
+
+    </update>
+
+    <delete id="delMProject">
+        delete from M_PROJECT where PM_EMPLOYEE_NO = #{pmid} and PROJECT_ID = #{projectid}
+    </delete>
+
+    <delete id="delMProjectbypmid">
+        delete from M_PROJECT where PM_EMPLOYEE_NO = #{pmid}
+    </delete>
+
+    <select id="getMProjectByPmid" resultMap="MProjectMap">
+        SELECT
+        ID,
+        PM_EMPLOYEE_NO,
+        PROJECT_ID,
+        PROJECT_NAME,
+        CASE_NAME,
+        ENT_DT,
+        ENT_ID,
+        UPD_DT,
+        UPD_ID,
+        DEL_DT,
+        DEL_ID,
+        DEL_FG
+        FROM M_PROJECT
+        where
+        DEL_FG = '0'AND CASE_NAME != '0'
+
+            AND PM_EMPLOYEE_NO = #{pmid}
+    </select>
+
+    <select id="getMProjectByPmNo" resultMap="MProjectNameMap">
+        SELECT
+        PROJECT_NAME
+        FROM M_PROJECT
+        where
+        DEL_FG = '0'
+        and PM_EMPLOYEE_NO = #{pmid}
+    </select>
+
+    <resultMap id="MProjectNameMap" type="com.webservice.ahiru.entity.MProjectName">
+        <result property="projectname" column="PROJECT_NAME" />
+    </resultMap>
+
+    <select id="getMProject" resultMap="MProjectMap">
+        SELECT
+        PM_EMPLOYEE_NO,
+        PROJECT_ID,
+        PROJECT_NAME,
+        CASE_NAME,
+        ENT_DT,
+        ENT_ID,
+        UPD_DT,
+        UPD_ID,
+        DEL_DT,
+        DEL_ID,
+        DEL_FG
+        FROM M_PROJECT
+        where
+        DEL_FG = '0' and ID = #{id}
+    </select>
+
+    <update id="setMProject">
+        update M_PROJECT
+        <set>
+            PROJECT_NAME = #{projectname}
+            , PROJECT_ID = #{projectid}
+            , CASE_NAME = #{casename}
+            , ENT_DT = #{entdt}
+            , ENT_ID = #{entid}
+            , UPD_DT = #{upddt}
+            , UPD_ID = #{updid}
+            , DEL_DT = #{deldt}
+            , DEL_ID = #{delid}
+            , DEL_FG = #{delfg}
+        </set>
+        <where>
+            ID = #{id}
+        </where>
+    </update>
+
+</mapper>
