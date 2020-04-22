@@ -46,7 +46,7 @@ public class MProjectController {
     }
 
     /**
-     *aaaaaaaaaaaaaaaaaabbbbb
+     *aaaaaaaaaaaaaaaaaabbbbbcccc
      * @Target(ElementType.METHOD) doneMProject
      * @Target(ElementType.PARAMETER) @RequestBody List<MProject> mProjectList
      * 获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中
