@@ -40,4 +40,6 @@ public interface TEmpWorkMapper {
     //获取数据库表（T_EMP_WORK）的数据，以list列表的形式，根据项目经理号去重查询
     public List<TEmpWork> getTEmpWorkByPM_NO(String pmEmployeeNo);
     //韩广晨 2020-04-16 End
+    //删除数据库表（T_EMP_WORK）的数据
+    public int delTEmpWork(TEmpWork tEmpWork);
 }

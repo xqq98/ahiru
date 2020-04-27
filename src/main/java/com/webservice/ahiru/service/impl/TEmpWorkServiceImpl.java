@@ -1,5 +1,6 @@
 package com.webservice.ahiru.service.impl;
 import com.webservice.ahiru.entity.TEmpWork;
+import com.webservice.ahiru.exception.AhiruException;
 import com.webservice.ahiru.mapper.TEmpWorkMapper;
 import com.webservice.ahiru.service.TEmpWorkService;
 import org.slf4j.Logger;
@@ -43,8 +44,8 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
     //伪代码,表示重写（下面的方法名是否是你父类中所有的）
     @Override
     //获取数据库表（T_EMP_WORK）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据主键）,返回tEmpWork
-    public List<TEmpWork> getTEmpWorkById(String id) {
-
+    public List<TEmpWork> getTEmpWorkById(String id)  throws AhiruException {
+        try {
         List<TEmpWork> tEmpWork = tEmpWorkMapper.getTEmpWorkById(id);
         List<TEmpWork> tEmpWork1 = new ArrayList<>();
 
@@ -107,12 +108,11 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
                     continue;
             }
         }
-
-
-
-
-
-        return tEmpWork1;
+        return tEmpWork1;}
+        catch (Exception ex){
+            logger.error(ex.getMessage(),ex);
+            throw new AhiruException("空闲人员数据取得失败");
+        }
 
     }
 
@@ -157,4 +157,42 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
     }
     //韩广晨 2020-04-16 End
 
+    //伪代码,表示重写（下面的方法名是否是你父类中所有的）
+    @Override
+    //修改数据库表（T_EMP_WORK）的数据，修改数据后，返回 CNT
+    public int delTEmpWork(TEmpWork tEmpWork) {
+
+        int CNT = tEmpWorkMapper.delTEmpWork(tEmpWork);
+
+        return CNT;
+    }
+
+    @Override
+    //处理数据
+    public int doneTempWork(List<TEmpWork> tEmpWorkList)  throws AhiruException {
+        try {
+            for (int i = 0; i < tEmpWorkList.size(); i++) {
+
+                TEmpWork tEmpWork = tEmpWorkList.get(i);
+                //判断调用修改方法还是增加方法
+                if (tEmpWork.getWorkNo() != null) {
+                    edtTEmpWork(tEmpWork);
+                } else {
+                    //如果返回PMNUM 调用增加方法
+                    if ((tEmpWork.getPmEmployeeNo() != null)) {
+                        addTEmpWork(tEmpWork);
+                        //未返回进入下一循环
+                    } else {
+                        continue;
+                    }
+
+                }
+
+            }
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            throw new AhiruException("项目登录失败");
+        }
+        return 0;
+    }
 }
