@@ -148,7 +148,7 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
 
         return CNT;}catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            throw new AhiruException("人员新增失败");
+            throw new AhiruException("人员信息修改失败");
         }
     }
 
@@ -185,7 +185,7 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
 
         return CNT;}catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            throw new AhiruException("人员新增失败");
+            throw new AhiruException("人员删除失败");
         }
     }
 
@@ -216,7 +216,7 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
-            throw new AhiruException("项目登录失败");
+            throw new AhiruException("数据处理失败");
         }
         return 0;
     }
