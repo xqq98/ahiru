@@ -188,7 +188,7 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
             throw new AhiruException("人员删除失败");
         }
     }
-
+    @Override
     @Transactional
     //处理数据
     public int doneTempWork(List<TEmpWork> tEmpWorkList)  throws AhiruException {
