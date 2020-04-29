@@ -1,17 +1,17 @@
 package com.webservice.ahiru.controller;
 
 
-import com.webservice.ahiru.entity.MProject;
 import com.webservice.ahiru.entity.PmChosen;
-import com.webservice.ahiru.service.MProjectService;
+import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.PmChosenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.websocket.server.PathParam;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,10 +54,11 @@ public class PmChosenController {
 
     //控制器处理“/getpmchosen”的URL请求，POST请求
     @RequestMapping(value = "/getpmchosen",method = RequestMethod.POST)
-    public List<PmChosen> getPmChosen(@RequestBody PmChosen pmChosen){
+    public Result getPmChosen(@RequestBody PmChosen pmChosen){
 
         List<PmChosen> resultPmChosen = pmChosenService.getPmChosen(pmChosen);
 
-        return resultPmChosen;
+        Result result = Result.ok(resultPmChosen);
+        return result;
     }
 }
