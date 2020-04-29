@@ -28,7 +28,8 @@
         FROM
         V_PM_CHOSEN
         WHERE
-        1 = 1
+        //去除1到12月都足月使用的人
+        ((a1 AND a2 AND a3 AND a4 AND a5 AND a6 AND a7 AND a8 AND a9 AND a10 AND a11 AND a12) != 1 AND(a1 AND a2 AND a3 AND a4 AND a5 AND a6 AND a7 AND a8 AND a9 AND a10 AND a11 AND a12) != 2)
 
 
 
@@ -53,6 +54,7 @@
         <!--    判断年月-->
         <if test="year != '' and year !=null">
             AND V_PM_CHOSEN.YEAR = #{year}
+
             <if test="monthList.size == 1 and monthList !=null ">
          AND ${monthList.get(0)} = 0
         </if>
