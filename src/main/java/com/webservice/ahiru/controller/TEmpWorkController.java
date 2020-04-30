@@ -1,6 +1,7 @@
 package com.webservice.ahiru.controller;
 
 import com.webservice.ahiru.entity.TEmpWork;
+import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.TEmpWorkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,11 +70,13 @@ public class TEmpWorkController {
 
     //控制器处理“/getmprojectbyid”的URL请求，POST请求
     @RequestMapping(value = "/gettempworkbyid", method = RequestMethod.POST)
-    public List<TEmpWork> getTEmpWorkById(@RequestParam("id") String id) {
+    public Result getTEmpWorkById(@RequestParam("id") String id) {
 
-        List<TEmpWork> resultTEmpWork = new ArrayList<TEmpWork>();
+        List<TEmpWork> resultTEmpWork = tEmpWorkService.getTEmpWorkById(id);
 
-        return tEmpWorkService.getTEmpWorkById(id);
+//        return tEmpWorkService.getTEmpWorkById(id);
+        Result result = Result.ok(resultTEmpWork);
+        return result;
     }
 
     /**
@@ -127,29 +130,9 @@ public class TEmpWorkController {
 
     //控制器处理“/donetempwork”的URL请求，POST请求
     @RequestMapping(value = "/donetempwork", method = RequestMethod.POST)
-    public String doneTEmpWork(@RequestBody List<TEmpWork> tEmpWorkList) {
-
-        for (int i = 0; i < tEmpWorkList.size(); i++) {
-
-            TEmpWork tEmpWork = tEmpWorkList.get(i);
-                //判断调用修改方法还是增加方法
-                if( tEmpWork.getWorkNo() != null){
-                    tEmpWorkService.edtTEmpWork(tEmpWork);
-                }
-                else {
-                    //如果返回PMNUM 调用增加方法
-                    if((tEmpWork.getPmEmployeeNo() != null)){
-                        tEmpWorkService.addTEmpWork(tEmpWork);
-                    //未返回进入下一循环
-                    }else{
-                        continue;
-                    }
-
-                }
-
-        }
-
-        return "ok";
+    public Result doneTEmpWork(@RequestBody List<TEmpWork> tEmpWorkList) {
+        tEmpWorkService.doneTempWork(tEmpWorkList);
+        return Result.ok();
     }
 
     //控制器处理“/gettempworkbypmno”的URL请求，POST请求

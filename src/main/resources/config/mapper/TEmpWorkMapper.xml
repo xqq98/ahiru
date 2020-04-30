@@ -157,4 +157,19 @@
         where PM_EMPLOYEE_NO = #{pmEmployeeNo}
         and DEL_FG = 0
     </select>
+
+    <!--    修改数据（删除方法）-->
+    <update id="delTEmpWork">
+        update T_EMP_WORK
+        <set>
+
+            DEL_DT = #{delDt},
+            DEL_ID = #{delId},
+            DEL_FG = 1
+        </set>
+        <where>
+            WORK_NO = #{workNo}
+        </where>
+
+    </update>
 </mapper>

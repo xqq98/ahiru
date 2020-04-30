@@ -1,13 +1,18 @@
 package com.webservice.ahiru.service.impl;
+import com.webservice.ahiru.common.UserUtil;
 import com.webservice.ahiru.entity.TEmpWork;
+import com.webservice.ahiru.exception.AhiruException;
 import com.webservice.ahiru.mapper.TEmpWorkMapper;
 import com.webservice.ahiru.service.TEmpWorkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,8 +48,8 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
     //伪代码,表示重写（下面的方法名是否是你父类中所有的）
     @Override
     //获取数据库表（T_EMP_WORK）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据主键）,返回tEmpWork
-    public List<TEmpWork> getTEmpWorkById(String id) {
-
+    public List<TEmpWork> getTEmpWorkById(String id)  throws AhiruException {
+        try {
         List<TEmpWork> tEmpWork = tEmpWorkMapper.getTEmpWorkById(id);
         List<TEmpWork> tEmpWork1 = new ArrayList<>();
 
@@ -107,12 +112,11 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
                     continue;
             }
         }
-
-
-
-
-
-        return tEmpWork1;
+        return tEmpWork1;}
+        catch (Exception ex){
+            logger.error(ex.getMessage(),ex);
+            throw new AhiruException("空闲人员数据取得失败");
+        }
 
     }
 
@@ -120,20 +124,32 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
     @Override
     //把表（T_EMP_WORK）的所有字段的值都插入表中，返回CNT
     public int addTEmpWork(TEmpWork tEmpWork) {
-
+        try {
+        String username= UserUtil.getLoginUser();
+        tEmpWork.setEntId(username);
+        tEmpWork.setEntDt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
         int CNT = tEmpWorkMapper.addTEmpWork(tEmpWork);
 
         return CNT;
-    }
+    }catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            throw new AhiruException("人员新增失败");
+        }}
 
     //伪代码,表示重写（下面的方法名是否是你父类中所有的）
     @Override
     //修改数据库表（T_EMP_WORK）的数据，修改数据后，返回 CNT
     public int edtTEmpWork(TEmpWork tEmpWork) {
-
+        try {
+            String username= UserUtil.getLoginUser();
+            tEmpWork.setUpdId(username);
+            tEmpWork.setUpdDt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
         int CNT = tEmpWorkMapper.edtTEmpWork(tEmpWork);
 
-        return CNT;
+        return CNT;}catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            throw new AhiruException("人员信息修改失败");
+        }
     }
 
     //韩广晨 2020-04-16 Begin
@@ -157,4 +173,51 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
     }
     //韩广晨 2020-04-16 End
 
+    //伪代码,表示重写（下面的方法名是否是你父类中所有的）
+    @Override
+    //修改数据库表（T_EMP_WORK）的数据，修改数据后，返回 CNT
+    public int delTEmpWork(TEmpWork tEmpWork) {
+        try {
+            String username= UserUtil.getLoginUser();
+            tEmpWork.setDelId(username);
+            tEmpWork.setDelDt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
+        int CNT = tEmpWorkMapper.delTEmpWork(tEmpWork);
+
+        return CNT;}catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            throw new AhiruException("人员删除失败");
+        }
+    }
+    @Override
+    @Transactional
+    //处理数据
+    public int doneTempWork(List<TEmpWork> tEmpWorkList)  throws AhiruException {
+        try {
+            for (int i = 0; i < tEmpWorkList.size(); i++) {
+
+                TEmpWork tEmpWork = tEmpWorkList.get(i);
+                //如果workno不为空，说明数据库存在数据，根据delfg判断调用修改还是删除方法
+                if (tEmpWork.getWorkNo() != null) {
+                    if(tEmpWork.getDelFg() != "0"){
+                        edtTEmpWork(tEmpWork);
+                    }else{
+                    delTEmpWork(tEmpWork);}
+                } else {
+                    //如果workno为null 且返回PMNUM 调用增加方法
+                    if ((tEmpWork.getPmEmployeeNo() != null)) {
+                        addTEmpWork(tEmpWork);
+                        //未返回进入下一循环
+                    } else {
+                        continue;
+                    }
+
+                }
+
+            }
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            throw new AhiruException("数据处理失败");
+        }
+        return 0;
+    }
 }

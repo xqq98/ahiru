@@ -1,8 +1,8 @@
 package com.webservice.ahiru.service.impl;
 
 
-import com.webservice.ahiru.entity.MProject;
 import com.webservice.ahiru.entity.PmChosen;
+import com.webservice.ahiru.exception.AhiruException;
 import com.webservice.ahiru.mapper.PmChosenMapper;
 import com.webservice.ahiru.service.PmChosenService;
 import org.slf4j.Logger;
@@ -34,8 +34,13 @@ public class PmChosenServiceImpl implements PmChosenService {
     @Override
     //获取视图（V_PM_CHOSEN）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据三个主键），返回resultPmChosen
     public List<PmChosen> getPmChosen(PmChosen pmChosen) {
+        try{
         List<PmChosen> resultPmChosen = pmChosenMapper.getPmChosen(pmChosen);
 
-        return resultPmChosen;
+        return resultPmChosen;}
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            throw new AhiruException("信息获取失败");
+        }
     }
 }

@@ -1,8 +1,7 @@
 package com.webservice.ahiru.service.impl;
 
-import com.webservice.ahiru.entity.MEmployee;
 import com.webservice.ahiru.entity.MEmployeePm;
-import com.webservice.ahiru.mapper.MEmployeeMapper;
+import com.webservice.ahiru.exception.AhiruException;
 import com.webservice.ahiru.mapper.MEmployeePmMapper;
 import com.webservice.ahiru.service.MEmployeePmService;
 import org.slf4j.Logger;
@@ -38,8 +37,12 @@ public class MEmployeePmServiceImpl implements MEmployeePmService {
     //并且 权限等于0 ( M_EMPLOYEE.DEL_FG = '0' ) AND ( M_EMP_DTL.DEL_FG = '0' ) 来查询表（M_EMPLOYEE）中员工编号（EMPLOYEE_NO）和 员工姓名（NAME）
     public List<MEmployeePm> getMEmployees() {
 
-        List<MEmployeePm> mEmployees = mEmployeePmMapper.getInfos();
+        try{List<MEmployeePm> mEmployees = mEmployeePmMapper.getInfos();
 
-        return mEmployees;
+        return mEmployees;}
+        catch (Exception ex) {
+        logger.error(ex.getMessage(), ex);
+        throw new AhiruException("PM信息获取失败");
+    }
     }
 }

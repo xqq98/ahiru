@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author yanyan
@@ -41,83 +41,77 @@ public class MProjectController {
 
     //测试该方法是否通畅
     @RequestMapping("/test9")
-    public Object test(){
+    public Object test() {
         return "Y2 ok!!!";
     }
 
     /**
-     *aaaaaaaaaaaaaaaaaabbbbbcccc
+     * aaaaaa
+     *
      * @Target(ElementType.METHOD) doneMProject
      * @Target(ElementType.PARAMETER) @RequestBody List<MProject> mProjectList
      * 获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中
      * 根据PM员工号（PM_EMPLOYEE_NO）来查询表（M_PROJECT）下的所有数据
      * 如果数据库有值，那么清空数据库的所有值，在通过for循环把前台传过来的值赋到数据库中
      * 如果数据库没有值，那么通过for循环把前台传过来的值赋到数据库中
-     *aaa
+     * aaa
      * @author wanghao
      * @since 2020-2-17
-     *shy
+     * shy
      */
 
-     //数据处理
+    //数据处理
     //控制器处理“/donemproject”的URL请求，POST请求
-    @RequestMapping(value = "/donemproject",method = RequestMethod.POST)
-    public Result doneMProject (@RequestBody List<MProject> mProjectList){
+    @RequestMapping(value = "/donemproject", method = RequestMethod.POST)
+    public Result doneMProject(@RequestBody List<MProject> mProjectList) {
         mProjectService.setMProject(mProjectList);
         return Result.ok();
     }
 
     /**
-     *
      * @Target(ElementType.METHOD) getMProjects
-     * @Target(ElementType.PARAMETER)
-     * 获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中
-     *
+     * @Target(ElementType.PARAMETER) 获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中
      * @author wanghao
      * @since 2020-2-17
      */
 
     //控制器处理“/getmprojects”的URL请求，POST请求
-    @RequestMapping(value = "/getmprojects" ,method = RequestMethod.POST)
-    public List<MProject> getMProjects() {
+    @RequestMapping(value = "/getmprojects", method = RequestMethod.POST)
+    public Result getMProjects() {
 
-        List<MProject> result = new ArrayList<MProject>();
-
-        return mProjectService.getMProjects();
+        List<MProject> result = mProjectService.getMProjects();
+        Result resultss = Result.ok(result);
+        return resultss;
 
     }
 
     /**
-     *
      * @Target(ElementType.METHOD) getMProjects
      * @Target(ElementType.PARAMETER) @RequestParam("pmid") String pmid,@RequestParam("projectid") String projectid
      * 获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据双主键）
      * 根据PM员工号（PM_EMPLOYEE_NO）和项目编号（PROJECT_ID），来查询表（M_PROJECT）的所有数据
-     *
      * @author wanghao
      * @since 2020-2-17
      */
 
     //控制器处理“/getmprojectbyid”的URL请求，GET请求
     @RequestMapping(value = "/getmprojectbyid")
-    public MProject getMProjectById(@RequestParam("pmid") String pmid,@RequestParam("projectid") String projectid){
-
-        return mProjectService.getMProjectById(pmid,projectid);
+    public Result getMProjectById(@RequestParam("pmid") String pmid, @RequestParam("projectid") String projectid) {
+        Result result = Result.ok(mProjectService.getMProjectById(pmid, projectid));
+        return result;
     }
 
     /**
-     *
      * @Target(ElementType.METHOD) addMProject
      * @Target(ElementType.PARAMETER) @RequestBody MProject mProject
      * 把表（M_PROJECT）的所有字段的值都插入表中，返回 Add Done
-     *
      * @author wanghao
      * @since 2020-2-17
      */
 
     //控制器处理“/addmproject”的URL请求，POST请求
-    @RequestMapping(value ="/addmproject" ,method = RequestMethod.POST)
-    public  String addMProject(@RequestBody MProject mProject){
+    @RequestMapping(value = "/addmproject", method = RequestMethod.POST)
+    public String addMProject(@RequestBody MProject mProject) {
 
         mProjectService.addMProject(mProject);
 
@@ -125,19 +119,17 @@ public class MProjectController {
     }
 
     /**
-     *
      * @Target(ElementType.METHOD) edtmproject
      * @Target(ElementType.PARAMETER) @RequestBody MProject mProject
      * 修改数据库表（M_PROJECT）的数据，修改数据后，返回 Edt Done
      * 根据PM员工号（PM_EMPLOYEE_NO）和项目编号（PROJECT_ID），修改表（M_PROJECT）的数据
-     *
      * @author wanghao
      * @since 2020-2-17
      */
 
     //控制器处理“/edtmproject”的URL请求，POST请求
-    @RequestMapping(value ="/edtmproject" ,method = RequestMethod.POST)
-    public  String edtMProject(@RequestBody MProject mProject){
+    @RequestMapping(value = "/edtmproject", method = RequestMethod.POST)
+    public String edtMProject(@RequestBody MProject mProject) {
 
         mProjectService.edtMProject(mProject);
 
@@ -145,32 +137,28 @@ public class MProjectController {
     }
 
     /**
-     *
      * @Target(ElementType.METHOD) delMProject
      * @Target(ElementType.PARAMETER) @RequestParam("pmid") String pmid,@RequestParam("projectid") String projectid
      * 删除数据库表（M_PROJECT）的数据，根据PM员工号（PM_EMPLOYEE_NO）和项目编号（PROJECT_ID），返回Del Done
      * 根据PM员工号（PM_EMPLOYEE_NO）和项目编号（PROJECT_ID），删除表（M_PROJECT）的数据
-     *
      * @author wanghao
      * @since 2020-2-17
      */
 
     //控制器处理“/delmproject”的URL请求，GET请求
     @RequestMapping(value = "/delmproject")
-    public String delMProject(@RequestParam("pmid") String pmid,@RequestParam("projectid") String projectid){
+    public String delMProject(@RequestParam("pmid") String pmid, @RequestParam("projectid") String projectid) {
 
-        mProjectService.delMProject(pmid,projectid);
+        mProjectService.delMProject(pmid, projectid);
 
         return "Del Done";
     }
 
     /**
-     *
      * @Target(ElementType.METHOD) delMProject
      * @Target(ElementType.PARAMETER) @RequestParam("pmid") String pmid
      * 删除数据库表（M_PROJECT）的数据，根据PM员工号（PM_EMPLOYEE_NO），返回Delbypmid Done
      * 根据PM员工号（PM_EMPLOYEE_NO），删除表（M_PROJECT）的数据
-     *
      * @author wanghao
      * @since 2020-2-17
      */
@@ -178,7 +166,7 @@ public class MProjectController {
     //控制器处理“/delmprojectbypmid”的URL请求，GET请求
     //SHY
     @RequestMapping(value = "/delmprojectbypmid")
-    public Result delMProject(@RequestParam("pmid") String pmid){
+    public Result delMProject(@RequestParam("pmid") String pmid) {
 
         mProjectService.delMProjectbypmid(pmid);
 
@@ -186,12 +174,10 @@ public class MProjectController {
     }
 
     /**
-     *
      * @Target(ElementType.METHOD) getMProjectByPmid
      * @Target(ElementType.PARAMETER) @PathVariable(value = "pmid") String pmid
      * 获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据主键）
      * 根据PM员工号（PM_EMPLOYEE_NO），查询表（M_PROJECT）的所有数据
-     *
      * @author wanghao
      * @since 2020-2-17
      */
@@ -199,60 +185,63 @@ public class MProjectController {
     //控制器处理“/getmprojectbypmid/{pmid}”的URL请求，POST请求
     //shy
     @RequestMapping(value = "/getmprojectbypmid")
-    public Result getMProjectByPmid(@RequestParam(value = "pmid") String pmid){
+    public Result getMProjectByPmid(@RequestParam(value = "pmid") String pmid) {
         List<MProject> resultMprojects = mProjectService.getMProjectByPmid(pmid);
         Result result = Result.ok(resultMprojects);
         return result;
     }
 
     //控制器处理“/getmprojectbypmid/{pmid}”的URL请求，POST请求
-    @RequestMapping(value = "/getmprojectbypmNo/{pmid}",method = RequestMethod.POST)
-    public List<MProject> getMProjectByPmNo(@PathVariable(value = "pmid") String pmid){
+    @RequestMapping(value = "/getmprojectbypmNo/{pmid}", method = RequestMethod.POST)
+    public Result getMProjectByPmNo(@PathVariable(value = "pmid") String pmid) {
 
-        List<MProject> resultMproject = new ArrayList<MProject>();
-
-        return mProjectService.getMProjectByPmNo(pmid);
+        List<MProject> resultMproject = mProjectService.getMProjectByPmNo(pmid);
+        Result result = Result.ok(resultMproject);
+        return result;
     }
 
     //控制器处理getallmproject
-    @RequestMapping(value = "/getallmproject",method = RequestMethod.POST)
-    public List<MProjectNew> getAllMProject(){
+    @RequestMapping(value = "/getallmproject", method = RequestMethod.POST)
+    public Result getAllMProject() {
 
         List<MProjectNew> resultMprojectNew = new ArrayList<>();
 
         resultMprojectNew = mProjectService.getAllMProject();
-        return resultMprojectNew;
+
+        Result result = Result.ok(resultMprojectNew);
+        return result;
     }
 
     //控制器处理“/getMProjectsIdAndName”的URL请求，POST请求
-    @RequestMapping(value = "/getMProjectsIdAndName",method = RequestMethod.POST)
-    public List<MProject> getMProjectsIdAndName(){
+    @RequestMapping(value = "/getMProjectsIdAndName", method = RequestMethod.POST)
+    public Result getMProjectsIdAndName() {
 
         List<MProject> resultMProjectsIdAndName = mProjectService.getMProjectsIdAndName();
-
-        return resultMProjectsIdAndName;
+        Result result = Result.ok(resultMProjectsIdAndName);
+        return result;
 
     }
 
-    @RequestMapping(value = "/getMProjectsCaseName",method = RequestMethod.POST)
-    public List<MProjectCaseName> getMProjectsCaseName(){
+    @RequestMapping(value = "/getMProjectsCaseName", method = RequestMethod.POST)
+    public Result getMProjectsCaseName() {
 
         List<MProjectCaseName> resultMprojectCaseName = new ArrayList<>();
         resultMprojectCaseName = mProjectService.getMProjectsCaseName();
-
-        return resultMprojectCaseName;
+        Result result = Result.ok(resultMprojectCaseName);
+        return result;
     }
 
     //控制器处理“/getmprojects”的URL请求，POST请求
-    @RequestMapping(value = "/getmprojectsall" ,method = RequestMethod.POST)
-    public List<MProject> getMProjectsAll() {
+    @RequestMapping(value = "/getmprojectsall", method = RequestMethod.POST)
+    public Result getMProjectsAll() {
 
         List<MProject> resultall = new ArrayList<MProject>();
 
-        return mProjectService.getMProjectsAll();
+
+        Result result = Result.ok(mProjectService.getMProjectsAll());
+        return result;
 
     }
-
 
 
 }

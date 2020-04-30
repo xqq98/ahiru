@@ -1,18 +1,13 @@
 package com.webservice.ahiru.controller;
 
-import com.webservice.ahiru.entity.MEmployee;
-import com.webservice.ahiru.entity.MEmployeePm;
+import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.MEmployeePmService;
-import com.webservice.ahiru.service.MProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>
@@ -56,11 +51,11 @@ public class MEmployeePmController {
 
     //控制器处理“/getMEmployees”的URL请求，POST请求
     @RequestMapping(value = "/getMEmployees",method = RequestMethod.POST)
-    public List<MEmployeePm> getPMList() {
+    public Result getPMList() {
 
-        List<MEmployeePm> result = new ArrayList<MEmployeePm>();
+        Result result = Result.ok(mEmployeePmService.getMEmployees());
 
-        return mEmployeePmService.getMEmployees();
+        return result;
     }
 
 }

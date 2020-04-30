@@ -1,9 +1,6 @@
 package com.webservice.ahiru.entity;
 
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.time.Month;
-import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -86,6 +83,15 @@ public class PmChosen {
 
     //12月
     private String a12;
+    private List<String> monthList;
+
+    public List<String> getMonthList() {
+        return monthList;
+    }
+
+    public void setMonthList(List<String> monthList) {
+        this.monthList = monthList;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

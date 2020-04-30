@@ -3,9 +3,9 @@ spring:
     static-locations: classpath:/static
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://52.196.8.152:3306/awsdb1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
-    username: root
-    password: P@ctera@
+    url: jdbc:mysql://xxxxxx:3306/awsdb1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+    username: xxxx
+    password: xxxxx
     driverClassName: com.mysql.cj.jdbc.Driver
     validationQuery: select 'x'
   freemarker:
