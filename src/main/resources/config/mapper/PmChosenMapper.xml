@@ -28,7 +28,7 @@
         FROM
         V_PM_CHOSEN
         WHERE
-        //去除1到12月都足月使用的人
+--         去除1到12月都足月使用的人
         ((a1 AND a2 AND a3 AND a4 AND a5 AND a6 AND a7 AND a8 AND a9 AND a10 AND a11 AND a12) != 1 AND(a1 AND a2 AND a3 AND a4 AND a5 AND a6 AND a7 AND a8 AND a9 AND a10 AND a11 AND a12) != 2)
 
 
