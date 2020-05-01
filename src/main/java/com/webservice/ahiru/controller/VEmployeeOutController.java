@@ -1,6 +1,5 @@
 package com.webservice.ahiru.controller;
 
-import com.webservice.ahiru.entity.Bu;
 import com.webservice.ahiru.entity.VEmployeeOut;
 import com.webservice.ahiru.mapper.VEmployeeOutMapper;
 import com.webservice.ahiru.service.VEmployeeOutService;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>
@@ -59,7 +55,7 @@ public class VEmployeeOutController {
     public Object intf(@RequestBody VEmployeeOut vEmployeeOut){
         System.out.println("=============START=======");
 
-        Object obj = getInfo(vEmployeeOut);
+        Object obj = vEmployeeOUTService.getInfo(vEmployeeOut);
 
         System.out.println("=============END=======");
 
@@ -73,7 +69,7 @@ public class VEmployeeOutController {
     public Object intbu(@RequestBody VEmployeeOut vEmployeeOut){
         System.out.println("=============START=======");
 
-        Object obj = getBU(vEmployeeOut);
+        Object obj = vEmployeeOUTService.getBU(vEmployeeOut);
 
         System.out.println("=============END=======");
 
@@ -113,51 +109,51 @@ public class VEmployeeOutController {
      * @since 2020-03-09
      */
 
-    public List<VEmployeeOut> getInfo(VEmployeeOut vEmployeeOut) {
-
-        System.out.println("===============ID:"+vEmployeeOut.getId() +"=================");
-
-
-        List<VEmployeeOut> result = new ArrayList<VEmployeeOut>();
-
-        if(vEmployeeOut != null){
-            result = vEmployeeOUTMapper.getInfo(vEmployeeOut);
-        }
-        return result;
-    }
-
-//    public List<OutPersonManager> getInfo(OutPersonManager outPersonManager) {
+//    public List<VEmployeeOut> getInfo(VEmployeeOut vEmployeeOut) {
 //
-//        System.out.println("===============ID:"+outPersonManager.getManager() +"=================");
+//        System.out.println("===============ID:"+vEmployeeOut.getId() +"=================");
 //
 //
-//        List<OutPersonManager> result = new ArrayList<OutPersonManager>();
+//        List<VEmployeeOut> result = new ArrayList<VEmployeeOut>();
 //
-//        if(outPersonManager != null){
-//            result = vEmployeeOUTMapper.getMANAGER(outPersonManager);
+//        if(vEmployeeOut != null){
+//            result = vEmployeeOUTMapper.getInfo(vEmployeeOut);
 //        }
 //        return result;
 //    }
-
-//查询部门
-    public Bu getBU(VEmployeeOut vEmployeeOut) {
-        Bu a = new Bu();
-        List<String> list=new ArrayList<>();
-        System.out.println("===============BU:"+vEmployeeOut.getBu() +"=================");
-        List<VEmployeeOut> result = new ArrayList<VEmployeeOut>();
-
-        if(vEmployeeOut != null){
-            result = vEmployeeOUTMapper.getBU(vEmployeeOut);
-        }
-//        过滤重复数据
-        for(int i=0;i<result.size();i++){
-                if (!list.contains(result.get(i).getBu())) {
-                    list.add(result.get(i).getBu());
-                }
-        }
-        a.setBu(list);
-        return a;
-    }
+//
+////    public List<OutPersonManager> getInfo(OutPersonManager outPersonManager) {
+////
+////        System.out.println("===============ID:"+outPersonManager.getManager() +"=================");
+////
+////
+////        List<OutPersonManager> result = new ArrayList<OutPersonManager>();
+////
+////        if(outPersonManager != null){
+////            result = vEmployeeOUTMapper.getMANAGER(outPersonManager);
+////        }
+////        return result;
+////    }
+//
+////查询部门
+//    public Bu getBU(VEmployeeOut vEmployeeOut) {
+//        Bu a = new Bu();
+//        List<String> list=new ArrayList<>();
+//        System.out.println("===============BU:"+vEmployeeOut.getBu() +"=================");
+//        List<VEmployeeOut> result = new ArrayList<VEmployeeOut>();
+//
+//        if(vEmployeeOut != null){
+//            result = vEmployeeOUTMapper.getBU(vEmployeeOut);
+//        }
+////        过滤重复数据
+//        for(int i=0;i<result.size();i++){
+//                if (!list.contains(result.get(i).getBu())) {
+//                    list.add(result.get(i).getBu());
+//                }
+//        }
+//        a.setBu(list);
+//        return a;
+//    }
 
 
 }
