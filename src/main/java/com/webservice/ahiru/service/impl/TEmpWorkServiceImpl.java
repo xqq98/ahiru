@@ -216,7 +216,7 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
                     if(tEmpWork.getPmEmployeeNo().equals(oldTEmpWork.getPmEmployeeNo())){
                         continue;
                     }else{
-                        edtTEmpWork(tEmpWork);;}
+                        edtTEmpWork(tEmpWork);}
                 } else {
                     //如果workno为null 且返回PMNUM 调用增加方法
                     if ((tEmpWork.getPmEmployeeNo() != null)) {
