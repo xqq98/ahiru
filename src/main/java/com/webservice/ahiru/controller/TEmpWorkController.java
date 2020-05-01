@@ -137,7 +137,9 @@ public class TEmpWorkController {
 
     //控制器处理“/gettempworkbypmno”的URL请求，POST请求
     @RequestMapping(value = "/gettempworkbypmno")
-    public List<TEmpWork> getTEmpWorkByPM_NO(@RequestParam(value = "pmEmployeeNo") String pmEmployeeNo) {
-        return tEmpWorkService.getTEmpWorkByPM_NO(pmEmployeeNo);
+    public Result getTEmpWorkByPM_NO(@RequestParam(value = "pmEmployeeNo") String pmEmployeeNo) {
+        Result result = Result.ok(tEmpWorkService.getTEmpWorkByPM_NO(pmEmployeeNo));
+        return result;
+
     }
 }
