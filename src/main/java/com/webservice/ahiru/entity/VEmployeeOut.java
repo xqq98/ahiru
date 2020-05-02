@@ -3,6 +3,7 @@ package com.webservice.ahiru.entity;
 import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -129,6 +130,17 @@ public class VEmployeeOut implements Serializable {
 
     //削除フラグ
     private String delFg;
+
+    private List<String> buList;
+
+
+    public List<String> getBuList() {
+        return buList;
+    }
+
+    public void setBuList(List<String> buList) {
+        this.buList = buList;
+    }
 
     public String getId() {
         return id;

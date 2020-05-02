@@ -1,7 +1,7 @@
 package com.webservice.ahiru.controller;
 
 import com.webservice.ahiru.entity.UPEmpDtl;
-import com.webservice.ahiru.mapper.UPEmpDtlMapper;
+import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.UPEmpDtlService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>
@@ -31,13 +28,9 @@ public class UPEmpDtlController<depRole> {
 
     //Log文件的获取
     private Logger logger = LoggerFactory.getLogger(UPEmpDtlController.class);
-
-//    @Autowired
-//    private UPEmpDtlService upEmpDtlService;
-
-    //Service接口的实现类
+//Service接口的实现类
     @Autowired
-    private UPEmpDtlMapper upEmpDtlMapper;
+    private UPEmpDtlService upEmpDtlService;
 
     /**
      *
@@ -54,14 +47,14 @@ public class UPEmpDtlController<depRole> {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Object intf(@RequestBody UPEmpDtl upEmpDtl){
+    public Result intf(@RequestBody UPEmpDtl upEmpDtl){
         System.out.println("=============START=======");
 
-        Object obj = getInfo(upEmpDtl);
+        Result result = upEmpDtlService.getInfo(upEmpDtl);
 
         System.out.println("=============END=======");
 
-        return obj;
+        return result;
     }
 
     //测试该方法是否通畅
@@ -70,29 +63,7 @@ public class UPEmpDtlController<depRole> {
         return "ok!!!";
     }
 
-    /**
-     *
-     * @Target(ElementType.METHOD) getInfo
-     * @Target(ElementType.PARAMETER) @RequestBody UPEmpDtl upEmpDtl
-     * 查询表（M_EMP_DTL）的数据以列表的形式输出，调用upEmpDtlMapper的getInfo方法，返回对象result
-     * 根据员工编号（EMPLOYEE_NO）来查询表（M_EMP_DTL）的数据
-     *
-     * @author wanghao
-     * @since 2019-2-17
-     */
 
-    public List<UPEmpDtl> getInfo(UPEmpDtl upEmpDtl) {
-
-        System.out.println("===============EmployeeNo:"+upEmpDtl.getId() +"=================");
-        System.out.println("===============DepRole:"+upEmpDtl.getDepRole() +"=================");
-
-        List<UPEmpDtl> result = new ArrayList<>();
-
-        if(upEmpDtl != null){
-            result = upEmpDtlMapper.getInfo(upEmpDtl);
-        }
-        return result;
-    }
 
     /**
      *
@@ -111,29 +82,26 @@ public class UPEmpDtlController<depRole> {
     @RequestMapping(value = "/update", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Result UpdateInfo(@RequestBody UPEmpDtl upEmpDtl) {
 
-    public String UpdateInfo(@RequestBody UPEmpDtl upEmpDtl) {
+        Result result;
 
-        int result;
+//        String message = "";
 
-        String message = "";
-
-        System.out.println("===============EmployeeNo:"+upEmpDtl.getId() +"=================");
-        System.out.println("===============DepRope:"+upEmpDtl.getBpflg() +"=================");
+        logger.info("===============EmployeeNo:"+upEmpDtl.getId() +"=================");
+        logger.info("===============DepRope:"+upEmpDtl.getBpflg() +"=================");
 
         if(upEmpDtl.getBpflg().equals("0")){
-            result=upEmpDtlMapper.UpdateEmpInfo(upEmpDtl);
+            result=upEmpDtlService.UpdateEmpInfo(upEmpDtl);
         }
         else{
-            result=upEmpDtlMapper.UpdateBpInfo(upEmpDtl);
+            result=upEmpDtlService.UpdateBpInfo(upEmpDtl);
         }
-//        int result = upEmpDtlMapper.UpdateInfo(upEmpDtl);
-
-        message = "ok";
+//        message = "ok";
         System.out.println("----------------------------");
         System.out.println(result);
         System.out.println("----------------------------");
-        return message ;
+        return result ;
     }
 
 }

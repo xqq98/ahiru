@@ -21,6 +21,7 @@
         EMPLOYEE_TYPE,
         IN_SOCIETY_DATE,
         TURN_POSITIVE_DATE,
+--        DATE_FORMAT(`V_EMP_OUT`.LEAVING_DATE,'%Y-%m-%d') AS `LEAVING_DATE`,
         LEAVING_DATE,
         COST_CENTER,
         FUNCTION,
@@ -40,6 +41,7 @@
         DEL_FG
         FROM V_EMP_OUT
         where DEL_FG = '1'
+       
         <if test="id != '' and id !=null">
             and ID = #{id}
         </if>
@@ -47,6 +49,13 @@
         --         通过部门筛选
         <if test="bu != '' and bu !=null">
             and BU = #{bu}
+        </if>
+
+        <if test="buList.size !=0 and buList !=null">
+            AND BU IN
+            <foreach collection="buList" open="(" separator="," close=")" item="aaa">
+                #{aaa}
+            </foreach>
         </if>
 
         --         通过pm筛选

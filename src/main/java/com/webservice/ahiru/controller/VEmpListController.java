@@ -60,7 +60,7 @@ public class VEmpListController {
     public Object intf(@RequestBody VEmpList VEmpList){
         System.out.println("=============START=======");
 
-        Object obj = getInfo(VEmpList);
+        Object obj = VEmpListService.getInfo(VEmpList);
 
         System.out.println("=============END=======");
 
@@ -84,66 +84,66 @@ public class VEmpListController {
      * @since 2020-2-18
      */
 
-    public List<VEmpList> getInfo(VEmpList VEmpList) {
-
-        System.out.println("===============code:"+VEmpList.getId() +"=================");
-
-        List<VEmpList> result = new ArrayList<VEmpList>();
-
-        if(VEmpList != null){
-            result = VEmpListMapper.getInfo(VEmpList);
-
-            //获取当前时间戳
-            long nowDate = System.currentTimeMillis();
-            //两个月60天的毫秒数
-            String twomonth = "5184000000";
-
-            //将两个月的毫秒数转换成long
-            long month = Long.parseLong(twomonth);
-
-            //将当前时间+60天
-            long nowAddtwomonth = nowDate + month;
-            System.out.println("nowAddtwomonth="+nowAddtwomonth);
-            for(int i=0;i<result.size();i++){
-                char first=result.get(i).getId().charAt(0);
-                System.out.println(first+"-"+i+""+result.get(i).getOutDate());
-                if(first == '9'){
-                    //将数据中离职时间信息转换成时间戳
-                    if(result.get(i).getOutDate() != null && result.get(i).getOutDate() !=""){
-                        String timeStamp = date2TimeStamp(result.get(i).getOutDate(), "yyyy-MM-dd");
-                        long personalleveltime = Long.parseLong(timeStamp);
-                        if(nowAddtwomonth >= personalleveltime){
-                            result.get(i).setColor("yellow");
-                        }else {
-                            result.get(i).setColor("white");
-                        }
-                    }
-                    else{
-                        result.get(i).setColor("white");
-                    }
-                }else {
-                    if(result.get(i).getOutDate() != null){
-                        result.get(i).setColor("gray");
-                    }
-                    else{
-                        result.get(i).setColor("white");
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    public static String date2TimeStamp(String date_str,String format){
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat(format);
-            sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-            return String.valueOf(sdf.parse(date_str).getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
+//    public List<VEmpList> getInfo(VEmpList VEmpList) {
+//
+//        System.out.println("===============code:"+VEmpList.getId() +"=================");
+//
+//        List<VEmpList> result = new ArrayList<VEmpList>();
+//
+//        if(VEmpList != null){
+//            result = VEmpListMapper.getInfo(VEmpList);
+//
+//            //获取当前时间戳
+//            long nowDate = System.currentTimeMillis();
+//            //两个月60天的毫秒数
+//            String twomonth = "5184000000";
+//
+//            //将两个月的毫秒数转换成long
+//            long month = Long.parseLong(twomonth);
+//
+//            //将当前时间+60天
+//            long nowAddtwomonth = nowDate + month;
+//            System.out.println("nowAddtwomonth="+nowAddtwomonth);
+//            for(int i=0;i<result.size();i++){
+//                char first=result.get(i).getId().charAt(0);
+//                System.out.println(first+"-"+i+""+result.get(i).getOutDate());
+//                if(first == '9'){
+//                    //将数据中离职时间信息转换成时间戳
+//                    if(result.get(i).getOutDate() != null && result.get(i).getOutDate() !=""){
+//                        String timeStamp = date2TimeStamp(result.get(i).getOutDate(), "yyyy-MM-dd");
+//                        long personalleveltime = Long.parseLong(timeStamp);
+//                        if(nowAddtwomonth >= personalleveltime){
+//                            result.get(i).setColor("yellow");
+//                        }else {
+//                            result.get(i).setColor("white");
+//                        }
+//                    }
+//                    else{
+//                        result.get(i).setColor("white");
+//                    }
+//                }else {
+//                    if(result.get(i).getOutDate() != null){
+//                        result.get(i).setColor("gray");
+//                    }
+//                    else{
+//                        result.get(i).setColor("white");
+//                    }
+//                }
+//            }
+//        }
+//        return result;
+//    }
+//
+//    public static String date2TimeStamp(String date_str,String format){
+//        try {
+//            SimpleDateFormat sdf = new SimpleDateFormat(format);
+//            sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+//            return String.valueOf(sdf.parse(date_str).getTime());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return "";
+//    }
 
 }
 

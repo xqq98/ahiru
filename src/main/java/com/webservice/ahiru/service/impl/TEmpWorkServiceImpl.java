@@ -70,6 +70,19 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
         tEmpWork1.get(9).setUseMonth("10");
         tEmpWork1.get(10).setUseMonth("11");
         tEmpWork1.get(11).setUseMonth("12");
+        tEmpWork1.get(0).setEmployeeNo(id);
+            tEmpWork1.get(1).setEmployeeNo(id);
+            tEmpWork1.get(2).setEmployeeNo(id);
+            tEmpWork1.get(3).setEmployeeNo(id);
+            tEmpWork1.get(4).setEmployeeNo(id);
+            tEmpWork1.get(5).setEmployeeNo(id);
+            tEmpWork1.get(6).setEmployeeNo(id);
+            tEmpWork1.get(7).setEmployeeNo(id);
+            tEmpWork1.get(8).setEmployeeNo(id);
+            tEmpWork1.get(9).setEmployeeNo(id);
+            tEmpWork1.get(10).setEmployeeNo(id);
+            tEmpWork1.get(11).setEmployeeNo(id);
+
 
         for (int i = 0;i<tEmpWork.size();i++){
             TEmpWork aaa = tEmpWork.get(i);
@@ -193,15 +206,17 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
     //处理数据
     public int doneTempWork(List<TEmpWork> tEmpWorkList)  throws AhiruException {
         try {
+            //再次查询一遍数据，待后面作比较
+            List<TEmpWork> oldlist = getTEmpWorkById(tEmpWorkList.get(0).getEmployeeNo());
             for (int i = 0; i < tEmpWorkList.size(); i++) {
-
+                TEmpWork oldTEmpWork = oldlist.get(i);
                 TEmpWork tEmpWork = tEmpWorkList.get(i);
                 //如果workno不为空，说明数据库存在数据，根据delfg判断调用修改还是删除方法
                 if (tEmpWork.getWorkNo() != null) {
-                    if(tEmpWork.getDelFg() != "0"){
-                        edtTEmpWork(tEmpWork);
+                    if(tEmpWork.getPmEmployeeNo().equals(oldTEmpWork.getPmEmployeeNo())){
+                        continue;
                     }else{
-                    delTEmpWork(tEmpWork);}
+                        edtTEmpWork(tEmpWork);}
                 } else {
                     //如果workno为null 且返回PMNUM 调用增加方法
                     if ((tEmpWork.getPmEmployeeNo() != null)) {

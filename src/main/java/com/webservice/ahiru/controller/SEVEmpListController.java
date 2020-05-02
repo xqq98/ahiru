@@ -1,13 +1,12 @@
 package com.webservice.ahiru.controller;
 
 import com.webservice.ahiru.entity.SEVEmpList;
+import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.SEVEmpListService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * <p>
@@ -51,13 +50,15 @@ public class SEVEmpListController {
 
     //控制器处理“/getpmchosen”的URL请求，POST请求
     @RequestMapping(value = "/getInFo",method = RequestMethod.POST)
-    public List<SEVEmpList> getInFo(@RequestParam("startDt") String startDt,@RequestParam("endDt") String endDt){
+    public Result getInFo(@RequestParam("startDt") String startDt, @RequestParam("endDt") String endDt){
 
-        return sevEmpListService.getInFo(startDt,endDt);
+        Result result = sevEmpListService.getInFo(startDt, endDt);
+
+        return result;
     }
 
     @RequestMapping(value = "/getInFoAll",method = RequestMethod.POST)
-    public List<SEVEmpList> getInfoAll(@RequestBody SEVEmpList sevEmpList){
+    public Result getInfoAll(@RequestBody SEVEmpList sevEmpList){
 
 //        System.out.println(sevEmpList.getDepRoleName()+"=========================" );
 
@@ -67,8 +68,11 @@ public class SEVEmpListController {
 //
 //        System.out.println(sevEmpList.getDepRoleName()+"=========================" );
 
-        System.out.println("name:"+sevEmpListService.getInfoAll(sevEmpList));
-        return sevEmpListService.getInfoAll(sevEmpList);
+        logger.info("name:"+sevEmpListService.getInfoAll(sevEmpList));
+
+        Result result = sevEmpListService.getInfoAll(sevEmpList);
+
+        return result;
     }
 
 }
