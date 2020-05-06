@@ -1,180 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.webservice.ahiru.mapper.EmployeeWorkMapper">
-	<select id="getEmployeeWorkInfo" resultMap="EmployeeWorkMap" parameterType="com.webservice.ahiru.entity.EmployeeWork">
-		SELECT
+	<select id="getEmployeeWorkDetail" resultMap="EmployeeWorkDetailMap" parameterType="com.webservice.ahiru.entity.EmployeeWork">
+		SELECT T_EMP_WORK.WORK_NO AS workNo,
 		T_EMP_WORK.EMPLOYEE_NO AS employeeNo,
-		IFNULL( T_EMP_WORK.`YEAR`, '' ) AS YEAR,
-		IFNULL( T_EMP_WORK.PM_EMPLOYEE_NO, '' ) AS pmEmployeeNo,
-		CASE WHEN (T_EMP_WORK.USE_STATUS='0') THEN '' ELSE T_EMP_WORK.PROJECT_ID END AS projectId,
-		CASE WHEN (T_EMP_WORK.USE_STATUS='0') THEN '' ELSE M_PROJECT.PROJECT_NAME END AS projectName,
-		IFNULL( T_EMP_WORK.CASE_NAME, '' ) AS caseName,
-		IFNULL( T_EMP_WORK.USE_MONTH, '' ) AS useMonth,
-		IFNULL( T_EMP_WORK.USE_STATUS, '' ) AS useStatus,
-		IFNULL( T_EMP_WORK.USE_MEMO, '' ) AS useMemo,
-		CASE WHEN  (M_EMPLOYEE.`NAME` is null) THEN M_BP.VENDOR_NAME ELSE  M_EMPLOYEE.`NAME` END AS `name`,
-		IFNULL( M_EMPLOYEE.`LEVEL`, '' ) AS `level`,
-		IFNULL( M_CODE.HANYOU_VALUE_NAME, '' ) AS department,
-		IFNULL( M_EMPLOYEE.PROFESSIONAL, '' ) AS professional,
-		IFNULL( M_EMPLOYEE_PM.`NAME`, '' ) AS `pmName`
-		FROM
-		T_EMP_WORK
-		LEFT JOIN M_EMPLOYEE ON T_EMP_WORK.EMPLOYEE_NO = M_EMPLOYEE.EMPLOYEE_NO
-		LEFT JOIN M_EMP_DTL ON T_EMP_WORK.EMPLOYEE_NO = M_EMP_DTL.EMPLOYEE_NO
-		LEFT JOIN M_CODE ON (M_EMP_DTL.DEP_ROLE = M_CODE.HANYOU_VALUE AND M_CODE.HANYOU_CODE = 'DEP_ROLE' )
-		LEFT JOIN M_EMPLOYEE M_EMPLOYEE_PM ON T_EMP_WORK.PM_EMPLOYEE_NO = M_EMPLOYEE_PM.EMPLOYEE_NO
-		LEFT JOIN M_BP ON T_EMP_WORK.EMPLOYEE_NO = M_BP.VENDOR_ID
-		INNER JOIN M_PROJECT ON T_EMP_WORK.PROJECT_ID = M_PROJECT.PROJECT_ID
-		WHERE
-		T_EMP_WORK.`YEAR` = YEAR ( now( ) )
-		<if test="tech !='' and tech !=null ">
-			AND tech =#{tech}
-		</if>
-		<if test="roles !='' and roles !=null ">
-			AND M_EMPLOYEE.DEPARTMENT =#{roles}
-		</if>
-		<if test="pm !='' and pm !=null ">
-			AND T_EMP_WORK.PM_EMPLOYEE_NO =#{pm}
-		</if>
-		<if test="pro !='' and pro !=null ">
-			AND T_EMP_WORK.PROJECT_ID =#{pro}
-		</if>
-		AND T_EMP_WORK.DEL_FG='0'
-		ORDER BY
-		employeeNo,
-		pmEmployeeNo,
-		`YEAR`
+		T_EMP_WORK.USE_MONTH AS useMonth,
+		T_EMP_WORK.USE_STATUS AS useStatus,
+		M_PROJECT.CASE_NAME AS caseName,
+		T_EMP_WORK.USE_MEMO AS useMemo
+		FROM T_EMP_WORK
+		LEFT JOIN M_PROJECT  ON T_EMP_WORK.CASE_ID = M_PROJECT.ID
+		WHERE T_EMP_WORK.DEL_FG='0'
+		AND T_EMP_WORK.EMPLOYEE_NO=#{employeeNo}
+	    AND T_EMP_WORK.PM_EMPLOYEE_NO=#{pmNo}
 	</select>
 
-	<resultMap id="EmployeeWorkMap" type="com.webservice.ahiru.entity.EmployeeWork">
-		<result property="employee" column="employeeNo"/>
-		<result property="year" column="year"/>
-		<result property="pm" column="pmEmployeeNo"/>
-		<result property="pmName" column="pmName"/>
-		<result property="pro" column="projectId"/>
-		<result property="proName" column="projectName"/>
-		<result property="caseName" column="caseName"/>
+	<insert id="insEmployeeWorkInfo" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="" open="" separator=";" close="">
+			insert into  T_EMP_WORK
+			values (#{employeeNo},#{pmNo},'',#{caseId},'',year(now()),#{useMonth},#{useStatus},#{useStatus},now(),#{pmNo},'','','','','0')
+		</foreach>
+	</insert>
+	<delete id="delEmployeeWorkInfo" parameterType="java.util.List">
+			DELETE from  T_EMP_WORK
+			WHERE
+			T_EMP_WORK.WORK_NO= #{item.workNo}
+			AND T_EMP_WORK.PM_EMPLOYEE_NO=#{pmNo}
+	</delete>
+
+	<resultMap id="EmployeeWorkDetailMap" type="com.webservice.ahiru.entity.EmployeeWork">
+		<result property="workNo" column="workNo"/>
+		<result property="employeeNo" column="employeeNo"/>
 		<result property="useMonth" column="useMonth"/>
 		<result property="useStatus" column="useStatus"/>
+		<result property="caseName" column="caseName"/>
 		<result property="useMemo" column="useMemo"/>
-		<result property="name" column="name"/>
-		<result property="level" column="level"/>
-		<result property="roles" column="department"/>
-		<result property="tech" column="professional"/>
 	</resultMap>
-
-	<update id="uptEmployeeWorkInfo" parameterType="java.util.List">
-		<foreach collection="list" item="item" index="" open="" separator=";" close="">
-			UPDATE T_EMP_WORK
-			SET T_EMP_WORK.PM_EMPLOYEE_NO = #{item.pm},
-			T_EMP_WORK.PROJECT_ID = #{item.pro},
-			T_EMP_WORK.USE_STATUS = #{item.useStatus},
-			T_EMP_WORK.USE_MEMO = #{item.useMemo},
-			T_EMP_WORK.UPD_ID = #{item.updID},
-			T_EMP_WORK.CASE_NAME = #{item.caseName},
-			T_EMP_WORK.UPD_DT = now()
-			WHERE
-			T_EMP_WORK.EMPLOYEE_NO= #{item.employee}
-			and T_EMP_WORK.`YEAR` = #{item.year}
-			and T_EMP_WORK.PM_EMPLOYEE_NO = #{item.pm}
-			and T_EMP_WORK.USE_MONTH = #{item.useMonth}
-		</foreach>
-	</update>
-
-	<select id="getEmployeeWorkInfoAll" resultMap="EmployeeWorkMap" parameterType="com.webservice.ahiru.entity.EmployeeWork">
-		SELECT
-		T_EMP_WORK.EMPLOYEE_NO AS employeeNo,
-		IFNULL( T_EMP_WORK.`YEAR`, '' ) AS YEAR,
-		IFNULL( T_EMP_WORK.PM_EMPLOYEE_NO, '' ) AS pmEmployeeNo,
-		CASE WHEN (T_EMP_WORK.USE_STATUS='0') THEN '' ELSE T_EMP_WORK.PROJECT_ID END AS projectId,
-		CASE WHEN (T_EMP_WORK.USE_STATUS='0') THEN '' ELSE M_PROJECT.PROJECT_NAME END AS projectName,
-		IFNULL( T_EMP_WORK.CASE_NAME, '' ) AS caseName,
-		IFNULL( T_EMP_WORK.USE_MONTH, '' ) AS useMonth,
-		IFNULL( T_EMP_WORK.USE_STATUS, '' ) AS useStatus,
-		IFNULL( T_EMP_WORK.USE_MEMO, '' ) AS useMemo,
-		CASE WHEN  (M_EMPLOYEE.`NAME` is null) THEN M_BP.VENDOR_NAME ELSE  M_EMPLOYEE.`NAME` END AS `name`,
-		IFNULL( M_EMPLOYEE.`LEVEL`, '' ) AS `level`,
-		IFNULL( M_CODE.HANYOU_VALUE_NAME, '' ) AS department,
-		IFNULL( M_EMPLOYEE.PROFESSIONAL, '' ) AS professional,
-		IFNULL( M_EMPLOYEE_PM.`NAME`, '' ) AS `pmName`
-		FROM
-		T_EMP_WORK
-		LEFT JOIN M_EMPLOYEE ON T_EMP_WORK.EMPLOYEE_NO = M_EMPLOYEE.EMPLOYEE_NO
-		LEFT JOIN M_EMP_DTL ON T_EMP_WORK.EMPLOYEE_NO = M_EMP_DTL.EMPLOYEE_NO
-		LEFT JOIN M_CODE ON (M_EMP_DTL.DEP_ROLE = M_CODE.HANYOU_VALUE AND M_CODE.HANYOU_CODE = 'DEP_ROLE' )
-		LEFT JOIN M_EMPLOYEE M_EMPLOYEE_PM ON T_EMP_WORK.PM_EMPLOYEE_NO = M_EMPLOYEE_PM.EMPLOYEE_NO
-		LEFT JOIN M_BP ON T_EMP_WORK.EMPLOYEE_NO = M_BP.VENDOR_ID
-		INNER JOIN M_PROJECT ON T_EMP_WORK.PROJECT_ID = M_PROJECT.PROJECT_ID
-		WHERE
-		T_EMP_WORK.PM_EMPLOYEE_NO IN
-		(SELECT
-        DISTINCT  PM_EMPLOYEE_NO
-        FROM
-        `T_EMP_WORK`
-        WHERE
-        USE_STATUS = '0'
-        and
-        concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) >= #{startDt}
-        and
-        #{endDt} >=	concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) )
-		AND T_EMP_WORK.DEL_FG='0'
-		ORDER BY
-		employeeNo,
-		pmEmployeeNo,
-		`YEAR`
-	</select>
-
-	<select id="getEmployeeWorkInfoAllList" resultMap="EmployeeWorkMap" parameterType="com.webservice.ahiru.entity.EmployeeWork">
-		SELECT * FROM
-		(SELECT
-		T_EMP_WORK.EMPLOYEE_NO AS employeeNo,
-		IFNULL( T_EMP_WORK.`YEAR`, '' ) AS YEAR,
-		IFNULL( T_EMP_WORK.PM_EMPLOYEE_NO, '' ) AS pmEmployeeNo,
-		CASE WHEN (T_EMP_WORK.USE_STATUS='0') THEN '' ELSE T_EMP_WORK.PROJECT_ID END AS projectId,
-		CASE WHEN (T_EMP_WORK.USE_STATUS='0') THEN '' ELSE M_PROJECT.PROJECT_NAME END AS projectName,
-		IFNULL( T_EMP_WORK.CASE_NAME, '' ) AS caseName,
-		IFNULL( T_EMP_WORK.USE_MONTH, '' ) AS useMonth,
-		IFNULL( T_EMP_WORK.USE_STATUS, '' ) AS useStatus,
-		IFNULL( T_EMP_WORK.USE_MEMO, '' ) AS useMemo,
-		CASE WHEN  (M_EMPLOYEE.`NAME` is null) THEN M_BP.VENDOR_NAME ELSE  M_EMPLOYEE.`NAME` END AS `name`,
-		IFNULL( M_EMPLOYEE.`LEVEL`, '' ) AS `level`,
-		IFNULL( M_CODE.HANYOU_VALUE_NAME, '' ) AS department,
-		IFNULL( M_EMPLOYEE.PROFESSIONAL, '' ) AS professional,
-		IFNULL( M_EMPLOYEE_PM.`NAME`, '' ) AS `pmName`
-		FROM
-		T_EMP_WORK
-		LEFT JOIN M_EMPLOYEE ON T_EMP_WORK.EMPLOYEE_NO = M_EMPLOYEE.EMPLOYEE_NO
-		LEFT JOIN M_EMP_DTL ON T_EMP_WORK.EMPLOYEE_NO = M_EMP_DTL.EMPLOYEE_NO
-		LEFT JOIN M_CODE ON (M_EMP_DTL.DEP_ROLE = M_CODE.HANYOU_VALUE AND M_CODE.HANYOU_CODE = 'DEP_ROLE' )
-		LEFT JOIN M_EMPLOYEE M_EMPLOYEE_PM ON T_EMP_WORK.PM_EMPLOYEE_NO = M_EMPLOYEE_PM.EMPLOYEE_NO
-		LEFT JOIN M_BP ON T_EMP_WORK.EMPLOYEE_NO = M_BP.VENDOR_ID
-		INNER JOIN M_PROJECT ON T_EMP_WORK.PROJECT_ID = M_PROJECT.PROJECT_ID
-		WHERE
-		T_EMP_WORK.DEL_FG='0'
-		ORDER BY
-		employeeNo,
-		pmEmployeeNo,
-		`YEAR`) tableA
-		WHERE
-		YEAR = YEAR ( now( ) )
-		<if test="name !='' and name !=null " >
-			AND name =#{name}
-		</if>
-		<if test="levelList.size>0 and levelList !=null " >
-			AND level IN
-			<foreach item="level" collection="levelList" index="index" open="(" separator="," close=")">#{level}</foreach>
-		</if>
-		<if test="depRoleNameList.size>0 and depRoleNameList !=null " >
-			AND department IN
-			<foreach item="depRoleName" collection="depRoleNameList" index="index" open="(" separator="," close=")">#{depRoleName}</foreach>
-		</if>
-		<if test="techNameList.size>0 and techNameList !=null " >
-			AND professional IN
-			<foreach item="techName" collection="techNameList" index="index" open="(" separator="," close=")">#{techName}</foreach>
-		</if>
-		<if test="pmName !='' and pmName !=null " >
-			AND pmName =#{pmName}
-		</if>
-	</select>
-
 </mapper>
