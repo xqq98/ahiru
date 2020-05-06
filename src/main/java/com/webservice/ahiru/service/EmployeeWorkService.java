@@ -1,6 +1,5 @@
 package com.webservice.ahiru.service;
 
-import com.baomidou.mybatisplus.service.IService;
 import com.webservice.ahiru.entity.EmployeeWork;
 import com.webservice.ahiru.entity.EmployeeWorkYear;
 
@@ -17,15 +16,10 @@ import java.util.List;
 //Service层业务接口类编写
 public interface EmployeeWorkService {
 
-    //查询数据
-    public List<EmployeeWorkYear> getEmployeeWorkInfo(EmployeeWork employeeWork);
-
-    //public int copyEmployeeWorkInfo(List<EmployeeWork> EmployeeWorkList);
-
+    //一览数据取得
+    public List<EmployeeWorkYear> getEmployeeWorkInfo(EmployeeWorkYear employeeWorkYear);
+    //明细数据取得
+    public List<EmployeeWork> getEmployeeWorkDetail(EmployeeWork employeeWork);
     //修改数据
-    public int uptEmployeeWorkInfo(EmployeeWorkYear employeeWorkYear);
-
-    public List<EmployeeWorkYear> getEmployeeWorkInfoAll(String startDt, String endDt);
-
-    public List<EmployeeWorkYear> getEmployeeWorkInfoAllList(EmployeeWork employeeWorklist);
+    public int uptEmployeeWorkInfo(List employeeWorkList);
 }
