@@ -1,7 +1,6 @@
 package com.webservice.ahiru.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * <p>
@@ -15,132 +14,91 @@ public class EmployeeWork implements Serializable {
 
     //用来表明类的不同版本间的兼容性
     private static final long serialVersionUID = 1L;
-
-    // 编号
-    int workNo;
-
+    //编号
+    private String workNo;
     //员工ID
-    private String employee;
-
+    private String employeeNo;
+    //员工姓名
+    private String employeeName;
     //PMID
-    private String pm;
-
+    private String pmNo;
     //PM名
     private String pmName;
-
     //项目ID
-    private String pro;
+    private String projectId;
+    //年份
+    private String year;
+    //月份
+    private String useMonth;
+    //使用情况
+    private String useStatus;
 
-    //项目名
-    private String proName;
+    // 部门
+    private String department;
 
     //案件名
     private String caseName;
-
-    //年份
-    private String year;
-
-    // 利用月
-    private String useMonth;
-
-    // 使用状况
-    private String useStatus;
-
-    // 备考
+    //备考
     private String useMemo;
 
-    //员工姓名
-    private String name;
-
-    //级别
-    private String level;
-
-    //部门
-    private String roles;
-
-    //技术
-    private String tech;
-
-    // 更新者ID
-    private String updID;
-
-    // 删除者ID
+    private String entDt;
+    private String entId;
+    private String updDt;
+    private String uptId;
+    private String edlDt;
     private String delID;
+    private String delFg;
 
-    // 插入者ID
-    private String entID;
-
-    //
-    private List<String> levelList;
-
-    //部门名称
-    private List<String> depRoleNameList;
-
-    //技术名称
-    private List<String> techNameList;
-
-    public List<String> getLevelList() {
-        return levelList;
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
-    public void setLevelList(List<String> levelList) {
-        this.levelList = levelList;
+    public String getWorkNo() {
+        return workNo;
     }
 
-    public List<String> getDepRoleNameList() {
-        return depRoleNameList;
+    public void setWorkNo(String workNo) {
+        this.workNo = workNo;
     }
 
-    public void setDepRoleNameList(List<String> depRoleNameList) {
-        this.depRoleNameList = depRoleNameList;
+    public String getEmployeeNo() {
+        return employeeNo;
     }
 
-    public List<String> getTechNameList() {
-        return techNameList;
+    public void setEmployeeNo(String employeeNo) {
+        this.employeeNo = employeeNo;
     }
 
-    public void setTechNameList(List<String> techNameList) {
-        this.techNameList = techNameList;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
-    public String getCaseName() {
-        return caseName;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
-    public void setCaseName(String caseName) {
-        this.caseName = caseName;
+    public String getPmNo() {
+        return pmNo;
     }
 
-    public String getProName() {
-        return proName;
+    public void setPmNo(String pmNo) {
+        this.pmNo = pmNo;
     }
 
-    public void setProName(String proName) {
-        this.proName = proName;
+    public String getPmName() {
+        return pmName;
     }
 
-    public String getEmployee() {
-        return employee;
+    public void setPmName(String pmName) {
+        this.pmName = pmName;
     }
 
-    public void setEmployee(String employee) {
-        this.employee = employee;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public String getPm() {
-        return pm;
-    }
-
-    public void setPm(String pm) {
-        this.pm = pm;
-    }
-
-    public String getPro() {
-        return pro;
-    }
-
-    public void setPro(String pro) {
-        this.pro = pro;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
     public String getYear() {
@@ -167,6 +125,22 @@ public class EmployeeWork implements Serializable {
         this.useStatus = useStatus;
     }
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getCaseName() {
+        return caseName;
+    }
+
+    public void setCaseName(String caseName) {
+        this.caseName = caseName;
+    }
+
     public String getUseMemo() {
         return useMemo;
     }
@@ -175,52 +149,44 @@ public class EmployeeWork implements Serializable {
         this.useMemo = useMemo;
     }
 
-    public String getName() {
-        return name;
+    public String getEntDt() {
+        return entDt;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEntDt(String entDt) {
+        this.entDt = entDt;
     }
 
-    public String getLevel() {
-        return level;
+    public String getEntId() {
+        return entId;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setEntId(String entId) {
+        this.entId = entId;
     }
 
-    public String getRoles() {
-        return roles;
+    public String getUpdDt() {
+        return updDt;
     }
 
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setUpdDt(String updDt) {
+        this.updDt = updDt;
     }
 
-    public String getTech() {
-        return tech;
+    public String getUptId() {
+        return uptId;
     }
 
-    public void setTech(String tech) {
-        this.tech = tech;
+    public void setUptId(String uptId) {
+        this.uptId = uptId;
     }
 
-    public int getWorkNo() {
-        return workNo;
+    public String getEdlDt() {
+        return edlDt;
     }
 
-    public void setWorkNo(int workNo) {
-        this.workNo = workNo;
-    }
-
-    public String getUpdID() {
-        return updID;
-    }
-
-    public void setUpdID(String updID) {
-        this.updID = updID;
+    public void setEdlDt(String edlDt) {
+        this.edlDt = edlDt;
     }
 
     public String getDelID() {
@@ -231,43 +197,11 @@ public class EmployeeWork implements Serializable {
         this.delID = delID;
     }
 
-    public String getEntID() {
-        return entID;
+    public String getDelFg() {
+        return delFg;
     }
 
-    public void setEntID(String entID) {
-        this.entID = entID;
-    }
-
-    public String getPmName() {
-        return pmName;
-    }
-
-    public void setPmName(String pmName) {
-        this.pmName = pmName;
-    }
-
-    //编译器可以给你验证@Override下面的方法名是否是你父类中所有的，如果没有则报错。
-    @Override
-    //返回参数名称和值
-    public String toString() {
-        return "EmployeeWork{" +
-                "workNo=" + workNo +
-                ", employee='" + employee + '\'' +
-                ", pm='" + pm + '\'' +
-                ", pmName='" + pmName + '\'' +
-                ", pro='" + pro + '\'' +
-                ", year='" + year + '\'' +
-                ", useMonth='" + useMonth + '\'' +
-                ", useStatus='" + useStatus + '\'' +
-                ", useMemo='" + useMemo + '\'' +
-                ", name='" + name + '\'' +
-                ", level='" + level + '\'' +
-                ", roles='" + roles + '\'' +
-                ", tech='" + tech + '\'' +
-                ", updID='" + updID + '\'' +
-                ", delID='" + delID + '\'' +
-                ", entID='" + entID + '\'' +
-                '}';
+    public void setDelFg(String delFg) {
+        this.delFg = delFg;
     }
 }
