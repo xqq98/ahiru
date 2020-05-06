@@ -3,6 +3,7 @@ package com.webservice.ahiru.service.impl;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.webservice.ahiru.controller.VEmployeeOutController;
 import com.webservice.ahiru.entity.VEmployeeOut;
+import com.webservice.ahiru.exception.AhiruException;
 import com.webservice.ahiru.mapper.VEmployeeOutMapper;
 import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.VEmployeeOutService;
@@ -59,11 +60,12 @@ public class VEmployeeOutServiceImpl extends ServiceImpl<VEmployeeOutMapper, VEm
                 list = vEmployeeOutMapper.getInfo(vEmployeeOut);
             }
           //  return result;
-            result = Result.ok(list);
+            result = new Result(list);
         } catch (Exception e) {
           //  e.printStackTrace();
             result = Result.error(e.getMessage());
             logger.info("数据异常"+e.getMessage());
+            throw new AhiruException("数据异常");
         }
         return result;
     }
@@ -108,6 +110,7 @@ public class VEmployeeOutServiceImpl extends ServiceImpl<VEmployeeOutMapper, VEm
             //e.printStackTrace();
             a = Result.error(e.getMessage());
             logger.info("数据异常"+e.getMessage());
+            throw new AhiruException("数据异常");
         }
         return a;
     }

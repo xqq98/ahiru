@@ -2,6 +2,7 @@ package com.webservice.ahiru.controller;
 
 import com.webservice.ahiru.entity.VEmployeeOut;
 import com.webservice.ahiru.mapper.VEmployeeOutMapper;
+import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.VEmployeeOutService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,28 +53,28 @@ public class VEmployeeOutController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Object intf(@RequestBody VEmployeeOut vEmployeeOut){
+    public Result intf(@RequestBody VEmployeeOut vEmployeeOut){
         System.out.println("=============START=======");
 
-        Object obj = vEmployeeOUTService.getInfo(vEmployeeOut);
+        Result result = vEmployeeOUTService.getInfo(vEmployeeOut);
 
         System.out.println("=============END=======");
 
-        return obj;
+        return result;
     }
 
     @RequestMapping(value = "/apibu",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Object intbu(@RequestBody VEmployeeOut vEmployeeOut){
+    public Result intbu(@RequestBody VEmployeeOut vEmployeeOut){
         System.out.println("=============START=======");
 
-        Object obj = vEmployeeOUTService.getBU(vEmployeeOut);
+        Result result = vEmployeeOUTService.getBU(vEmployeeOut);
 
         System.out.println("=============END=======");
 
-        return obj;
+        return result;
     }
 
 //    @RequestMapping(value = "/apimanager",

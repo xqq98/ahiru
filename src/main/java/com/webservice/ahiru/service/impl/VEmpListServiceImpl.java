@@ -3,6 +3,7 @@ package com.webservice.ahiru.service.impl;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.webservice.ahiru.controller.VEmpListController;
 import com.webservice.ahiru.entity.VEmpList;
+import com.webservice.ahiru.exception.AhiruException;
 import com.webservice.ahiru.mapper.VEmpListMapper;
 import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.VEmpListService;
@@ -87,6 +88,7 @@ public class VEmpListServiceImpl extends ServiceImpl<VEmpListMapper, VEmpList> i
             //  e.printStackTrace();
             resul = Result.error(e.getMessage());
             logger.info("数据异常"+e.getMessage());
+            throw new AhiruException("数据异常");
         }
         return resul;
     }
