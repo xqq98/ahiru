@@ -2,6 +2,7 @@ package com.webservice.ahiru.controller;
 
 import com.webservice.ahiru.entity.VEmpList;
 import com.webservice.ahiru.mapper.VEmpListMapper;
+import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.VEmpListService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimeZone;
 
 /**
  * <p>
@@ -57,14 +53,14 @@ public class VEmpListController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Object intf(@RequestBody VEmpList VEmpList){
+    public Result intf(@RequestBody VEmpList VEmpList){
         System.out.println("=============START=======");
 
-        Object obj = VEmpListService.getInfo(VEmpList);
+        Result result = VEmpListService.getInfo(VEmpList);
 
         System.out.println("=============END=======");
 
-        return obj;
+        return result;
     }
 
     //测试该方法是否通畅
