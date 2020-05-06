@@ -32,85 +32,35 @@ public class EmployeeWorkController {
    @Autowired
     private EmployeeWorkService employeeWorkService;
 
-    /**
-     *
-     * @Target(ElementType.METHOD) getEmployeeWorkInfo
-     * @Target(ElementType.PARAMETER) @RequestBody EmployeeWork employeeWork
-     * 获取数据库表（T_EMP_WORK）的数据，以list列表的形式，把查询出来的数据保存在数据对象中，返回对象employeeWorkList
-     *
-     * @author wanghao
-     * @since 2020-2-14
-     */
-
-    //控制器处理“/getInfo”的URL请求，POST请求
     @RequestMapping(value = "/getInfo",
             method = RequestMethod.POST)
-    public Object getEmployeeWorkInfogetEmployeeWorkInfo(@RequestBody EmployeeWork employeeWork){
+    public Object getEmployeeWorkInfo(@RequestBody EmployeeWorkYear employeeWorkYear){
         logger.info("*******getEmployeeWorkInfo start********");
 
-       List<EmployeeWorkYear> employeeWorkList=employeeWorkService.getEmployeeWorkInfo(employeeWork);
+       List<EmployeeWorkYear> employeeWorkList=employeeWorkService.getEmployeeWorkInfo(employeeWorkYear);
 
         logger.info("*******getEmployeeWorkInfo start********");
 
         return employeeWorkList;
     }
+    @RequestMapping(value = "/getDetail",
+            method = RequestMethod.POST)
+    public Object getEmployeeWorkDetail(@RequestBody EmployeeWork employeeWork){
+        logger.info("*******getEmployeeWorkInfo start********");
 
-    /**
-     *
-     * @Target(ElementType.METHOD) uptEmployeeWorkInfo
-     * @Target(ElementType.PARAMETER) @RequestBody EmployeeWorkYear employeeWorkYear
-     * 修改数据库表（T_EMP_WORK）的数据，修改数据后，放到对象employeeWorkYear中，返回 0
-     *
-     * @author wanghao
-     * @since 2020-2-14
-     */
+        List<EmployeeWork> employeeWorkList=employeeWorkService.getEmployeeWorkDetail(employeeWork);
 
-    //控制器处理“/upd”的URL请求，POST请求
+        logger.info("*******getEmployeeWorkInfo start********");
+
+        return employeeWorkList;
+    }
     @RequestMapping(value = "/upd",
             method = RequestMethod.POST)
-
-    public Object uptEmployeeWorkInfo(@RequestBody EmployeeWorkYear employeeWorkYear){
+    public Object uptEmployeeWorkInfo(@RequestBody List employeeWorkList){
         logger.info("*******uptEmployeeWorkInfo start********");
-
-        employeeWorkService.uptEmployeeWorkInfo(employeeWorkYear);
+        employeeWorkService.uptEmployeeWorkInfo(employeeWorkList);
         logger.info("*******uptEmployeeWorkInfo end********");
         return 0;
-    }
-
-   /**@RequestMapping(value = "/copy",
-    method = RequestMethod.POST)
-    public Object copyEmployeeWorkInfo(@RequestBody List<EmployeeWork> employeeWorkList){
-    logger.info("*******copyEmployeeWorkInfo start********");
-
-    employeeWorkService.copyEmployeeWorkInfo(employeeWorkList);
-    logger.info("*******copyEmployeeWorkInfo end********");
-    return 0;
-    }*/
-
-   //控制器处理“/getInfo”的URL请求，POST请求
-   @RequestMapping(value = "/getInfoAll",
-           method = RequestMethod.POST)
-   public Object getEmployeeWorkInfoAll(@RequestParam("startDt") String startDt, @RequestParam("endDt") String endDt){
-       logger.info("*******getEmployeeWorkInfo start********");
-
-       List<EmployeeWorkYear> employeeWorkListAll = employeeWorkService.getEmployeeWorkInfoAll(startDt,endDt);
-
-       logger.info("*******getEmployeeWorkInfo start********");
-
-       return employeeWorkListAll;
-   }
-
-    //控制器处理“/getInfo”的URL请求，POST请求
-    @RequestMapping(value = "/getInfoAllList",
-            method = RequestMethod.POST)
-    public Object getEmployeeWorkInfoAllList(@RequestBody EmployeeWork employeeWorklist){
-        logger.info("*******getEmployeeWorkInfo start********");
-
-        List<EmployeeWorkYear> employeeWorkLists = employeeWorkService.getEmployeeWorkInfoAllList(employeeWorklist);
-
-        logger.info("*******getEmployeeWorkInfo start********");
-
-        return employeeWorkLists;
     }
 }
 
