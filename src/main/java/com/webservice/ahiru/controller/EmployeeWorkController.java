@@ -2,6 +2,7 @@ package com.webservice.ahiru.controller;
 
 import com.webservice.ahiru.entity.EmployeeWork;
 import com.webservice.ahiru.entity.EmployeeWorkYear;
+import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.EmployeeWorkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,33 +35,29 @@ public class EmployeeWorkController {
 
     @RequestMapping(value = "/getInfo",
             method = RequestMethod.POST)
-    public Object getEmployeeWorkInfo(@RequestBody EmployeeWorkYear employeeWorkYear){
+    public Result getEmployeeWorkInfo(@RequestBody EmployeeWorkYear employeeWorkYear){
         logger.info("*******getEmployeeWorkInfo start********");
-
-       List<EmployeeWorkYear> employeeWorkList=employeeWorkService.getEmployeeWorkInfo(employeeWorkYear);
-
+        List<EmployeeWorkYear> employeeWorkYearList=employeeWorkService.getEmployeeWorkInfo(employeeWorkYear);
+        Result result = Result.ok(employeeWorkYearList);
         logger.info("*******getEmployeeWorkInfo start********");
-
-        return employeeWorkList;
+        return result;
     }
     @RequestMapping(value = "/getDetail",
             method = RequestMethod.POST)
-    public Object getEmployeeWorkDetail(@RequestBody EmployeeWork employeeWork){
+    public Result getEmployeeWorkDetail(@RequestBody EmployeeWork employeeWork){
         logger.info("*******getEmployeeWorkInfo start********");
-
         List<EmployeeWork> employeeWorkList=employeeWorkService.getEmployeeWorkDetail(employeeWork);
-
+        Result result = Result.ok(employeeWorkList);
         logger.info("*******getEmployeeWorkInfo start********");
-
-        return employeeWorkList;
+        return result;
     }
     @RequestMapping(value = "/upd",
             method = RequestMethod.POST)
-    public Object uptEmployeeWorkInfo(@RequestBody List employeeWorkList){
+    public Result uptEmployeeWorkInfo(@RequestBody List employeeWorkList){
         logger.info("*******uptEmployeeWorkInfo start********");
         employeeWorkService.uptEmployeeWorkInfo(employeeWorkList);
         logger.info("*******uptEmployeeWorkInfo end********");
-        return 0;
+        return Result.ok();
     }
 }
 
