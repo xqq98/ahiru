@@ -68,7 +68,7 @@
         </if>
 
         </if>
-
+        ORDER BY PM_NUM,ID DESC
 
     </select>
 
