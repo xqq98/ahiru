@@ -2,6 +2,7 @@ package com.webservice.ahiru.service.impl;
 
 import com.webservice.ahiru.entity.EmployeeWork;
 import com.webservice.ahiru.entity.EmployeeWorkYear;
+import com.webservice.ahiru.entity.SEVEmpList;
 import com.webservice.ahiru.exception.AhiruException;
 import com.webservice.ahiru.mapper.EmployeeWorkMapper;
 import com.webservice.ahiru.mapper.EmployeeWorkYearMapper;
@@ -38,28 +39,28 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
 
     // 取得全部年度工作情报
     @Override
-    public List<EmployeeWorkYear> getEmployeeWorkInfo(EmployeeWorkYear employeeWorkYear) {
+    public List<EmployeeWorkYear> getEmployeeWorkInfo(SEVEmpList sEVEmpList) {
         logger.info("*******getEmployeeWorkInfo Start********");
         try {
             // 数据取得
-            List<EmployeeWorkYear>  EmployeeWorkYearList =
-                    employeeWorkYearMapper.getEmployeeWorkInfo(employeeWorkYear);
+            List<EmployeeWorkYear>  employeeWorkYearList =
+                    employeeWorkYearMapper.getEmployeeWorkInfo(sEVEmpList);
             String pmId;
             String pmName;
             String caseName;
-            for (EmployeeWorkYear employee:EmployeeWorkYearList){
+            for (EmployeeWorkYear employee:employeeWorkYearList){
                 pmId=employee.getPmId();
-                if(!"".equals(pmId)&&pmId.contains(",")){
+                if(!"".equals(pmId)&&!(pmId==null)&&pmId.contains(",")){
                     pmId=pmId.split(",")[0];
                     employee.setPmId(pmId);
                 }
                  pmName=employee.getPmName();
-                if(!"".equals(pmName)&&pmName.contains(",")){
+                if(!"".equals(pmName)&&!(pmName==null)&&pmName.contains(",")){
                     pmName=pmName.split(",")[0];
                     employee.setPmName(pmName);
                 }
                 caseName=employee.getCaseName();
-                if(!"".equals(caseName)&&caseName.contains(",")){
+                if(!"".equals(caseName)&&!(caseName==null)&&caseName.contains(",")){
                     caseName=caseName.split(",")[0];
                     employee.setCaseName(caseName);
                 }
@@ -78,7 +79,8 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
                         employee.getUseStatus12(),};
                 employee.setUseStatus(useStatus);
             }
-            return EmployeeWorkYearList ;
+
+            return employeeWorkYearList ;
         } catch (Exception ex){
             logger.error(ex.getMessage(),ex);
             throw new AhiruException("getEmployeeWorkInfo失败");
