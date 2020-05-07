@@ -36,13 +36,13 @@ public class UPEmpDtl implements Serializable {
 //    private String scheduledExitDt;
     //判断员工类型
     private String bpflg;
-//    private String entDt;
-//    private String entId;
-//    private String updDt;
-//    private String updId;
-//    private String delDt;
-//    private String delId;
-//    private String delFg;
+    private String entDt;
+    private String entId;
+    private String updDt;
+    private String updId;
+//
+//    private String delFg;    private String delDt;
+////    private String delId;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -92,5 +92,37 @@ public class UPEmpDtl implements Serializable {
 
     public void setBpflg(String bpflg) {
         this.bpflg = bpflg;
+    }
+
+    public String getUpdDt() {
+        return updDt;
+    }
+
+    public void setUpdDt(String updDt) {
+        this.updDt = updDt;
+    }
+
+    public String getUpdId() {
+        return updId;
+    }
+
+    public void setUpdId(String updId) {
+        this.updId = updId;
+    }
+
+    public String getEntDt() {
+        return entDt;
+    }
+
+    public void setEntDt(String entDt) {
+        this.entDt = entDt;
+    }
+
+    public String getEntId() {
+        return entId;
+    }
+
+    public void setEntId(String entId) {
+        this.entId = entId;
     }
 }

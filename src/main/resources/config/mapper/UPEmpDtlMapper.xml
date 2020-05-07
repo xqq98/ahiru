@@ -26,7 +26,9 @@
         DEP_ROLE = #{depRole},
         TECH_DIRECTION = #{tech},
         PLAN_LEAVING_DATE = #{outDate},
-        LEAVING_REASON = #{outRsn}
+        LEAVING_REASON = #{outRsn},
+        UPD_ID = #{updId},
+        UPD_DT = #{updDt}
         where
         <if test="id != ''">
             EMPLOYEE_NO = #{id} AND
@@ -42,7 +44,9 @@
         SET
         DEP_ROLE = #{depRole},
         TECH_DIRECTION = #{tech},
-        SCHEDULED_EXIT_DT = #{outDate}
+        SCHEDULED_EXIT_DT = #{outDate},
+        UPD_ID = #{updId},
+        UPD_DT = #{updDt}
         where
         <if test="id != ''">
             EMPLOYEE_NO = #{id} AND
@@ -59,6 +63,7 @@
         <result property="outDate" column="PLAN_LEAVING_DATE" />
         <result property="outRsn" column="LEAVING_REASON" />
         <result property="scheduledExitDt" column="SCHEDULED_EXIT_DT" />
+        <result property="updId" column="UPD_ID" />
 
     </resultMap>
 </mapper>

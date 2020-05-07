@@ -1,6 +1,7 @@
 package com.webservice.ahiru.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.webservice.ahiru.common.UserUtil;
 import com.webservice.ahiru.controller.VEmpListController;
 import com.webservice.ahiru.entity.UPEmpDtl;
 import com.webservice.ahiru.exception.AhiruException;
@@ -12,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,9 +71,12 @@ public class UPEmpDtlServiceImpl extends ServiceImpl<UPEmpDtlMapper, UPEmpDtl> i
         Result resul = null;
         int uei = 0;
         try{
-        uei = upEmpDtlMapper.UpdateEmpInfo(uPEmpDtl);
-        if(uei == 0){
-            throw new AhiruException("修改失败");
+            String username= UserUtil.getLoginUser();
+            uPEmpDtl.setUpdId(username);
+            uPEmpDtl.setUpdDt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
+            uei = upEmpDtlMapper.UpdateEmpInfo(uPEmpDtl);
+            if(uei == 0){
+                throw new AhiruException("修改失败");
         }
             resul = new Result(uei);
         }catch (Exception e){
@@ -87,6 +93,9 @@ public class UPEmpDtlServiceImpl extends ServiceImpl<UPEmpDtlMapper, UPEmpDtl> i
         Result resul = null;
         int ubi = 0;
         try{
+            String username= UserUtil.getLoginUser();
+            upEmpDtl.setUpdId(username);
+            upEmpDtl.setUpdDt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
             ubi = upEmpDtlMapper.UpdateBpInfo(upEmpDtl);
             if(ubi == 0){
                 throw new AhiruException("修改失败");

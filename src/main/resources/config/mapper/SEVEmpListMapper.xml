@@ -122,6 +122,18 @@
         <if test="pmName !='' and pmName !=null " >
             AND PMNAME =#{pmName}
         </if>
+        <if test="startDt != '' and startDt != null and endDt != '' and endDt != null ">
+            AND ID in (SELECT
+            DISTINCT  EMPLOYEE_NO
+            FROM
+            `T_EMP_WORK`
+            WHERE
+            USE_STATUS = '0'
+            and
+            concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) >= #{startDt}
+            and
+            #{endDt} >=	concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) )
+        </if>
 
     </select>
 </mapper>
