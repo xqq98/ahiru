@@ -2,6 +2,7 @@ package com.webservice.ahiru.controller;
 
 import com.webservice.ahiru.entity.EmployeeWork;
 import com.webservice.ahiru.entity.EmployeeWorkYear;
+import com.webservice.ahiru.entity.SEVEmpList;
 import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.EmployeeWorkService;
 import org.slf4j.Logger;
@@ -35,9 +36,9 @@ public class EmployeeWorkController {
 
     @RequestMapping(value = "/getInfo",
             method = RequestMethod.POST)
-    public Result getEmployeeWorkInfo(@RequestBody EmployeeWorkYear employeeWorkYear){
+    public Result getEmployeeWorkInfo(@RequestBody SEVEmpList sEVEmpList){
         logger.info("*******getEmployeeWorkInfo start********");
-        List<EmployeeWorkYear> employeeWorkYearList=employeeWorkService.getEmployeeWorkInfo(employeeWorkYear);
+        List<EmployeeWorkYear> employeeWorkYearList=employeeWorkService.getEmployeeWorkInfo(sEVEmpList);
         Result result = Result.ok(employeeWorkYearList);
         logger.info("*******getEmployeeWorkInfo start********");
         return result;
