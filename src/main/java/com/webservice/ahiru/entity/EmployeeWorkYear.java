@@ -22,6 +22,8 @@ public class EmployeeWorkYear implements Serializable {
     private String employeeName;
     // 部门
     private String department;
+    //PMID
+    private String pmId;
     //PM名
     private String pmName;
     //案件名
@@ -30,7 +32,7 @@ public class EmployeeWorkYear implements Serializable {
     private String year;
     //级别
     private String level;
-    //年份
+    //技术特长
     private String professional;
     // 1月使用状况
     private String useStatus01;
@@ -56,6 +58,8 @@ public class EmployeeWorkYear implements Serializable {
     private String useStatus11;
     // 12月使用状况
     private String useStatus12;
+
+    private String[]  useStatus;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -84,6 +88,10 @@ public class EmployeeWorkYear implements Serializable {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    public String getPmId() { return pmId; }
+
+    public void setPmId(String pmId) { this.pmId = pmId; }
 
     public String getPmName() {
         return pmName;
@@ -203,6 +211,14 @@ public class EmployeeWorkYear implements Serializable {
 
     public void setUseStatus12(String useStatus12) {
         this.useStatus12 = useStatus12;
+    }
+
+    public String[] getUseStatus() {
+        return useStatus;
+    }
+
+    public void setUseStatus(String[] useStatus) {
+        this.useStatus = useStatus;
     }
 
     public String getLevel() {
