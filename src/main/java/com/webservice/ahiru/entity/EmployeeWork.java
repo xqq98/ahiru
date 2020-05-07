@@ -1,6 +1,7 @@
 package com.webservice.ahiru.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
