@@ -55,11 +55,11 @@
         <if test="year != '' and year !=null">
             AND V_PM_CHOSEN.YEAR = #{year}
 
-            <if test="monthList.size == 1 and monthList !=null ">
+            <if test="monthList !=null and monthList.size == 1 ">
          AND ${monthList.get(0)} = 0
         </if>
 
-        <if test="monthList.size > 1 and monthList !=null ">
+        <if test="monthList !=null and monthList.size > 1 ">
          AND
             <foreach collection="monthList" item="item"  open="(" close="= 0)" separator="=0 OR">
             ${item}
@@ -68,7 +68,7 @@
         </if>
 
         </if>
-
+        ORDER BY PM_NUM,ID DESC
 
     </select>
 

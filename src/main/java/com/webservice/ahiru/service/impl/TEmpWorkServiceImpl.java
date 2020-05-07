@@ -71,17 +71,29 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
         tEmpWork1.get(10).setUseMonth("11");
         tEmpWork1.get(11).setUseMonth("12");
         tEmpWork1.get(0).setEmployeeNo(id);
-            tEmpWork1.get(1).setEmployeeNo(id);
-            tEmpWork1.get(2).setEmployeeNo(id);
-            tEmpWork1.get(3).setEmployeeNo(id);
-            tEmpWork1.get(4).setEmployeeNo(id);
-            tEmpWork1.get(5).setEmployeeNo(id);
-            tEmpWork1.get(6).setEmployeeNo(id);
-            tEmpWork1.get(7).setEmployeeNo(id);
-            tEmpWork1.get(8).setEmployeeNo(id);
-            tEmpWork1.get(9).setEmployeeNo(id);
-            tEmpWork1.get(10).setEmployeeNo(id);
-            tEmpWork1.get(11).setEmployeeNo(id);
+        tEmpWork1.get(1).setEmployeeNo(id);
+        tEmpWork1.get(2).setEmployeeNo(id);
+        tEmpWork1.get(3).setEmployeeNo(id);
+        tEmpWork1.get(4).setEmployeeNo(id);
+        tEmpWork1.get(5).setEmployeeNo(id);
+        tEmpWork1.get(6).setEmployeeNo(id);
+        tEmpWork1.get(7).setEmployeeNo(id);
+        tEmpWork1.get(8).setEmployeeNo(id);
+        tEmpWork1.get(9).setEmployeeNo(id);
+        tEmpWork1.get(10).setEmployeeNo(id);
+        tEmpWork1.get(11).setEmployeeNo(id);
+        tEmpWork1.get(0).setUseStatus("0");
+        tEmpWork1.get(1).setUseStatus("0");
+        tEmpWork1.get(2).setUseStatus("0");
+        tEmpWork1.get(3).setUseStatus("0");
+        tEmpWork1.get(4).setUseStatus("0");
+        tEmpWork1.get(5).setUseStatus("0");
+        tEmpWork1.get(6).setUseStatus("0");
+        tEmpWork1.get(7).setUseStatus("0");
+        tEmpWork1.get(8).setUseStatus("0");
+        tEmpWork1.get(9).setUseStatus("0");
+        tEmpWork1.get(10).setUseStatus("0");
+        tEmpWork1.get(11).setUseStatus("0");
 
 
         for (int i = 0;i<tEmpWork.size();i++){

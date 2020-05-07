@@ -58,7 +58,7 @@ public class VEmpListServiceImpl extends ServiceImpl<VEmpListMapper, VEmpList> i
                 System.out.println("nowAddtwomonth="+nowAddtwomonth);
                 for(int i=0;i<result.size();i++){
                     char first=result.get(i).getId().charAt(0);
-                    System.out.println(first+"-"+i+""+result.get(i).getOutDate()+"********");
+//                    System.out.println(first+"-"+i+""+result.get(i).getOutDate()+"********");
                     if(first == '9'){
                         //将数据中离职时间信息转换成时间戳
                         if(result.get(i).getOutDate() != null && result.get(i).getOutDate() !=""){
