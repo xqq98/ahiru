@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.webservice.ahiru.mapper.EmployeeWorkYearMapper">
-	<select id="getEmployeeWorkInfo" resultMap="EmployeeWorkYearMap" parameterType="com.webservice.ahiru.entity.EmployeeWorkYear">
+	<select id="getEmployeeWorkInfo" resultMap="EmployeeWorkYearMap" parameterType="com.webservice.ahiru.entity.SEVEmpList">
         SELECT  EMPLOYEETOTAL.employeeNo AS employeeNo,
         EMPLOYEETOTAL.employeeName AS employeeName,
         EMPLOYEETOTAL.department AS department,
@@ -31,8 +31,8 @@
         ''   AS professional
         FROM M_BP
         WHERE M_BP.DEL_FG='0'
-        <if test="employeeName !='' and employeeName !=null " >
-            AND M_BP.VENDOR_ID=#{employeeName} OR  M_BP.VENDOR_NAME=#{employeeName}
+        <if test="name !='' and name !=null " >
+            AND M_BP.VENDOR_ID=#{name} OR  M_BP.VENDOR_NAME=#{name}
         </if>
         UNION  ALL
         SELECT M_EMPLOYEE.EMPLOYEE_NO AS employeeNo,
@@ -43,19 +43,7 @@
         FROM M_EMPLOYEE
         LEFT JOIN M_EMP_DTL ON M_EMPLOYEE.EMPLOYEE_NO = M_EMP_DTL.EMPLOYEE_NO
         LEFT JOIN M_CODE ON (M_EMP_DTL.DEP_ROLE = M_CODE.HANYOU_VALUE AND M_CODE.HANYOU_CODE = 'DEP_ROLE' )
-        WHERE M_EMPLOYEE.DEL_FG=0
-        <if test="level !='' and level !=null " >
-            AND M_EMPLOYEE.LEVEL=#{level}
-        </if>
-        <if test="professional !='' and professional !=null " >
-            AND M_EMPLOYEE.PROFESSIONAL=#{department}
-        </if>
-        <if test="department !='' and department !=null " >
-            AND M_CODE.HANYOU_VALUE_NAME=#{department}
-        </if>
-        <if test="employeeName !='' and employeeName !=null " >
-            AND M_EMPLOYEE.EMPLOYEE_NO=#{employeeName} OR  M_EMPLOYEE.NAME=#{employeeName}
-        </if>) EMPLOYEETOTAL
+        WHERE M_EMPLOYEE.DEL_FG=0) EMPLOYEETOTAL
         LEFT JOIN
         (SELECT T_EMP_WORK.EMPLOYEE_NO AS employeeNo,
         group_concat(M_EMPLOYEE.EMPLOYEE_NO) AS pmId,
@@ -68,6 +56,7 @@
         AND T_EMP_WORK.USE_MONTH=month(now())
         GROUP BY T_EMP_WORK.EMPLOYEE_NO) T_EMP_WORK2
         ON EMPLOYEETOTAL.employeeNo=T_EMP_WORK2.employeeNo
+
         LEFT JOIN
         (select T_EMP_WORK.EMPLOYEE_NO as employeeNo,
         T_EMP_WORK.YEAR AS year,
@@ -85,10 +74,33 @@
         sum(CASE WHEN T_EMP_WORK.USE_MONTH ='12' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus12
         FROM T_EMP_WORK
         WHERE T_EMP_WORK.DEL_FG='0'
+            <if test="startDt !='' and startDt !=null " >
+                    AND CONCAT(T_EMP_WORK.YEAR,T_EMP_WORK.USE_MONTH)<![CDATA[>=]]>#{startDt}
+                    AND CONCAT(T_EMP_WORK.YEAR,T_EMP_WORK.USE_MONTH)<![CDATA[<=]]>#{endDt}
+                    AND T_EMP_WORK.USE_STATUS='0'
+            </if>
         GROUP BY T_EMP_WORK.EMPLOYEE_NO,
         T_EMP_WORK.YEAR ) STATUS
         ON EMPLOYEETOTAL.employeeNo=STATUS.employeeNo
-
+            WHERE 1=1
+            <if test="levelList!= null and levelList.size>0" >
+                  AND EMPLOYEETOTAL.level IN
+                      <foreach collection="levelList" index="index" item ="level"  separator="," open=" (" close=")" >#{level}</foreach>
+            </if>
+            <if test="techNameList!= null and techNameList.size>0" >
+                  AND EMPLOYEETOTAL.professional IN
+                      <foreach collection="techNameList" index="index" item ="professional"  separator="," open=" (" close=")" >#{professional}</foreach>
+            </if>
+            <if test="depRoleNameList!= null and depRoleNameList.size>0" >
+                  AND EMPLOYEETOTAL.department IN
+                    <foreach collection="depRoleNameList" index="index" item ="department"  separator="," open=" (" close=")" > #{department}</foreach>
+            </if>
+            <if test="name !='' and name !=null " >
+                    AND EMPLOYEETOTAL.employeeNo=#{name} OR  EMPLOYEETOTAL.employeeName=#{name}
+            </if>
+            <if test="pmName !='' and pmName !=null " >
+                    AND EMPLOYEETOTAL.pmName=#{pmName}
+            </if>
 	</select>
 
 	<resultMap id="EmployeeWorkYearMap" type="com.webservice.ahiru.entity.EmployeeWorkYear">
@@ -100,7 +112,6 @@
 		<result property="caseName" column="caseName"/>
 		<result property="level" column="level"/>
         <result property="professional" column="professional"/>
-        <result property="year" column="year"/>
 		<result property="useStatus01" column="useStatus01"/>
 		<result property="useStatus02" column="useStatus02"/>
 		<result property="useStatus03" column="useStatus03"/>
