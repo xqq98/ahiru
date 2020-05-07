@@ -44,6 +44,40 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
             // 数据取得
             List<EmployeeWorkYear>  EmployeeWorkYearList =
                     employeeWorkYearMapper.getEmployeeWorkInfo(employeeWorkYear);
+            String pmId;
+            String pmName;
+            String caseName;
+            for (EmployeeWorkYear employee:EmployeeWorkYearList){
+                pmId=employee.getPmId();
+                if(!"".equals(pmId)&&pmId.contains(",")){
+                    pmId=pmId.split(",")[0];
+                    employee.setPmId(pmId);
+                }
+                 pmName=employee.getPmName();
+                if(!"".equals(pmName)&&pmName.contains(",")){
+                    pmName=pmName.split(",")[0];
+                    employee.setPmName(pmName);
+                }
+                caseName=employee.getCaseName();
+                if(!"".equals(caseName)&&caseName.contains(",")){
+                    caseName=caseName.split(",")[0];
+                    employee.setCaseName(caseName);
+                }
+                String[] useStatus =
+                        {employee.getUseStatus01(),
+                        employee.getUseStatus02(),
+                        employee.getUseStatus03(),
+                        employee.getUseStatus04(),
+                        employee.getUseStatus05(),
+                        employee.getUseStatus06(),
+                        employee.getUseStatus07(),
+                        employee.getUseStatus08(),
+                        employee.getUseStatus09(),
+                        employee.getUseStatus10(),
+                        employee.getUseStatus11(),
+                        employee.getUseStatus12(),};
+                employee.setUseStatus(useStatus);
+            }
             return EmployeeWorkYearList ;
         } catch (Exception ex){
             logger.error(ex.getMessage(),ex);
