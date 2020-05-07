@@ -313,7 +313,7 @@ try{
                 mProject.setEntdt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
                 mProject.setUpdid(username);
                 mProject.setUpddt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
-                mProject.setDelfg("0");
+                // mProject.setDelfg("0");。。
                 if (existMProject != null) {
                     tEmpWorkService.setTEmpWorkByNO(
                             mProject.getPmemployeeno(), mProject.getProjectid(), mProject.getCasename(),
