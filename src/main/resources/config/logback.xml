@@ -34,4 +34,9 @@
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FIXED_FILE" />
     </root>
+
+    <logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager">
+        <level value="WARN"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
 </configuration>
