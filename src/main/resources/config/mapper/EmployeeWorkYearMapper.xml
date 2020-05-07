@@ -2,13 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.webservice.ahiru.mapper.EmployeeWorkYearMapper">
 	<select id="getEmployeeWorkInfo" resultMap="EmployeeWorkYearMap" parameterType="com.webservice.ahiru.entity.EmployeeWorkYear">
-		SELECT  EMPLOYEETOTAL.employeeNo AS employeeNo,
+        SELECT  EMPLOYEETOTAL.employeeNo AS employeeNo,
         EMPLOYEETOTAL.employeeName AS employeeName,
         EMPLOYEETOTAL.department AS department,
+        IFNULL(T_EMP_WORK2.pmId,'') AS pmId,
         IFNULL(T_EMP_WORK2.pmName,'') AS pmName,
         IFNULL(T_EMP_WORK2.caseName,'')AS caseName,
         IFNULL(EMPLOYEETOTAL.level,'') AS level,
         IFNULL(EMPLOYEETOTAL.professional,'') AS professional,
+        IFNULL(STATUS.year,'')AS year,
         IFNULL(STATUS.useStatus01,'')AS useStatus01,
         IFNULL(STATUS.useStatus02,'') AS useStatus02,
         IFNULL(STATUS.useStatus03,'') AS useStatus03,
@@ -21,66 +23,71 @@
         IFNULL(STATUS.useStatus10,'') AS useStatus10,
         IFNULL(STATUS.useStatus11,'') AS useStatus11,
         IFNULL(STATUS.useStatus12,'') AS useStatus12
-FROM
-    (SELECT  M_BP.VENDOR_ID AS employeeNo,
-             M_BP.VENDOR_NAME AS employeeName,
-             'BP' AS department,
-             ''   AS level,
-             ''   AS professional
-      FROM M_BP
-      WHERE M_BP.DEL_FG='0'
+        FROM
+        (SELECT  M_BP.VENDOR_ID AS employeeNo,
+        M_BP.VENDOR_NAME AS employeeName,
+        'BP' AS department,
+        ''   AS level,
+        ''   AS professional
+        FROM M_BP
+        WHERE M_BP.DEL_FG='0'
         <if test="employeeName !='' and employeeName !=null " >
             AND M_BP.VENDOR_ID=#{employeeName} OR  M_BP.VENDOR_NAME=#{employeeName}
         </if>
-     UNION  ALL
-     SELECT M_EMPLOYEE.EMPLOYEE_NO AS employeeNo,
-            M_EMPLOYEE.NAME AS employeeName,
-            M_CODE.HANYOU_VALUE_NAME AS department,
-            M_EMPLOYEE.LEVEL AS level,
-            M_EMPLOYEE.PROFESSIONAL AS professional
-     FROM M_EMPLOYEE
-              LEFT JOIN M_EMP_DTL ON M_EMPLOYEE.EMPLOYEE_NO = M_EMP_DTL.EMPLOYEE_NO
-              LEFT JOIN M_CODE ON (M_EMP_DTL.DEP_ROLE = M_CODE.HANYOU_VALUE AND M_CODE.HANYOU_CODE = 'DEP_ROLE' )
-     WHERE M_EMPLOYEE.DEL_FG=0
-         <if test="level !='' and level !=null " >
-             AND M_EMPLOYEE.LEVEL=#{level}
-         </if>
-         <if test="professional !='' and professional !=null " >
-             AND M_EMPLOYEE.PROFESSIONAL=#{department}
-         </if>
+        UNION  ALL
+        SELECT M_EMPLOYEE.EMPLOYEE_NO AS employeeNo,
+        M_EMPLOYEE.NAME AS employeeName,
+        M_CODE.HANYOU_VALUE_NAME AS department,
+        M_EMPLOYEE.LEVEL AS level,
+        M_EMPLOYEE.PROFESSIONAL AS professional
+        FROM M_EMPLOYEE
+        LEFT JOIN M_EMP_DTL ON M_EMPLOYEE.EMPLOYEE_NO = M_EMP_DTL.EMPLOYEE_NO
+        LEFT JOIN M_CODE ON (M_EMP_DTL.DEP_ROLE = M_CODE.HANYOU_VALUE AND M_CODE.HANYOU_CODE = 'DEP_ROLE' )
+        WHERE M_EMPLOYEE.DEL_FG=0
+        <if test="level !='' and level !=null " >
+            AND M_EMPLOYEE.LEVEL=#{level}
+        </if>
+        <if test="professional !='' and professional !=null " >
+            AND M_EMPLOYEE.PROFESSIONAL=#{department}
+        </if>
         <if test="department !='' and department !=null " >
             AND M_CODE.HANYOU_VALUE_NAME=#{department}
         </if>
         <if test="employeeName !='' and employeeName !=null " >
             AND M_EMPLOYEE.EMPLOYEE_NO=#{employeeName} OR  M_EMPLOYEE.NAME=#{employeeName}
         </if>) EMPLOYEETOTAL
-        LEFT JOIN (SELECT T_EMP_WORK.EMPLOYEE_NO AS employeeNo,
-                          group_concat(M_EMPLOYEE.NAME) AS pmName,
-                          group_concat(T_EMP_WORK.CASE_NAME) AS caseName
-                   FROM T_EMP_WORK
-                            LEFT JOIN  M_EMPLOYEE ON T_EMP_WORK.PM_EMPLOYEE_NO=M_EMPLOYEE.EMPLOYEE_NO
-                   WHERE T_EMP_WORK.YEAR=year(now())
-                     AND T_EMP_WORK.USE_MONTH=month(now())
-                   GROUP BY  T_EMP_WORK.EMPLOYEE_NO) T_EMP_WORK2
-                  ON EMPLOYEETOTAL.employeeNo=T_EMP_WORK2.employeeNo
         LEFT JOIN
-                 (select T_EMP_WORK.EMPLOYEE_NO as employeeNo,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='01' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus01,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='02' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus02,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='03' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus03,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='04' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus04,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='05' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus05,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='06' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus06,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='07' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus07,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='08' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus08,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='09' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus09,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='10' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus10,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='11' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus11,
-                          sum(CASE WHEN T_EMP_WORK.USE_MONTH ='12' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus12
-                   FROM T_EMP_WORK
-                   WHERE T_EMP_WORK.DEL_FG='0'
-                   GROUP BY T_EMP_WORK.EMPLOYEE_NO) STATUS
-                  ON EMPLOYEETOTAL.employeeNo=STATUS.employeeNo
+        (SELECT T_EMP_WORK.EMPLOYEE_NO AS employeeNo,
+        group_concat(M_EMPLOYEE.EMPLOYEE_NO) AS pmId,
+        group_concat(M_EMPLOYEE.NAME) AS pmName,
+        group_concat(T_EMP_WORK.CASE_NAME) AS caseName
+        FROM T_EMP_WORK
+        LEFT JOIN  M_EMPLOYEE
+        ON T_EMP_WORK.PM_EMPLOYEE_NO=M_EMPLOYEE.EMPLOYEE_NO
+        WHERE T_EMP_WORK.YEAR=year(now())
+        AND T_EMP_WORK.USE_MONTH=month(now())
+        GROUP BY T_EMP_WORK.EMPLOYEE_NO) T_EMP_WORK2
+        ON EMPLOYEETOTAL.employeeNo=T_EMP_WORK2.employeeNo
+        LEFT JOIN
+        (select T_EMP_WORK.EMPLOYEE_NO as employeeNo,
+        T_EMP_WORK.YEAR AS year,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='01' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus01,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='02' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus02,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='03' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus03,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='04' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus04,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='05' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus05,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='06' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus06,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='07' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus07,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='08' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus08,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='09' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus09,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='10' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus10,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='11' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus11,
+        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='12' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus12
+        FROM T_EMP_WORK
+        WHERE T_EMP_WORK.DEL_FG='0'
+        GROUP BY T_EMP_WORK.EMPLOYEE_NO,
+        T_EMP_WORK.YEAR ) STATUS
+        ON EMPLOYEETOTAL.employeeNo=STATUS.employeeNo
 
 	</select>
 
@@ -88,10 +95,12 @@ FROM
 		<result property="employeeNo" column="employeeNo"/>
 		<result property="employeeName" column="employeeName"/>
 		<result property="department" column="department"/>
+        <result property="pmId" column="pmId"/>
 		<result property="pmName" column="pmName"/>
 		<result property="caseName" column="caseName"/>
 		<result property="level" column="level"/>
         <result property="professional" column="professional"/>
+        <result property="year" column="year"/>
 		<result property="useStatus01" column="useStatus01"/>
 		<result property="useStatus02" column="useStatus02"/>
 		<result property="useStatus03" column="useStatus03"/>
