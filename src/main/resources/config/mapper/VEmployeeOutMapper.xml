@@ -50,8 +50,7 @@
         <if test="bu != '' and bu !=null">
             and BU = #{bu}
         </if>
-
-        <if test="buList.size !=0 and buList !=null">
+        <if test="buList.size > 0 and buList != null">
             AND BU IN
             <foreach collection="buList" open="(" separator="," close=")" item="aaa">
                 #{aaa}
@@ -65,11 +64,11 @@
 
         --         通过离职时间筛选（起始和结束）
         <if test="startLeaving != '' and startLeaving !=null">
-            and LEAVING_DATE >= #{startLeaving}
+            and LEAVING_DATE >=  CONCAT(#{startLeaving},'-01')
         </if>
 
         <if test="endLeaving != '' and endLeaving !=null">
-            and #{endLeaving} >= LEAVING_DATE
+            and  CONCAT(#{endLeaving},'-31') >= LEAVING_DATE
         </if>
         <!--        <if test="id != ''">-->
         <!--            ID = #{id} AND-->
