@@ -2,6 +2,7 @@ package com.webservice.ahiru.mapper;
 
 import com.webservice.ahiru.entity.EmployeeWork;
 import com.webservice.ahiru.entity.EmployeeWorkYear;
+import com.webservice.ahiru.entity.SEVEmpList;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +25,7 @@ import java.util.List;
 public interface EmployeeWorkYearMapper {
 
     // 一览数据取得
-    List<EmployeeWorkYear> getEmployeeWorkInfo(EmployeeWorkYear employeeWorkYear);
+    List<EmployeeWorkYear> getEmployeeWorkInfo(SEVEmpList sEVEmpList);
 
     // 明细数据取得
     List<EmployeeWork> getEmployeeWorkDetail(EmployeeWork employeeWork);
