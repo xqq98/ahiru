@@ -1,5 +1,6 @@
 package com.webservice.ahiru.controller;
 
+import com.webservice.ahiru.entity.EmpWokeDto;
 import com.webservice.ahiru.entity.EmployeeWork;
 import com.webservice.ahiru.entity.EmployeeWorkYear;
 import com.webservice.ahiru.entity.SEVEmpList;
@@ -47,8 +48,8 @@ public class EmployeeWorkController {
             method = RequestMethod.POST)
     public Result getEmployeeWorkDetail(@RequestBody EmployeeWork employeeWork){
         logger.info("*******getEmployeeWorkInfo start********");
-        List<EmployeeWork> employeeWorkList=employeeWorkService.getEmployeeWorkDetail(employeeWork);
-        Result result = Result.ok(employeeWorkList);
+       EmpWokeDto empWork=employeeWorkService.getEmployeeWorkDetail(employeeWork);
+        Result result = Result.ok(empWork);
         logger.info("*******getEmployeeWorkInfo start********");
         return result;
     }
