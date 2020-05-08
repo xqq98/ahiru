@@ -110,6 +110,17 @@ public class SEVEmpList {
     //结束年月
     private String endDt;
 
+    //空闲月集合
+    private List<String> monthList;
+
+    public List<String> getMonthList() {
+        return monthList;
+    }
+
+    public void setMonthList(List<String> monthList) {
+        this.monthList = monthList;
+    }
+
     public String getDepRoleName() {
         return depRoleName;
     }
