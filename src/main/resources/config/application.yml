@@ -3,9 +3,9 @@ spring:
     static-locations: classpath:/static
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://xxxxxx:3306/awsdb1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
-    username: xxxx
-    password: xxxxx
+    url: jdbc:mysql://52.196.8.152:3306/awsdb1?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+    username: usrdev
+    password: Test001@
     driverClassName: com.mysql.cj.jdbc.Driver
     validationQuery: select 'x'
   freemarker:
@@ -25,3 +25,14 @@ mybatis-plus:
 server:
   servlet:
     context-path: /ahiru
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  level:
+    com:
+      webservice:
+        ahiru:
+          mapper: debug

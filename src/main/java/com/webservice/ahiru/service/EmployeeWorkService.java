@@ -23,5 +23,5 @@ public interface EmployeeWorkService {
     //明细数据取得
     public EmpWokeDto getEmployeeWorkDetail(EmployeeWork employeeWork);
     //修改数据
-    public int uptEmployeeWorkInfo(List employeeWorkList);
+    public int uptEmployeeWorkInfo(List<EmployeeWork> employeeWorkList);
 }
