@@ -1,5 +1,6 @@
 package com.webservice.ahiru.service.impl;
 
+import com.webservice.ahiru.common.UserUtil;
 import com.webservice.ahiru.entity.EmpWokeDto;
 import com.webservice.ahiru.entity.EmployeeWork;
 import com.webservice.ahiru.entity.EmployeeWorkYear;
@@ -177,23 +178,24 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
     public EmpWokeDto getEmployeeWorkDetail(EmployeeWork employeeWork) {
         try {
             // 数据取得
-            List<EmployeeWork> EmployeeWorkList =
+            List<EmployeeWork> employeeWorkList =
                     employeeWorkMapper.getEmployeeWorkDetail(employeeWork);
-            if (EmployeeWorkList.size()==0){
+            if (employeeWorkList.size()==0){
                 throw new AhiruException("指定的条件检索不到数据");
             }
             EmpWokeDto empWork = new EmpWokeDto();
-            empWork.setEmployeeNo(EmployeeWorkList.get(0).getEmployeeNo());
-            empWork.setUseMemo(EmployeeWorkList.get(0).getUseMemo());
+            empWork.setEmployeeNo(employeeWorkList.get(0).getEmployeeNo());
+            empWork.setUseMemo(employeeWorkList.get(0).getUseMemo());
 
             String workNo[] = new String[12];
             String usestat[] = new String[12];
             String caseId[] = new String[12];
             String caseName[] = new String[12];
+            String pmNo[] = new String[12];
 
             for (int i=1;i<=12;i++){
                 String index= String.valueOf(100+i).substring(1);
-                Stream<EmployeeWork> empStream = EmployeeWorkList.stream().filter(
+                Stream<EmployeeWork> empStream = employeeWorkList.stream().filter(
                         empwork ->index.equals(empwork.getUseMonth()));
                 List<EmployeeWork> empCol= empStream.collect(Collectors.toList());
                 if (empCol.size()>0){
@@ -201,17 +203,24 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
                     usestat[i-1]=empCol.get(0).getUseStatus()==null?"":empCol.get(0).getUseStatus();
                     caseId[i-1]=empCol.get(0).getCaseId()==null?"":empCol.get(0).getCaseId();
                     caseName[i-1]=empCol.get(0).getCaseName()==null?"":empCol.get(0).getCaseName();
+                    pmNo[i-1]=empCol.get(0).getPmNo()==null?"":empCol.get(0).getPmNo();
+                    if (UserUtil.getLoginUser().equals(empCol.get(0).getPmNo())){
+                        empWork.setUseMemo(empCol.get(0).getUseMemo());
+                    }
+
                 }else{
                     workNo[i-1]="";
                     usestat[i-1]="";
                     caseId[i-1]="";
                     caseName[i-1]="";
+                    pmNo[i-1]="";
                 }
             }
             empWork.setUseStatusArr(usestat);
             empWork.setCaseIdArr(caseId);
             empWork.setCaseNameArr(caseName);
             empWork.setWorkNoArr(workNo);
+            empWork.setPmIdArr(pmNo);
         return empWork;
         } catch (Exception ex){
             logger.error(ex.getMessage(),ex);
@@ -221,7 +230,7 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
 
     @Override
     @Transactional
-    public int uptEmployeeWorkInfo(List employeeWorkList){
+    public int uptEmployeeWorkInfo(List<EmployeeWork> employeeWorkList){
         logger.info("*******uptEmployeeWorkInfo Start********");
         try {
             employeeWorkMapper.updEmployeeWorkInfo(employeeWorkList);
