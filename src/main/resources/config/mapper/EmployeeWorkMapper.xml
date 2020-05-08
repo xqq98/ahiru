@@ -12,7 +12,7 @@
 		LEFT JOIN M_PROJECT  ON T_EMP_WORK.CASE_ID = M_PROJECT.ID
 		WHERE T_EMP_WORK.DEL_FG='0'
 		AND T_EMP_WORK.EMPLOYEE_NO=#{employeeNo}
-		<if test="pmName !='' and pmName !=null " >
+		<if test="pmNo !='' and pmNo !=null " >
 	    AND T_EMP_WORK.PM_EMPLOYEE_NO=#{pmNo}
 		</if >
 	    ORDER BY T_EMP_WORK.USE_MONTH
