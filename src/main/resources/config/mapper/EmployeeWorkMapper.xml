@@ -4,6 +4,7 @@
 	<select id="getEmployeeWorkDetail" resultMap="EmployeeWorkDetailMap" parameterType="com.webservice.ahiru.entity.EmployeeWork">
 		SELECT T_EMP_WORK.WORK_NO AS workNo,
 		T_EMP_WORK.EMPLOYEE_NO AS employeeNo,
+		T_EMP_WORK.PM_EMPLOYEE_NO AS pmNo,
 		T_EMP_WORK.USE_MONTH AS useMonth,
 		T_EMP_WORK.USE_STATUS AS useStatus,
 		M_PROJECT.CASE_NAME AS caseName,
@@ -34,14 +35,30 @@
 		<foreach collection="list" item="item" index="" open="" separator=";" close="">
 			update T_EMP_WORK
 			<set>
-				CASE_ID=#{caseId},
-				CASE_NAME=#{caseName},
-				USE_STATUS=#{useStatus},
+				<choose>
+					<when test="item.caseId=''">
+						CASE_ID=null,
+					</when>
+					<otherwise>
+						CASE_ID=#{item.caseId},
+					</otherwise>
+				</choose>
+				<choose>
+					<when test="item.caseName=''">
+						CASE_NAME=null,
+					</when>
+					<otherwise>
+						CASE_NAME=#{item.caseName},
+					</otherwise>
+				</choose>
+
+				USE_STATUS=#{item.useStatus},
+				USE_MEMO=#{item.useMemo},
 				UPD_DT= now(),
-				UPD_ID=#{updId}
+				UPD_ID=#{item.uptId}
 			</set>
 			<where>
-				WORK_NO = #{workNo}
+				WORK_NO = #{item.workNo}
 			</where>
 		</foreach>
 	</update>
@@ -49,6 +66,7 @@
 	<resultMap id="EmployeeWorkDetailMap" type="com.webservice.ahiru.entity.EmployeeWork">
 		<result property="workNo" column="workNo"/>
 		<result property="employeeNo" column="employeeNo"/>
+		<result property="pmNo" column="pmNo"/>
 		<result property="useMonth" column="useMonth"/>
 		<result property="useStatus" column="useStatus"/>
 		<result property="caseId" column="caseId"/>
