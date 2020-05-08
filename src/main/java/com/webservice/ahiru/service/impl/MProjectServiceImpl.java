@@ -218,48 +218,37 @@ try{
         List<MProjectCaseName> resultMprojectCaseName = new ArrayList<>();
         List<MProject> mProjectsAll = mProjectMapper.getMProjectsAll();
         System.out.println("----------------getAll---------------------");
-        mProjectsAll = mProjectMapper.getMProjects();
+        //mProjectsAll = mProjectMapper.getMProjects();
+        String empNo="";
         for(int i = 0;i<mProjectsAll.size();i++){
+            if (empNo.equals(mProjectsAll.get(i).getPmemployeeno())){
+                continue;
+            }
             MProjectCaseName mProjectCaseName = new MProjectCaseName();
-            List<String> projectidlist = new ArrayList<>();
-            List<String> projectnamelist = new ArrayList<>();
-            List<String> caseNameList = new ArrayList<>();
+            List<String> projectidlist = new ArrayList<String>();
+            List<String> projectnamelist = new ArrayList<String>();
+            List<String> caseNameList = new ArrayList<String>();
+            List<String> caseIdList = new ArrayList<String>();
             projectidlist.add("");
             projectnamelist.add("");
             caseNameList.add("");
-
-            //判断id是否重复
-            boolean isOk = true;//默认id不重复
-            for(int k = 0;k<resultMprojectCaseName.size();k++){
-                if(resultMprojectCaseName.get(k).getPmemployeeno().equals(mProjectsAll.get(i).getPmemployeeno())){
-                    isOk = false;
+            caseIdList.add("");
+            mProjectCaseName.setPmemployeeno(mProjectsAll.get(i).getPmemployeeno());
+            for(int j = 0;j<mProjectsAll.size();j++) {
+                if (mProjectsAll.get(i).getPmemployeeno().equals(mProjectsAll.get(j).getPmemployeeno())) {
+                    projectidlist.add(mProjectsAll.get(j).getProjectid());
+                    projectnamelist.add(mProjectsAll.get(j).getProjectname());
+                    caseNameList.add(mProjectsAll.get(j).getCasename());
+                    caseIdList.add(mProjectsAll.get(j).getId());
                 }
             }
-            //如果id 不重复   执行以下代码  如重复 则不执行
-            if(isOk){
-                mProjectCaseName.setPmemployeeno(mProjectsAll.get(i).getPmemployeeno());
-                projectidlist.add(mProjectsAll.get(i).getProjectid());
-                projectnamelist.add(mProjectsAll.get(i).getProjectname());
-                caseNameList.add(mProjectsAll.get(i).getCasename());
-                for(int j = 0;j<mProjectsAll.size();j++){
-                    if(i != j){
-                        //说明找到了projectid 相同的
-                        if(mProjectsAll.get(i).getPmemployeeno().equals(mProjectsAll.get(j).getPmemployeeno())){
-                            projectidlist.add(mProjectsAll.get(j).getProjectid());
-                            projectnamelist.add(mProjectsAll.get(j).getProjectname());
-                            caseNameList.add(mProjectsAll.get(j).getCasename());
-                            System.out.println(projectidlist);
-                            System.out.println(projectnamelist);
-                            System.out.println(caseNameList);
-                        }
-                    }
-                }
 
-                mProjectCaseName.setProjectidlist(projectidlist);
-                mProjectCaseName.setProjectnamelist(projectnamelist);
-                mProjectCaseName.setCasenamelist(caseNameList);
-                resultMprojectCaseName.add(mProjectCaseName);
-            }
+            empNo = mProjectsAll.get(i).getPmemployeeno();
+            mProjectCaseName.setProjectidlist(projectidlist);
+            mProjectCaseName.setProjectnamelist(projectnamelist);
+            mProjectCaseName.setCasenamelist(caseNameList);
+            mProjectCaseName.setCaseIdlist(caseIdList);
+            resultMprojectCaseName.add(mProjectCaseName);
         }
         System.out.println("--------------------------------------------");
         return resultMprojectCaseName;
