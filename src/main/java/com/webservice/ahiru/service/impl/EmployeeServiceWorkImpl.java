@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,12 +49,90 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
             String pmId;
             String pmName;
             String caseName;
+            List<EmployeeWorkYear> empList = new ArrayList<EmployeeWorkYear>();
+
             for (EmployeeWorkYear employee:employeeWorkYearList){
                 pmId=employee.getPmId();
+                int flag = 0;
+                if (sEVEmpList.getStartDt()!=null && !"".equals(sEVEmpList.getStartDt())){
+                    String strMonth = getMonth(sEVEmpList.getStartDt(),sEVEmpList.getEndDt());
+                    if (strMonth.contains("01")){
+                        if (employee.getUseStatus01()==null || employee.getUseStatus01().endsWith("0")){
+                            flag=1;
+                        }
+                    }
+                    if (strMonth.contains("02")){
+                        if (employee.getUseStatus02()==null || employee.getUseStatus02().endsWith("0")){
+                            flag=1;
+                        }
+                    }
+
+                    if (strMonth.contains("03")){
+                        if (employee.getUseStatus03()==null || employee.getUseStatus03().endsWith("0")){
+                            flag=1;
+
+                        }
+                    }
+
+                    if (strMonth.contains("04")){
+                        if (employee.getUseStatus04()==null || employee.getUseStatus04().endsWith("0")){
+                            flag=1;
+                        }
+                    }
+
+                    if (strMonth.contains("05")){
+                        if (employee.getUseStatus05()==null || employee.getUseStatus05().endsWith("0")){
+                            flag=1;
+                        }
+                    }
+                    if (strMonth.contains("06")){
+                        if (employee.getUseStatus06()==null || employee.getUseStatus06().endsWith("0")){
+                            flag=1;
+                        }
+                    }
+
+                    if (strMonth.contains("07")){
+                        if (employee.getUseStatus07()==null || employee.getUseStatus07().endsWith("0")){
+                            flag=1;
+                        }
+                    }
+
+                    if (strMonth.contains("08")){
+                        if (employee.getUseStatus08()==null || employee.getUseStatus08().endsWith("0")){
+                            flag=1;
+                        }
+                    }
+
+                    if (strMonth.contains("09")){
+                        if (employee.getUseStatus09()==null || employee.getUseStatus09().endsWith("0")){
+                            flag=1;
+                        }
+                    }
+
+                    if (strMonth.contains("10")){
+                        if (employee.getUseStatus10()==null || employee.getUseStatus10().endsWith("0")){
+                            flag=1;
+                        }
+                    }
+
+                    if (strMonth.contains("11")){
+                        if (employee.getUseStatus11()==null || employee.getUseStatus11().endsWith("0")){
+                            flag=1;
+                        }
+                    }
+
+                    if (strMonth.contains("12")){
+                        if (employee.getUseStatus12()==null || employee.getUseStatus12().endsWith("0")){
+                            flag=1;
+
+                        }
+                    }
+                }
                 if(!"".equals(pmId)&&!(pmId==null)&&pmId.contains(",")){
                     pmId=pmId.split(",")[0];
                     employee.setPmId(pmId);
                 }
+
                  pmName=employee.getPmName();
                 if(!"".equals(pmName)&&!(pmName==null)&&pmName.contains(",")){
                     pmName=pmName.split(",")[0];
@@ -78,9 +157,13 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
                         employee.getUseStatus11(),
                         employee.getUseStatus12(),};
                 employee.setUseStatus(useStatus);
+                if (flag==1){
+                    empList.add(employee);
+                }else if (sEVEmpList.getStartDt()==null || "".equals(sEVEmpList.getStartDt())){
+                    empList.add(employee);
+                }
             }
-
-            return employeeWorkYearList ;
+            return empList ;
         } catch (Exception ex){
             logger.error(ex.getMessage(),ex);
             throw new AhiruException("getEmployeeWorkInfo失败");
@@ -113,6 +196,20 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
             throw new AhiruException("getEmployeeWorkDetail失败");
         }
         return 0;
+    }
+
+
+    private String getMonth(String sd,String ed) {
+        int ints=Integer.valueOf(sd.substring(3));
+        int inte=Integer.valueOf(ed.substring(3));
+        List<String> arry = new ArrayList<String>();
+
+        for (int i=ints;i<=inte;i++){
+            arry.add(String.valueOf(100+i).substring(1));
+        }
+        String res=arry.toString();
+
+        return res;
     }
 }
 
