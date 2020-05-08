@@ -32,6 +32,9 @@ public interface EmployeeWorkMapper {
 
     // 插入数据
     int insEmployeeWorkInfo(List employeeWorkList);
+
+    // 更新数据
+    int updEmployeeWorkInfo(List employeeWorkList);
 }
 
 
