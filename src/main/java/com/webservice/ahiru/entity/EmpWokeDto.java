@@ -9,6 +9,16 @@ public class EmpWokeDto extends EmployeeWork {
 
     private String[] workNoArr;
 
+    private String[] pmIdArr;
+
+    public String[] getPmIdArr() {
+        return pmIdArr;
+    }
+
+    public void setPmIdArr(String[] pmIdArr) {
+        this.pmIdArr = pmIdArr;
+    }
+
     public String[] getWorkNoArr() {
         return workNoArr;
     }
