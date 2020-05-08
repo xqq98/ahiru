@@ -12,7 +12,10 @@
 		LEFT JOIN M_PROJECT  ON T_EMP_WORK.CASE_ID = M_PROJECT.ID
 		WHERE T_EMP_WORK.DEL_FG='0'
 		AND T_EMP_WORK.EMPLOYEE_NO=#{employeeNo}
+		<if test="pmName !='' and pmName !=null " >
 	    AND T_EMP_WORK.PM_EMPLOYEE_NO=#{pmNo}
+		</if >
+	    ORDER BY T_EMP_WORK.USE_MONTH
 	</select>
 
 	<insert id="insEmployeeWorkInfo" parameterType="java.util.List">
@@ -21,11 +24,10 @@
 			values (#{employeeNo},#{pmNo},'',#{caseId},'',year(now()),#{useMonth},#{useStatus},#{useStatus},now(),#{pmNo},'','','','','0')
 		</foreach>
 	</insert>
-	<delete id="delEmployeeWorkInfo" parameterType="java.util.List">
-			DELETE from  T_EMP_WORK
+	<delete id="delEmployeeWorkInfo" parameterType="com.webservice.ahiru.entity.EmployeeWork">
+			DELETE FROM  T_EMP_WORK
 			WHERE
-			T_EMP_WORK.WORK_NO= #{item.workNo}
-			AND T_EMP_WORK.PM_EMPLOYEE_NO=#{pmNo}
+			T_EMP_WORK.WORK_NO= #{workNo}
 	</delete>
 
 	<resultMap id="EmployeeWorkDetailMap" type="com.webservice.ahiru.entity.EmployeeWork">
