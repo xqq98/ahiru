@@ -144,18 +144,18 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
                     employee.setCaseName(caseName);
                 }
                 String[] useStatus =
-                        {employee.getUseStatus01(),
-                        employee.getUseStatus02(),
-                        employee.getUseStatus03(),
-                        employee.getUseStatus04(),
-                        employee.getUseStatus05(),
-                        employee.getUseStatus06(),
-                        employee.getUseStatus07(),
-                        employee.getUseStatus08(),
-                        employee.getUseStatus09(),
-                        employee.getUseStatus10(),
-                        employee.getUseStatus11(),
-                        employee.getUseStatus12(),};
+                        {employee.getUseStatus01()==null?"":employee.getUseStatus01(),
+                        employee.getUseStatus02()==null?"":employee.getUseStatus02(),
+                        employee.getUseStatus03()==null?"":employee.getUseStatus03(),
+                        employee.getUseStatus04()==null?"":employee.getUseStatus04(),
+                        employee.getUseStatus05()==null?"":employee.getUseStatus05(),
+                        employee.getUseStatus06()==null?"":employee.getUseStatus06(),
+                        employee.getUseStatus07()==null?"":employee.getUseStatus07(),
+                        employee.getUseStatus08()==null?"":employee.getUseStatus08(),
+                        employee.getUseStatus09()==null?"":employee.getUseStatus09(),
+                        employee.getUseStatus10()==null?"":employee.getUseStatus10(),
+                        employee.getUseStatus11()==null?"":employee.getUseStatus11(),
+                        employee.getUseStatus12()==null?"":employee.getUseStatus12(),};
                 employee.setUseStatus(useStatus);
                 if (flag==1){
                     empList.add(employee);
