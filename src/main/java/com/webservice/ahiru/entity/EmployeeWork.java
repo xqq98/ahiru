@@ -37,6 +37,16 @@ public class EmployeeWork implements Serializable {
     // 部门
     private String department;
 
+    private String caseId;
+
+    public String getCaseId() {
+        return caseId;
+    }
+
+    public void setCaseId(String caseId) {
+        this.caseId = caseId;
+    }
+
     //案件名
     private String caseName;
     //备考
