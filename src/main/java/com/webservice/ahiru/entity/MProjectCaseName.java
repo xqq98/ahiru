@@ -7,7 +7,16 @@ public class MProjectCaseName {
     private String pmemployeeno;
     private List<String> projectidlist;
     private List<String> projectnamelist;
+    private List<String> caseIdlist;
     private List<String> casenamelist;
+
+    public List<String> getCaseIdlist() {
+        return caseIdlist;
+    }
+
+    public void setCaseIdlist(List<String> caseIdlist) {
+        this.caseIdlist = caseIdlist;
+    }
 
     public String getPmemployeeno() {
         return pmemployeeno;
