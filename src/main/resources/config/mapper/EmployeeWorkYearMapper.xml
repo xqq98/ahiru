@@ -2,105 +2,68 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.webservice.ahiru.mapper.EmployeeWorkYearMapper">
 	<select id="getEmployeeWorkInfo" resultMap="EmployeeWorkYearMap" parameterType="com.webservice.ahiru.entity.SEVEmpList">
-        SELECT  EMPLOYEETOTAL.employeeNo AS employeeNo,
-        EMPLOYEETOTAL.employeeName AS employeeName,
-        EMPLOYEETOTAL.department AS department,
-        IFNULL(T_EMP_WORK2.pmId,'') AS pmId,
-        IFNULL(T_EMP_WORK2.pmName,'') AS pmName,
-        IFNULL(T_EMP_WORK2.caseName,'')AS caseName,
-        IFNULL(EMPLOYEETOTAL.level,'') AS level,
-        IFNULL(EMPLOYEETOTAL.professional,'') AS professional,
-        IFNULL(STATUS.year,'')AS year,
-        IFNULL(STATUS.useStatus01,'')AS useStatus01,
-        IFNULL(STATUS.useStatus02,'') AS useStatus02,
-        IFNULL(STATUS.useStatus03,'') AS useStatus03,
-        IFNULL(STATUS.useStatus04,'') AS useStatus04,
-        IFNULL(STATUS.useStatus05,'') AS useStatus05,
-        IFNULL(STATUS.useStatus06,'') AS useStatus06,
-        IFNULL(STATUS.useStatus07,'') AS useStatus07,
-        IFNULL(STATUS.useStatus08,'') AS useStatus08,
-        IFNULL(STATUS.useStatus09,'') AS useStatus09,
-        IFNULL(STATUS.useStatus10,'') AS useStatus10,
-        IFNULL(STATUS.useStatus11,'') AS useStatus11,
-        IFNULL(STATUS.useStatus12,'') AS useStatus12
-        FROM
-        (SELECT  M_BP.VENDOR_ID AS employeeNo,
-        M_BP.VENDOR_NAME AS employeeName,
-        'BP' AS department,
-        ''   AS level,
-        ''   AS professional
-        FROM M_BP
-        WHERE M_BP.DEL_FG='0'
-        <if test="name !='' and name !=null " >
-            AND M_BP.VENDOR_ID=#{name} OR  M_BP.VENDOR_NAME=#{name}
-        </if>
-        UNION  ALL
-        SELECT M_EMPLOYEE.EMPLOYEE_NO AS employeeNo,
-        M_EMPLOYEE.NAME AS employeeName,
-        M_CODE.HANYOU_VALUE_NAME AS department,
-        M_EMPLOYEE.LEVEL AS level,
-        M_EMPLOYEE.PROFESSIONAL AS professional
-        FROM M_EMPLOYEE
-        LEFT JOIN M_EMP_DTL ON M_EMPLOYEE.EMPLOYEE_NO = M_EMP_DTL.EMPLOYEE_NO
-        LEFT JOIN M_CODE ON (M_EMP_DTL.DEP_ROLE = M_CODE.HANYOU_VALUE AND M_CODE.HANYOU_CODE = 'DEP_ROLE' )
-        WHERE M_EMPLOYEE.DEL_FG=0) EMPLOYEETOTAL
+        select
+        VW.ID as  employeeNo,
+        VW.NAME as employeeName,
+        VW.DEPROLENAME AS  department,
+        VW.PMUID AS pmId,
+        VW.PMNAME AS pmName,
+        em_work.CASE_NAME AS caseName,
+        YEAR (curdate()) AS year,
+        VW.LEVEL AS level,
+        VW.TECHNAME AS professional,
+        VW.A1 AS useStatus01,
+        VW.A2 AS useStatus02,
+        VW.A3 AS useStatus03,
+        VW.A4 AS useStatus04,
+        VW.A5 AS useStatus05,
+        VW.A6 AS useStatus06,
+        VW.A7 AS useStatus07,
+        VW.A8 AS useStatus08,
+        VW.A9 AS useStatus09,
+        VW.A10 AS useStatus10,
+        VW.A11 AS useStatus11,
+        VW.A12 AS useStatus12
+        from V_EMP_WORK AS VW
         LEFT JOIN
-        (SELECT T_EMP_WORK.EMPLOYEE_NO AS employeeNo,
-        group_concat(M_EMPLOYEE.EMPLOYEE_NO) AS pmId,
-        group_concat(M_EMPLOYEE.NAME) AS pmName,
-        group_concat(T_EMP_WORK.CASE_NAME) AS caseName
+        M_CODE
+        ON VW.TECH = M_CODE.HANYOU_VALUE
+        AND M_CODE.HANYOU_CODE='TECH_DIREC'
+        LEFT JOIN
+        ( SELECT T_EMP_WORK.EMPLOYEE_NO,
+        T_EMP_WORK.PM_EMPLOYEE_NO,
+        max(T_EMP_WORK.CASE_NAME) as CASE_NAME
         FROM T_EMP_WORK
-        LEFT JOIN  M_EMPLOYEE
-        ON T_EMP_WORK.PM_EMPLOYEE_NO=M_EMPLOYEE.EMPLOYEE_NO
-        WHERE T_EMP_WORK.YEAR=year(now())
-        AND T_EMP_WORK.USE_MONTH=month(now())
-        GROUP BY T_EMP_WORK.EMPLOYEE_NO) T_EMP_WORK2
-        ON EMPLOYEETOTAL.employeeNo=T_EMP_WORK2.employeeNo
+        WHERE YEAR=YEAR (curdate())
+        AND USE_MONTH = MONTH(curdate())
+        group by EMPLOYEE_NO,PM_EMPLOYEE_NO
+        ) as em_work
+        ON
+        em_work.EMPLOYEE_NO = VW.ID
+        AND em_work.PM_EMPLOYEE_NO = VW.PMUID
 
-        LEFT JOIN
-        (select T_EMP_WORK.EMPLOYEE_NO as employeeNo,
-        T_EMP_WORK.YEAR AS year,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='01' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus01,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='02' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus02,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='03' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus03,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='04' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus04,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='05' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus05,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='06' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus06,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='07' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus07,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='08' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus08,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='09' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus09,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='10' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus10,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='11' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus11,
-        sum(CASE WHEN T_EMP_WORK.USE_MONTH ='12' THEN T_EMP_WORK.USE_STATUS else ''end) as useStatus12
-        FROM T_EMP_WORK
-        WHERE T_EMP_WORK.DEL_FG='0'
-            <if test="startDt !='' and startDt !=null " >
-                    AND CONCAT(T_EMP_WORK.YEAR,T_EMP_WORK.USE_MONTH)<![CDATA[>=]]>#{startDt}
-                    AND CONCAT(T_EMP_WORK.YEAR,T_EMP_WORK.USE_MONTH)<![CDATA[<=]]>#{endDt}
-                    AND T_EMP_WORK.USE_STATUS='0'
-            </if>
-        GROUP BY T_EMP_WORK.EMPLOYEE_NO,
-        T_EMP_WORK.YEAR ) STATUS
-        ON EMPLOYEETOTAL.employeeNo=STATUS.employeeNo
-            WHERE 1=1
-            <if test="levelList!= null and levelList.size>0" >
-                  AND EMPLOYEETOTAL.level IN
-                      <foreach collection="levelList" index="index" item ="level"  separator="," open=" (" close=")" >#{level}</foreach>
-            </if>
-            <if test="techNameList!= null and techNameList.size>0" >
-                  AND EMPLOYEETOTAL.professional IN
-                      <foreach collection="techNameList" index="index" item ="professional"  separator="," open=" (" close=")" >#{professional}</foreach>
-            </if>
-            <if test="depRoleNameList!= null and depRoleNameList.size>0" >
-                  AND EMPLOYEETOTAL.department IN
-                    <foreach collection="depRoleNameList" index="index" item ="department"  separator="," open=" (" close=")" > #{department}</foreach>
-            </if>
+        <where>
             <if test="name !='' and name !=null " >
-                    AND EMPLOYEETOTAL.employeeNo=#{name} OR  EMPLOYEETOTAL.employeeName=#{name}
+                AND (ID like CONCAT('%',#{name},'%') or name like CONCAT('%',#{name},'%') )
             </if>
+
+            <if test="levelList!= null and levelList.size>0" >
+                AND LEVEL in
+                <foreach collection="levelList" index="index" item ="level"  separator="," open=" (" close=")" >#{level}</foreach>
+            </if>
+
+            <if test="depRoleNameList!= null and depRoleNameList.size>0" >
+                AND DEPROLENAME in <foreach collection="depRoleNameList" index="index" item ="department"  separator="," open=" (" close=")" > #{department}</foreach>
+            </if>
+
+            <if test="techNameList!= null and techNameList.size>0" >
+                AND M_CODE.HANYOU_VALUE_NAME IN  <foreach collection="techNameList" index="index" item ="professional"  separator="," open=" (" close=")" >#{professional}</foreach>
+            </if>
+
             <if test="pmName !='' and pmName !=null " >
-                    AND EMPLOYEETOTAL.pmName=#{pmName}
+                AND PMUID = #{pmName}
             </if>
+        </where>
 	</select>
 
 	<resultMap id="EmployeeWorkYearMap" type="com.webservice.ahiru.entity.EmployeeWorkYear">
