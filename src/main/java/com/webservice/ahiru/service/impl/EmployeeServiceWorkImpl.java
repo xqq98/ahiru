@@ -174,9 +174,7 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
     public List<EmployeeWork> getEmployeeWorkDetail(EmployeeWork employeeWork) {
         try {
             // 数据取得
-        List<EmployeeWork> EmployeeWorkList =
-                employeeWorkMapper.getEmployeeWorkDetail(employeeWork);
-        return employeeWorkMapper.getEmployeeWorkDetail(employeeWork);
+             return employeeWorkMapper.getEmployeeWorkDetail(employeeWork);
         } catch (Exception ex){
             logger.error(ex.getMessage(),ex);
             throw new AhiruException("getEmployeeWorkDetail失败");
