@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,6 +52,19 @@ public class SEVEmpListServiceImpl implements SEVEmpListService {
     public Result getInfoAll(SEVEmpList sevEmpList) {
         Result resul = null;
         try {
+            String StartDt = sevEmpList.getStartDt();
+            String EndDt = sevEmpList.getEndDt();
+            int StartDt1 =Integer.parseInt(StartDt.substring(3));
+            int EndDt1 =Integer.parseInt(EndDt.substring(3));
+
+             List<String> monthList1 = new ArrayList<>();
+
+            for(int i = StartDt1;i<=EndDt1;i++){
+                String aaa = "a"+i;
+                System.out.println(aaa);
+                monthList1.add(aaa);
+            }
+            sevEmpList.setMonthList(monthList1);
             List<SEVEmpList> result = seVEmpListMapper.getInfoAll(sevEmpList);
             resul = new Result(result);
         } catch (Exception e) {
