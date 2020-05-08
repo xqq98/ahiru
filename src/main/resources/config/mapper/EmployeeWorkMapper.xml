@@ -7,7 +7,8 @@
 		T_EMP_WORK.USE_MONTH AS useMonth,
 		T_EMP_WORK.USE_STATUS AS useStatus,
 		M_PROJECT.CASE_NAME AS caseName,
-		T_EMP_WORK.USE_MEMO AS useMemo
+		T_EMP_WORK.USE_MEMO AS useMemo,
+		T_EMP_WORK.CASE_ID AS caseId
 		FROM T_EMP_WORK
 		LEFT JOIN M_PROJECT  ON T_EMP_WORK.CASE_ID = M_PROJECT.ID
 		WHERE T_EMP_WORK.DEL_FG='0'
@@ -29,12 +30,28 @@
 			WHERE
 			T_EMP_WORK.WORK_NO= #{workNo}
 	</delete>
+	<update id="updEmployeeWorkInfo" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="" open="" separator=";" close="">
+			update T_EMP_WORK
+			<set>
+				CASE_ID=#{caseId},
+				CASE_NAME=#{caseName},
+				USE_STATUS=#{useStatus},
+				UPD_DT= now(),
+				UPD_ID=#{updId}
+			</set>
+			<where>
+				WORK_NO = #{workNo}
+			</where>
+		</foreach>
+	</update>
 
 	<resultMap id="EmployeeWorkDetailMap" type="com.webservice.ahiru.entity.EmployeeWork">
 		<result property="workNo" column="workNo"/>
 		<result property="employeeNo" column="employeeNo"/>
 		<result property="useMonth" column="useMonth"/>
 		<result property="useStatus" column="useStatus"/>
+		<result property="caseId" column="caseId"/>
 		<result property="caseName" column="caseName"/>
 		<result property="useMemo" column="useMemo"/>
 	</resultMap>
