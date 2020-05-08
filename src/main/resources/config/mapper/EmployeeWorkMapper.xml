@@ -36,19 +36,19 @@
 			update T_EMP_WORK
 			<set>
 				<choose>
-					<when test="item.caseId=''">
-						CASE_ID=null,
+					<when test="item.caseId!=''">
+						CASE_ID=#{item.caseId},
 					</when>
 					<otherwise>
-						CASE_ID=#{item.caseId},
+						CASE_ID=null,
 					</otherwise>
 				</choose>
 				<choose>
-					<when test="item.caseName=''">
-						CASE_NAME=null,
+					<when test="item.caseName!=''">
+						CASE_NAME=#{item.caseName},
 					</when>
 					<otherwise>
-						CASE_NAME=#{item.caseName},
+						CASE_NAME=null,
 					</otherwise>
 				</choose>
 
