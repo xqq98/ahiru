@@ -2,66 +2,78 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.webservice.ahiru.mapper.EmployeeWorkYearMapper">
 	<select id="getEmployeeWorkInfo" resultMap="EmployeeWorkYearMap" parameterType="com.webservice.ahiru.entity.SEVEmpList">
-        select
-        VW.ID as  employeeNo,
-        VW.NAME as employeeName,
-        VW.DEPROLENAME AS  department,
-        VW.PMUID AS pmId,
-        VW.PMNAME AS pmName,
-        em_work.CASE_NAME AS caseName,
-        YEAR (curdate()) AS year,
-        VW.LEVEL AS level,
-        VW.TECHNAME AS professional,
-        VW.A1 AS useStatus01,
-        VW.A2 AS useStatus02,
-        VW.A3 AS useStatus03,
-        VW.A4 AS useStatus04,
-        VW.A5 AS useStatus05,
-        VW.A6 AS useStatus06,
-        VW.A7 AS useStatus07,
-        VW.A8 AS useStatus08,
-        VW.A9 AS useStatus09,
-        VW.A10 AS useStatus10,
-        VW.A11 AS useStatus11,
-        VW.A12 AS useStatus12
-        from V_EMP_WORK AS VW
-        LEFT JOIN
-        M_CODE
-        ON VW.TECH = M_CODE.HANYOU_VALUE
-        AND M_CODE.HANYOU_CODE='TECH_DIREC'
-        LEFT JOIN
-        ( SELECT T_EMP_WORK.EMPLOYEE_NO,
-        T_EMP_WORK.PM_EMPLOYEE_NO,
-        max(T_EMP_WORK.CASE_NAME) as CASE_NAME
-        FROM T_EMP_WORK
-        WHERE YEAR=YEAR (curdate())
-        AND USE_MONTH = MONTH(curdate())
-        group by EMPLOYEE_NO,PM_EMPLOYEE_NO
-        ) as em_work
-        ON
-        em_work.EMPLOYEE_NO = VW.ID
-        AND em_work.PM_EMPLOYEE_NO = VW.PMUID
+        SELECT T.*
+        FROM
+        ( SELECT
+        VEW.employeeNo,
+        VEW.employeeName,
+        VEW.department,
+        VEW.level,
+        VEW.professional,
+        '2020' as year,
+        max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.pmId,'')) pmId,
+        max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.pmName,'')) pmName,
+        max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.caseName,'')) caseName,
+        max(if (VEW.month = '01',VEW.useStatus,'')) useStatus01,
+        max(if (VEW.month = '02',VEW.useStatus,'')) useStatus02,
+        max(if (VEW.month = '03',VEW.useStatus,'')) useStatus03,
+        max(if (VEW.month = '04',VEW.useStatus,'')) useStatus04,
+        max(if (VEW.month = '05',VEW.useStatus,'')) useStatus05,
+        max(if (VEW.month = '06',VEW.useStatus,'')) useStatus06,
+        max(if (VEW.month = '07',VEW.useStatus,'')) useStatus07,
+        max(if (VEW.month = '08',VEW.useStatus,'')) useStatus08,
+        max(if (VEW.month = '09',VEW.useStatus,'')) useStatus09,
+        max(if (VEW.month = '10',VEW.useStatus,'')) useStatus10,
+        max(if (VEW.month = '11',VEW.useStatus,'')) useStatus11,
+        max(if (VEW.month = '12',VEW.useStatus,'')) useStatus12
+        FROM V_WORK_DATA AS VEW
+
+        GROUP BY 	VEW.employeeNo,
+        VEW.employeeName,
+        VEW.department,
+        VEW.level,
+        VEW.professional
+        ORDER BY VEW.employeeNo ) T
 
         <where>
             <if test="name !='' and name !=null " >
-                AND (ID like CONCAT('%',#{name},'%') or name like CONCAT('%',#{name},'%') )
+                AND (T.employeeNo  like CONCAT('%',#{name},'%') or T.employeeName like CONCAT('%',#{name},'%') )
             </if>
 
+                AND T.year = YEAR(CURDATE())
+
             <if test="levelList!= null and levelList.size>0" >
-                AND LEVEL in
+                AND T.LEVEL in
                 <foreach collection="levelList" index="index" item ="level"  separator="," open=" (" close=")" >#{level}</foreach>
             </if>
 
             <if test="depRoleNameList!= null and depRoleNameList.size>0" >
-                AND DEPROLENAME in <foreach collection="depRoleNameList" index="index" item ="department"  separator="," open=" (" close=")" > #{department}</foreach>
+                AND T.department in <foreach collection="depRoleNameList" index="index" item ="department"  separator="," open=" (" close=")" > #{department}</foreach>
             </if>
 
             <if test="techNameList!= null and techNameList.size>0" >
-                AND M_CODE.HANYOU_VALUE_NAME IN  <foreach collection="techNameList" index="index" item ="professional"  separator="," open=" (" close=")" >#{professional}</foreach>
+                AND T.professional IN  <foreach collection="techNameList" index="index" item ="professional"  separator="," open=" (" close=")" >#{professional}</foreach>
             </if>
 
             <if test="pmName !='' and pmName !=null " >
-                AND PMUID = #{pmName}
+                AND T.pmId = #{pmName}
+            </if>
+
+            <if test="startDt !='' and startDt !=null " >
+                AND ( EXISTS(
+                SELECT TEW.EMPLOYEE_NO
+                FROM T_EMP_WORK TEW
+                WHERE TEW.EMPLOYEE_NO = T.employeeNo
+                AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
+                AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}
+                AND (USE_STATUS = 0 AND CASE_ID is null )
+                )
+                OR NOT EXISTS (
+                SELECT TEW.EMPLOYEE_NO
+                FROM T_EMP_WORK TEW
+                WHERE TEW.EMPLOYEE_NO = T.employeeNo
+                AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
+                AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}))
             </if>
         </where>
 	</select>
