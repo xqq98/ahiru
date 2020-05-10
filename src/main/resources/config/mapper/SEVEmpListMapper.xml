@@ -135,6 +135,23 @@
 <!--            #{endDt} >=	concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) )-->
 <!--        </if>-->
 
+        <if test="startDt !='' and startDt !=null " >
+            AND ( EXISTS(
+            SELECT TEW.EMPLOYEE_NO
+            FROM T_EMP_WORK TEW
+            WHERE TEW.EMPLOYEE_NO = V_EMP_LIST.ID
+            AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
+            AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}
+            AND (USE_STATUS = 0 AND CASE_ID is null )
+            )
+            OR NOT EXISTS (
+            SELECT TEW.EMPLOYEE_NO
+            FROM T_EMP_WORK TEW
+            WHERE TEW.EMPLOYEE_NO = V_EMP_LIST.ID
+            AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
+            AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}))
+        </if>
+
         <if test="monthList !=null and monthList.size == 1 ">
             AND ${monthList.get(0)} IS null
         </if>
