@@ -52,9 +52,9 @@ public class SEVEmpListServiceImpl implements SEVEmpListService {
     public Result getInfoAll(SEVEmpList sevEmpList) {
         Result resul = null;
         try {
-            String StartDt = sevEmpList.getStartDt();
+  /*           String StartDt = sevEmpList.getStartDt();
             String EndDt = sevEmpList.getEndDt();
-            int StartDt1 =Integer.parseInt(StartDt.substring(3));
+           int StartDt1 =Integer.parseInt(StartDt.substring(3));
             int EndDt1 =Integer.parseInt(EndDt.substring(3));
 
              List<String> monthList1 = new ArrayList<>();
@@ -64,7 +64,7 @@ public class SEVEmpListServiceImpl implements SEVEmpListService {
                 System.out.println(aaa);
                 monthList1.add(aaa);
             }
-            sevEmpList.setMonthList(monthList1);
+            sevEmpList.setMonthList(monthList1);*/
             List<SEVEmpList> result = seVEmpListMapper.getInfoAll(sevEmpList);
             resul = new Result(result);
         } catch (Exception e) {
