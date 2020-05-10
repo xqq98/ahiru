@@ -56,18 +56,36 @@
             AND V_PM_CHOSEN.YEAR = #{year}
 
             <if test="monthList !=null and monthList.size == 1 ">
-         AND ${monthList.get(0)} = 0
+                AND ${monthList.get(0)} = 0
+            </if>
+
+            <if test="monthList !=null and monthList.size > 1 ">
+                AND
+                <foreach collection="monthList" item="item"  open="(" close="= 0)" separator="=0 OR">
+                ${item}
+                </foreach>
+
+            </if>
+
         </if>
 
-        <if test="monthList !=null and monthList.size > 1 ">
-         AND
-            <foreach collection="monthList" item="item"  open="(" close="= 0)" separator="=0 OR">
-            ${item}
-            </foreach>
-
+        <if test="startDt !='' and startDt !=null " >
+            AND ( EXISTS(
+            SELECT TEW.EMPLOYEE_NO
+            FROM T_EMP_WORK TEW
+            WHERE TEW.EMPLOYEE_NO = V_PM_CHOSEN.ID
+            AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
+            AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}
+            AND (USE_STATUS = 0 AND CASE_ID is null )
+            )
+            OR NOT EXISTS (
+            SELECT TEW.EMPLOYEE_NO
+            FROM T_EMP_WORK TEW
+            WHERE TEW.EMPLOYEE_NO = V_PM_CHOSEN.ID
+            AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
+            AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}))
         </if>
 
-        </if>
         ORDER BY PM_NUM,ID DESC
 
     </select>
