@@ -36,9 +36,7 @@
         <!--    判断ID-->
 
         <if test="id != '' and id !=null">
-            AND (V_PM_CHOSEN.ID LIKE concat(concat("%",#{id}),"%") OR V_PM_CHOSEN.NAME LIKE
-            concat(concat("%",#{id}),"%"))
-
+            AND (V_PM_CHOSEN.ID LIKE concat("%",#{id},"%") OR V_PM_CHOSEN.NAME LIKE  concat("%",#{id},"%"))
         </if>
         <!--    判断PM名字-->
         <if test="pmName != '' and pmName !=null">
@@ -70,20 +68,10 @@
         </if>
 
         <if test="startDt !='' and startDt !=null " >
-            AND ( EXISTS(
-            SELECT TEW.EMPLOYEE_NO
-            FROM T_EMP_WORK TEW
-            WHERE TEW.EMPLOYEE_NO = V_PM_CHOSEN.ID
-            AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
-            AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}
-            AND (USE_STATUS = 0 AND CASE_ID is null )
-            )
-            OR NOT EXISTS (
-            SELECT TEW.EMPLOYEE_NO
-            FROM T_EMP_WORK TEW
-            WHERE TEW.EMPLOYEE_NO = V_PM_CHOSEN.ID
-            AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
-            AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}))
+            AND
+            <include refid = "common.empwork.searchDate">
+                <property name="TBLID" value="V_PM_CHOSEN.ID"/>
+            </include>
         </if>
 
         ORDER BY PM_NUM,ID DESC

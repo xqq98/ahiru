@@ -60,20 +60,10 @@
             </if>
 
             <if test="startDt !='' and startDt !=null " >
-                AND ( EXISTS(
-                SELECT TEW.EMPLOYEE_NO
-                FROM T_EMP_WORK TEW
-                WHERE TEW.EMPLOYEE_NO = T.employeeNo
-                AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
-                AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}
-                AND (USE_STATUS = 0 AND CASE_ID is null )
-                )
-                OR NOT EXISTS (
-                SELECT TEW.EMPLOYEE_NO
-                FROM T_EMP_WORK TEW
-                WHERE TEW.EMPLOYEE_NO = T.employeeNo
-                AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
-                AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}))
+                AND
+                <include refid = "common.empwork.searchDate">
+                    <property name="TBLID" value="T.employeeNo"/>
+                </include>
             </if>
         </where>
 	</select>
