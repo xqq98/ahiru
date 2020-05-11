@@ -107,15 +107,15 @@
         <if test="name !='' and name !=null " >
             AND NAME LIKE concat('%',concat (#{name},'%'))
         </if>
-        <if test="levelList.size>0 and levelList !=null " >
+        <if test="levelList !=null and levelList.size>0  " >
             AND LEVEL IN
             <foreach item="level" collection="levelList" index="index" open="(" separator="," close=")">#{level}</foreach>
         </if>
-        <if test="depRoleNameList.size>0 and depRoleNameList !=null " >
+        <if test="depRoleNameList !=null and depRoleNameList.size>0   " >
              AND DEPROLENAME IN
             <foreach item="depRoleName" collection="depRoleNameList" index="index" open="(" separator="," close=")">#{depRoleName}</foreach>
         </if>
-        <if test="techNameList.size>0 and techNameList !=null " >
+        <if test="techNameList !=null and techNameList.size>0   " >
             AND TECHNAME IN
             <foreach item="techName" collection="techNameList" index="index" open="(" separator="," close=")">#{techName}</foreach>
         </if>
