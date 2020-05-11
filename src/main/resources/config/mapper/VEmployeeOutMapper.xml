@@ -64,11 +64,11 @@
 
         --         通过离职时间筛选（起始和结束）
         <if test="startLeaving != '' and startLeaving !=null">
-            and LEAVING_DATE >=  CONCAT(#{startLeaving},'-01')
+            and LEAVING_DATE >=  CONCAT(#{startLeaving},'01')
         </if>
 
         <if test="endLeaving != '' and endLeaving !=null">
-            and  CONCAT(#{endLeaving},'-31') >= LEAVING_DATE
+            and  CONCAT(#{endLeaving},'31') >= LEAVING_DATE
         </if>
         <!--        <if test="id != ''">-->
         <!--            ID = #{id} AND-->
