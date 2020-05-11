@@ -53,9 +53,9 @@ public class MProjectServiceImpl implements MProjectService {
         try {
 
 
-        List<MProject> mProjects = mProjectMapper.getMProjects();
+            List<MProject> mProjects = mProjectMapper.getMProjects();
 
-        return mProjects;}
+            return mProjects;}
         catch (Exception ex){
             logger.error(ex.getMessage(),ex);
             throw new AhiruException("getMProjects失败");
@@ -68,13 +68,13 @@ public class MProjectServiceImpl implements MProjectService {
     @Override
     //获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据双主键），返回mProject
     public MProject getMProjectById(String pmid,String projectid) {
-try{
-        MProject mProject = mProjectMapper.getMProjectById(pmid,projectid);
+        try{
+            MProject mProject = mProjectMapper.getMProjectById(pmid,projectid);
 
-        return mProject;} catch (Exception ex){
-    logger.error(ex.getMessage(),ex);
-    throw new AhiruException("getMProjectById失败");
-}
+            return mProject;} catch (Exception ex){
+            logger.error(ex.getMessage(),ex);
+            throw new AhiruException("getMProjectById失败");
+        }
     }
 
     //伪代码,表示重写（下面的方法名是否是你父类中所有的）
@@ -82,26 +82,26 @@ try{
     //把表（M_PROJECT）的所有字段的值都插入表中，返回CNT
     @Transactional
     public int addMProject(MProject mProject) {
-try{
-        int CNT = mProjectMapper.addMProject(mProject);
+        try{
+            int CNT = mProjectMapper.addMProject(mProject);
 
-        return CNT;}catch (Exception ex){
-    logger.error(ex.getMessage(),ex);
-    throw new AhiruException("添加失败");
-}
+            return CNT;}catch (Exception ex){
+            logger.error(ex.getMessage(),ex);
+            throw new AhiruException("添加失败");
+        }
     }
 
     //伪代码,表示重写（下面的方法名是否是你父类中所有的）
     @Override
     //修改数据库表（M_PROJECT）的数据，返回CNT
     public int edtMProject(MProject mProject) {
-try{
-        int CNT = mProjectMapper.edtMProject(mProject);
+        try{
+            int CNT = mProjectMapper.edtMProject(mProject);
 
-        return CNT;}catch (Exception ex){
-    logger.error(ex.getMessage(),ex);
-    throw new AhiruException("修改失败");
-}
+            return CNT;}catch (Exception ex){
+            logger.error(ex.getMessage(),ex);
+            throw new AhiruException("修改失败");
+        }
     }
 
     //伪代码,表示重写（下面的方法名是否是你父类中所有的）
@@ -109,13 +109,13 @@ try{
     //删除数据库表（M_PROJECT）的数据，根据PM员工号（PM_EMPLOYEE_NO）和项目编号（PROJECT_ID），返回CNT
     @Transactional
     public int delMProject(String pmid, String projectid) {
-try{
-        int CNT = mProjectMapper.delMProject(pmid,projectid);
+        try{
+            int CNT = mProjectMapper.delMProject(pmid,projectid);
 
-        return CNT;}catch (Exception ex){
-    logger.error(ex.getMessage(),ex);
-    throw new AhiruException("删除失败");
-}
+            return CNT;}catch (Exception ex){
+            logger.error(ex.getMessage(),ex);
+            throw new AhiruException("删除失败");
+        }
     }
 
     //伪代码,表示重写（下面的方法名是否是你父类中所有的）
@@ -155,10 +155,10 @@ try{
     public List<MProject> getMProjectByPmNo(String pmid) {
         try{List<MProject> resultMproject = mProjectMapper.getMProjectByPmNo(pmid);
 
-        return resultMproject;}catch (Exception ex){
-        logger.error(ex.getMessage(),ex);
-        throw new AhiruException("项目取得失败");
-    }
+            return resultMproject;}catch (Exception ex){
+            logger.error(ex.getMessage(),ex);
+            throw new AhiruException("项目取得失败");
+        }
     }
 
     @Override
@@ -203,13 +203,13 @@ try{
     @Override
     //获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中，返回mProjects
     public List<MProject> getMProjectsIdAndName() {
-try{
-        List<MProject> mProjectsIdAndName = mProjectMapper.getMProjectsIdAndName();
+        try{
+            List<MProject> mProjectsIdAndName = mProjectMapper.getMProjectsIdAndName();
 
-        return mProjectsIdAndName;}catch (Exception ex){
-    logger.error(ex.getMessage(),ex);
-    throw new AhiruException("项目取得失败");
-}
+            return mProjectsIdAndName;}catch (Exception ex){
+            logger.error(ex.getMessage(),ex);
+            throw new AhiruException("项目取得失败");
+        }
 
     }
 
@@ -256,13 +256,13 @@ try{
 
     @Override
     public List<MProject> getMProjectsAll() {
-try{
-        List<MProject> mProjectsAll = mProjectMapper.getMProjectsAll();
+        try{
+            List<MProject> mProjectsAll = mProjectMapper.getMProjectsAll();
 
-        return mProjectsAll;}catch (Exception ex){
-    logger.error(ex.getMessage(),ex);
-    throw new AhiruException("取得失败");
-}
+            return mProjectsAll;}catch (Exception ex){
+            logger.error(ex.getMessage(),ex);
+            throw new AhiruException("取得失败");
+        }
     }
     //韩广晨 2020-04-16 Begin
     public MProject getMProject(String id)
@@ -302,20 +302,24 @@ try{
                 mProject.setEntdt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
                 mProject.setUpdid(username);
                 mProject.setUpddt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
-                // mProject.setDelfg("0");。。
-                if (existMProject != null) {
-                    tEmpWorkService.setTEmpWorkByNO(
-                            mProject.getPmemployeeno(), mProject.getProjectid(), mProject.getCasename(),
-                            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), mProject.getPmemployeeno(),
-                            existMProject.getPmemployeeno(), existMProject.getProjectid(), existMProject.getCasename()
-                    );
-                    if (mProjectMapper.setMProject(mProject)==0){
-                        throw new AhiruException("项目登录失败");
-                    };
+                // mProject.setDelfg("0");
+                if (existMProject.getCasename().equals(mProject.getCasename()) && existMProject.getProjectid().equals(mProject.getProjectid())) {
+                    continue;
                 } else {
-                    if(mProjectMapper.addMProject(mProject)==0){
-                        throw new AhiruException("项目登录失败");
-                    };
+                    if(existMProject == null){
+                        if(mProjectMapper.addMProject(mProject)==0){
+                            throw new AhiruException("项目登录失败");
+                        }
+                    }else {
+                        tEmpWorkService.setTEmpWorkByNO(
+                                mProject.getPmemployeeno(), mProject.getProjectid(), mProject.getCasename(),
+                                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), mProject.getPmemployeeno(),
+                                existMProject.getPmemployeeno(), existMProject.getProjectid(), existMProject.getCasename()
+                        );
+                        if (mProjectMapper.setMProject(mProject)==0){
+                            throw new AhiruException("项目登录失败");
+                        }
+                    }
                 }
             }
             return 0;
