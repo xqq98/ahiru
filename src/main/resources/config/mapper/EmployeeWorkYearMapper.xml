@@ -10,29 +10,30 @@
         VEW.department,
         VEW.level,
         VEW.professional,
-        '2020' as year,
+        VEW.year,
         max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.pmId,'')) pmId,
         max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.pmName,'')) pmName,
         max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.caseName,'')) caseName,
-        max(if (VEW.month = '01',VEW.useStatus,'')) useStatus01,
-        max(if (VEW.month = '02',VEW.useStatus,'')) useStatus02,
-        max(if (VEW.month = '03',VEW.useStatus,'')) useStatus03,
-        max(if (VEW.month = '04',VEW.useStatus,'')) useStatus04,
-        max(if (VEW.month = '05',VEW.useStatus,'')) useStatus05,
-        max(if (VEW.month = '06',VEW.useStatus,'')) useStatus06,
-        max(if (VEW.month = '07',VEW.useStatus,'')) useStatus07,
-        max(if (VEW.month = '08',VEW.useStatus,'')) useStatus08,
-        max(if (VEW.month = '09',VEW.useStatus,'')) useStatus09,
-        max(if (VEW.month = '10',VEW.useStatus,'')) useStatus10,
-        max(if (VEW.month = '11',VEW.useStatus,'')) useStatus11,
-        max(if (VEW.month = '12',VEW.useStatus,'')) useStatus12
+        max(if (VEW.month = '01',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus01,
+        max(if (VEW.month = '02',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus02,
+        max(if (VEW.month = '03',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus03,
+        max(if (VEW.month = '04',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus04,
+        max(if (VEW.month = '05',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus05,
+        max(if (VEW.month = '06',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus06,
+        max(if (VEW.month = '07',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus07,
+        max(if (VEW.month = '08',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus08,
+        max(if (VEW.month = '09',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus09,
+        max(if (VEW.month = '10',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus10,
+        max(if (VEW.month = '11',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus11,
+        max(if (VEW.month = '12',if (VEW.useStatus > 0 or (VEW.useStatus=0 and VEW.caseId is not null),VEW.useStatus,''),'')) useStatus12
         FROM V_WORK_DATA AS VEW
 
         GROUP BY 	VEW.employeeNo,
         VEW.employeeName,
         VEW.department,
         VEW.level,
-        VEW.professional
+        VEW.professional,
+        VEW.year
         ORDER BY VEW.employeeNo ) T
 
         <where>
