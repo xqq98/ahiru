@@ -23,6 +23,7 @@
         TURN_POSITIVE_DATE,
 --        DATE_FORMAT(`V_EMP_OUT`.LEAVING_DATE,'%Y-%m-%d') AS `LEAVING_DATE`,
         LEAVING_DATE,
+        LEAVING_REASON,
         COST_CENTER,
         FUNCTION,
         EFFECT,
@@ -121,6 +122,7 @@
         <result property="inSocietyDate" column="IN_SOCIETY_DATE" />
         <result property="turnPositiveDate" column="TURN_POSITIVE_DATE" />
         <result property="leavingDate" column="LEAVING_DATE" />
+        <result property="leavingReason" column="LEAVING_REASON" />
         <result property="startLeaving" column="START_LEAVING" />
         <result property="endLeaving" column="END_LEAVING" />
         <result property="costCenter" column="COST_CENTER" />
