@@ -36,7 +36,7 @@ public interface MProjectService  {
     public int delMProjectbypmid(String pmid);
 
     //获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据主键）
-    public List<MProject> getMProjectByPmid(String pmid);
+    public List<MProject> getMProjectByPmid();
 
     //获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据主键）
     public List<MProject> getMProjectByPmNo(String pmid);

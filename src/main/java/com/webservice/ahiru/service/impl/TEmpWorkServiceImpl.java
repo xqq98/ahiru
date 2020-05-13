@@ -225,10 +225,21 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
                 TEmpWork tEmpWork = tEmpWorkList.get(i);
                 //如果workno不为空，说明数据库存在数据，根据delfg判断调用修改还是删除方法
                 if (tEmpWork.getWorkNo() != null) {
-                    if(tEmpWork.getPmEmployeeNo().equals(oldTEmpWork.getPmEmployeeNo())){
-                        continue;
+                    //判断是否有PM_EMPLOYEE_NUM
+                    if(tEmpWork.getPmEmployeeNo() != null){
+                        //前台传回的数据和老的数据对比，如果相等，进入下一条数据
+                        if(tEmpWork.getPmEmployeeNo().equals(oldTEmpWork.getPmEmployeeNo())){
+                            continue;
+                        }else{
+                            //有workno 有pmemployee 且不一样调用修改方法
+                            edtTEmpWork(tEmpWork);}
+
                     }else{
-                        edtTEmpWork(tEmpWork);}
+                        //有workno 没有pmnum 调用删除方法
+                        delTEmpWorkbyworkNo(tEmpWork);
+                    }
+
+
                 } else {
                     //如果workno为null 且返回PMNUM 调用增加方法
                     if ((tEmpWork.getPmEmployeeNo() != null)) {
@@ -246,5 +257,19 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
             throw new AhiruException("数据处理失败");
         }
         return 0;
+    }
+    //伪代码,表示重写（下面的方法名是否是你父类中所有的）
+    @Override
+    //修改数据库表（T_EMP_WORK）的数据，修改数据后，返回 CNT
+    public int delTEmpWorkbyworkNo(TEmpWork tEmpWork) {
+        try {
+
+            int CNT = tEmpWorkMapper.delTEmpWorkbyworkNo(tEmpWork);
+
+            return CNT;}
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+            throw new AhiruException("人员信息删除失败");
+        }
     }
 }

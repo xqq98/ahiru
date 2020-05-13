@@ -172,4 +172,8 @@
         </where>
 
     </update>
+
+    <delete id="delTEmpWorkbyworkNo">
+        delete from T_EMP_WORK where  WORK_NO = #{workNo}
+    </delete>
 </mapper>
