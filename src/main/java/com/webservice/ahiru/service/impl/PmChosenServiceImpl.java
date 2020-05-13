@@ -37,7 +37,7 @@ public class PmChosenServiceImpl implements PmChosenService {
     //获取视图（V_PM_CHOSEN）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据三个主键），返回resultPmChosen
     public List<PmChosen> getPmChosen(PmChosen pmChosen) {
         try{
-            if(StringUtils.isEmpty(pmChosen.getStartDt()) ){
+            if(!StringUtils.isEmpty(pmChosen.getStartDt()) ){
                 int startDATE = Integer.parseInt(pmChosen.getStartDt().substring(4));
                 int endDATE = Integer.parseInt(pmChosen.getEndDt().substring(4));
                 List<String> monthList1 = new ArrayList<>();

@@ -1,4 +1,6 @@
 package com.webservice.ahiru.service.impl;
+
+import com.alibaba.druid.util.StringUtils;
 import com.webservice.ahiru.common.UserUtil;
 import com.webservice.ahiru.entity.TEmpWork;
 import com.webservice.ahiru.exception.AhiruException;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,54 +53,41 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
     //获取数据库表（T_EMP_WORK）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据主键）,返回tEmpWork
     public List<TEmpWork> getTEmpWorkById(String id)  throws AhiruException {
         try {
-        List<TEmpWork> tEmpWork = tEmpWorkMapper.getTEmpWorkById(id);
-        List<TEmpWork> tEmpWork1 = new ArrayList<>();
+            //根据前台传过来的id 去tempwork表中检索
+            List<TEmpWork> tEmpWork = tEmpWorkMapper.getTEmpWorkById(id);
+            //新建tempworkList用于处理数据
+            List<TEmpWork> tEmpWork1 = new ArrayList<>();
+            //设置数据格式
+            DecimalFormat df =  new DecimalFormat("00");
 
 
         for(int i = 0;i<12;i++){
             TEmpWork ccc = new TEmpWork();
+            //向tempworkList中添加数据
             tEmpWork1.add(ccc);
         }
-        tEmpWork1.get(0).setUseMonth("01");
-        tEmpWork1.get(1).setUseMonth("02");
-        tEmpWork1.get(2).setUseMonth("03");
-        tEmpWork1.get(3).setUseMonth("04");
-        tEmpWork1.get(4).setUseMonth("05");
-        tEmpWork1.get(5).setUseMonth("06");
-        tEmpWork1.get(6).setUseMonth("07");
-        tEmpWork1.get(7).setUseMonth("08");
-        tEmpWork1.get(8).setUseMonth("09");
-        tEmpWork1.get(9).setUseMonth("10");
-        tEmpWork1.get(10).setUseMonth("11");
-        tEmpWork1.get(11).setUseMonth("12");
-        tEmpWork1.get(0).setEmployeeNo(id);
-        tEmpWork1.get(1).setEmployeeNo(id);
-        tEmpWork1.get(2).setEmployeeNo(id);
-        tEmpWork1.get(3).setEmployeeNo(id);
-        tEmpWork1.get(4).setEmployeeNo(id);
-        tEmpWork1.get(5).setEmployeeNo(id);
-        tEmpWork1.get(6).setEmployeeNo(id);
-        tEmpWork1.get(7).setEmployeeNo(id);
-        tEmpWork1.get(8).setEmployeeNo(id);
-        tEmpWork1.get(9).setEmployeeNo(id);
-        tEmpWork1.get(10).setEmployeeNo(id);
-        tEmpWork1.get(11).setEmployeeNo(id);
-        tEmpWork1.get(0).setUseStatus("0");
-        tEmpWork1.get(1).setUseStatus("0");
-        tEmpWork1.get(2).setUseStatus("0");
-        tEmpWork1.get(3).setUseStatus("0");
-        tEmpWork1.get(4).setUseStatus("0");
-        tEmpWork1.get(5).setUseStatus("0");
-        tEmpWork1.get(6).setUseStatus("0");
-        tEmpWork1.get(7).setUseStatus("0");
-        tEmpWork1.get(8).setUseStatus("0");
-        tEmpWork1.get(9).setUseStatus("0");
-        tEmpWork1.get(10).setUseStatus("0");
-        tEmpWork1.get(11).setUseStatus("0");
+
+        for(int i = 0;i<12;i++){
+            //tempworkList中每一个对象添加月份
+            tEmpWork1.get(i).setUseMonth(df.format(i+1));
+            //tempworkList中每一个对象添加id
+            tEmpWork1.get(i).setEmployeeNo(id);
+            //tempworkList中每一个对象都设置为空闲人员
+            tEmpWork1.get(i).setUseStatus("3");
+        }
 
 
         for (int i = 0;i<tEmpWork.size();i++){
             TEmpWork aaa = tEmpWork.get(i);
+            //若UseStatus为0 且CaseName为null 此时为空闲人员数据处理为3
+            if(aaa.getUseStatus().equals("0") && StringUtils.isEmpty(aaa.getCaseName()) ){
+                    aaa.setUseStatus("3");
+            }
+
+//            if(StringUtils.isEmpty(aaa.getUseStatus()) ){
+//                aaa.setUseStatus("3");
+//            }
+
             switch (aaa.getUseMonth()) {
                 case "01":
                     tEmpWork1.set(0,aaa);
@@ -223,6 +213,9 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
             for (int i = 0; i < tEmpWorkList.size(); i++) {
                 TEmpWork oldTEmpWork = oldlist.get(i);
                 TEmpWork tEmpWork = tEmpWorkList.get(i);
+                if(tEmpWork.getUseStatus().equals("3")){
+                    tEmpWork.setUseStatus("0");
+                }
                 //如果workno不为空，说明数据库存在数据，根据delfg判断调用修改还是删除方法
                 if (tEmpWork.getWorkNo() != null) {
                     //判断是否有PM_EMPLOYEE_NUM
