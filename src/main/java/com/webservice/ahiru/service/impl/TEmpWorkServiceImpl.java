@@ -217,9 +217,9 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
                     tEmpWork.setUseStatus("0");
                 }
                 //如果workno不为空，说明数据库存在数据，根据delfg判断调用修改还是删除方法
-                if (tEmpWork.getWorkNo() != null) {
+                if (!StringUtils.isEmpty(tEmpWork.getWorkNo())) {
                     //判断是否有PM_EMPLOYEE_NUM
-                    if(tEmpWork.getPmEmployeeNo() != null){
+                    if(!StringUtils.isEmpty(tEmpWork.getPmEmployeeNo())){
                         //前台传回的数据和老的数据对比，如果相等，进入下一条数据
                         if(tEmpWork.getPmEmployeeNo().equals(oldTEmpWork.getPmEmployeeNo())){
                             continue;
@@ -235,7 +235,7 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
 
                 } else {
                     //如果workno为null 且返回PMNUM 调用增加方法
-                    if ((tEmpWork.getPmEmployeeNo() != null)) {
+                    if (!StringUtils.isEmpty(tEmpWork.getPmEmployeeNo())) {
                         addTEmpWork(tEmpWork);
                         //未返回进入下一循环
                     } else {
