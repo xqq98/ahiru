@@ -113,6 +113,72 @@ public class SEVEmpList {
     //空闲月集合
     private List<String> monthList;
 
+    //颜色分类
+    private String color;
+
+    //入部门日期
+    private String indepDate;
+
+    //入部天数
+    private String inDepTime;
+
+    //入部年
+    private String inDepYear;
+
+    //出生日期
+    private String birthDay;
+
+    //年龄
+    private String age;
+
+    public String getIndepDate() {
+        return indepDate;
+    }
+
+    public void setIndepDate(String indepDate) {
+        this.indepDate = indepDate;
+    }
+
+    public String getInDepTime() {
+        return inDepTime;
+    }
+
+    public void setInDepTime(String inDepTime) {
+        this.inDepTime = inDepTime;
+    }
+
+    public String getInDepYear() {
+        return inDepYear;
+    }
+
+    public void setInDepYear(String inDepYear) {
+        this.inDepYear = inDepYear;
+    }
+
+    public String getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public List<String> getMonthList() {
         return monthList;
     }
