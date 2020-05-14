@@ -77,6 +77,9 @@ public class VEmployeeOut implements Serializable {
     //离职时间
     private String leavingDate;
 
+    //离职理由
+    private String leavingReason;
+
     //离职时间（起始）
     private String startLeaving;
 
@@ -292,6 +295,14 @@ public class VEmployeeOut implements Serializable {
 
     public void setLeavingDate(String leavingDate) {
         this.leavingDate = leavingDate;
+    }
+
+    public String getLeavingReason() {
+        return leavingReason;
+    }
+
+    public void setLeavingReason(String leavingReason) {
+        this.leavingReason = leavingReason;
     }
 
     public String getStartLeaving() {

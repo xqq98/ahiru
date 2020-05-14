@@ -29,16 +29,14 @@
         V_PM_CHOSEN
         WHERE
 --         去除1到12月都足月使用的人
-        ((a1 AND a2 AND a3 AND a4 AND a5 AND a6 AND a7 AND a8 AND a9 AND a10 AND a11 AND a12) != 1 AND(a1 AND a2 AND a3 AND a4 AND a5 AND a6 AND a7 AND a8 AND a9 AND a10 AND a11 AND a12) != 2)
-
-
+--         ((a1 AND a2 AND a3 AND a4 AND a5 AND a6 AND a7 AND a8 AND a9 AND a10 AND a11 AND a12) != 1 AND(a1 AND a2 AND a3 AND a4 AND a5 AND a6 AND a7 AND a8 AND a9 AND a10 AND a11 AND a12) != 2)
+--
+        1 = 1
 
         <!--    判断ID-->
 
         <if test="id != '' and id !=null">
-            AND (V_PM_CHOSEN.ID LIKE concat(concat("%",#{id}),"%") OR V_PM_CHOSEN.NAME LIKE
-            concat(concat("%",#{id}),"%"))
-
+            AND (V_PM_CHOSEN.ID LIKE concat("%",#{id},"%") OR V_PM_CHOSEN.NAME LIKE  concat("%",#{id},"%"))
         </if>
         <!--    判断PM名字-->
         <if test="pmName != '' and pmName !=null">
@@ -56,12 +54,12 @@
             AND V_PM_CHOSEN.YEAR = #{year}
 
             <if test="monthList !=null and monthList.size == 1 ">
-                AND ${monthList.get(0)} = 0
+                AND ${monthList.get(0)} = 3
             </if>
 
             <if test="monthList !=null and monthList.size > 1 ">
                 AND
-                <foreach collection="monthList" item="item"  open="(" close="= 0)" separator="=0 OR">
+                <foreach collection="monthList" item="item"  open="(" close="= 3)" separator="=3 OR">
                 ${item}
                 </foreach>
 
@@ -69,22 +67,12 @@
 
         </if>
 
-        <if test="startDt !='' and startDt !=null " >
-            AND ( EXISTS(
-            SELECT TEW.EMPLOYEE_NO
-            FROM T_EMP_WORK TEW
-            WHERE TEW.EMPLOYEE_NO = V_PM_CHOSEN.ID
-            AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
-            AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}
-            AND (USE_STATUS = 0 AND CASE_ID is null )
-            )
-            OR NOT EXISTS (
-            SELECT TEW.EMPLOYEE_NO
-            FROM T_EMP_WORK TEW
-            WHERE TEW.EMPLOYEE_NO = V_PM_CHOSEN.ID
-            AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
-            AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}))
-        </if>
+<!--        <if test="startDt !='' and startDt !=null " >-->
+<!--            AND-->
+<!--            <include refid = "common.empwork.searchDate">-->
+<!--                <property name="TBLID" value="V_PM_CHOSEN.ID"/>-->
+<!--            </include>-->
+<!--        </if>-->
 
         ORDER BY PM_NUM,ID DESC
 

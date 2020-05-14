@@ -40,6 +40,8 @@ public interface TEmpWorkService {
 
     //删除数据库表（T_EMP_WORK）的数据
     public int delTEmpWork(TEmpWork tEmpWork);
+    //根据workno物理删除
+    public int delTEmpWorkbyworkNo(TEmpWork tEmpWork);
 
 
     //处理数据

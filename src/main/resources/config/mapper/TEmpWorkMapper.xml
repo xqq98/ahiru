@@ -41,7 +41,8 @@
         UPD_ID,
         DEL_DT,
         DEL_ID,
-        DEL_FG
+        DEL_FG,
+        CASE_NAME
         FROM T_EMP_WORK
         where
         DEL_FG = '0'
@@ -172,4 +173,8 @@
         </where>
 
     </update>
+
+    <delete id="delTEmpWorkbyworkNo">
+        delete from T_EMP_WORK where  WORK_NO = #{workNo}
+    </delete>
 </mapper>

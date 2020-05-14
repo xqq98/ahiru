@@ -47,6 +47,7 @@
         FROM M_PROJECT
         where
         DEL_FG = '0' AND CASE_NAME = '0'
+          AND PM_EMPLOYEE_NO = #{pmid}
     </select>
 
     <select id="getMProjectById" resultMap="MProjectMap">

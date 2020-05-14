@@ -10,10 +10,10 @@
         VEW.department,
         VEW.level,
         VEW.professional,
-        '2020' as year,
+        VEW.year,
         max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.pmId,'')) pmId,
         max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.pmName,'')) pmName,
-        max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.caseName,'')) caseName,
+        max(if (VEW.`month`=date_format(CURDATE(),'%m'),CONCAT(SUBSTRING(VEW.projectId,1,2),':',VEW.caseName),'')) caseName,
         max(if (VEW.month = '01',VEW.useStatus,'')) useStatus01,
         max(if (VEW.month = '02',VEW.useStatus,'')) useStatus02,
         max(if (VEW.month = '03',VEW.useStatus,'')) useStatus03,
@@ -26,14 +26,15 @@
         max(if (VEW.month = '10',VEW.useStatus,'')) useStatus10,
         max(if (VEW.month = '11',VEW.useStatus,'')) useStatus11,
         max(if (VEW.month = '12',VEW.useStatus,'')) useStatus12
-        FROM V_WORK_DATA AS VEW
+        FROM ( SELECT * FROM V_WORK_DATA ORDER BY pmid ,caseName,projectId) VEW
 
         GROUP BY 	VEW.employeeNo,
         VEW.employeeName,
         VEW.department,
         VEW.level,
-        VEW.professional
-        ORDER BY VEW.employeeNo ) T
+        VEW.professional,
+        VEW.year
+         ) T
 
         <where>
             <if test="name !='' and name !=null " >
@@ -60,20 +61,10 @@
             </if>
 
             <if test="startDt !='' and startDt !=null " >
-                AND ( EXISTS(
-                SELECT TEW.EMPLOYEE_NO
-                FROM T_EMP_WORK TEW
-                WHERE TEW.EMPLOYEE_NO = T.employeeNo
-                AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
-                AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}
-                AND (USE_STATUS = 0 AND CASE_ID is null )
-                )
-                OR NOT EXISTS (
-                SELECT TEW.EMPLOYEE_NO
-                FROM T_EMP_WORK TEW
-                WHERE TEW.EMPLOYEE_NO = T.employeeNo
-                AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
-                AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}))
+                AND
+                <include refid = "common.empwork.searchDate">
+                    <property name="TBLID" value="T.employeeNo"/>
+                </include>
             </if>
         </where>
 	</select>

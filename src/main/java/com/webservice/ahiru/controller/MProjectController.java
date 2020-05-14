@@ -184,9 +184,9 @@ public class MProjectController {
 
     //控制器处理“/getmprojectbypmid/{pmid}”的URL请求，POST请求
     //shy
-    @RequestMapping(value = "/getmprojectbypmid")
-    public Result getMProjectByPmid(@RequestParam(value = "pmid") String pmid) {
-        List<MProject> resultMprojects = mProjectService.getMProjectByPmid(pmid);
+    @RequestMapping(value = "/getmprojectbypmid", method = RequestMethod.POST)
+    public Result getMProjectByPmid() {
+        List<MProject> resultMprojects = mProjectService.getMProjectByPmid();
         Result result = Result.ok(resultMprojects);
         return result;
     }

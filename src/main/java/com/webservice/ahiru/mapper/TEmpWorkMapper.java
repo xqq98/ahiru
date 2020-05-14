@@ -42,4 +42,7 @@ public interface TEmpWorkMapper {
     //韩广晨 2020-04-16 End
     //删除数据库表（T_EMP_WORK）的数据
     public int delTEmpWork(TEmpWork tEmpWork);
+
+    //根据work_no物理删除数据
+    public int delTEmpWorkbyworkNo(TEmpWork tEmpWork);
 }
