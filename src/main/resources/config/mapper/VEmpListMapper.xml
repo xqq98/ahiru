@@ -4,6 +4,7 @@
     <select id="getInfo" resultMap="VEmpListMap" parameterType="com.webservice.ahiru.entity.VEmpList">
         SELECT
         ID,
+--         BIRTHDAY,
         NAME,
         JOB,
         LEVEL,
@@ -11,6 +12,7 @@
         DEPROLE,
         TECH,
         INDEPDATE,
+--         INDEPTIME,
         OUTDATE,
         OUTRSN,
         BPFLG,
@@ -31,7 +33,7 @@
         a,
         PMNAME
         FROM V_EMP_LIST
-        where BPFLG != ''
+        where BPFLG != '' and DEL_FG = 0
         <if test="id != '' and id !=null">
             and ID = #{id}
         </if>
@@ -56,6 +58,7 @@
         <result property="depRole" column="DEPROLE" />
         <result property="tech" column="TECH" />
         <result property="indepDate" column="INDEPDATE" />
+        <result property="inDepTime" column="INDEPTIME" />
         <result property="outDate" column="OUTDATE" />
         <result property="outRsn" column="OUTRSN" />
         <result property="BPFlg" column="BPFLG" />
@@ -75,5 +78,6 @@
         <result property="a12" column="a12" />
         <result property="a" column="a" />
         <result property="pmName" column="PMNAME" />
+        <result property="birthDay" column="BIRTHDAY" />
     </resultMap>
 </mapper>
