@@ -206,8 +206,10 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
     @Override
     @Transactional
     //处理数据
-    public int doneTempWork(List<TEmpWork> tEmpWorkList)  throws AhiruException {
+    public List<String> doneTempWork(List<TEmpWork> tEmpWorkList)  throws AhiruException {
         try {
+            List<String> doneList =new ArrayList<>();
+
             //再次查询一遍数据，待后面作比较
             List<TEmpWork> oldlist = getTEmpWorkById(tEmpWorkList.get(0).getEmployeeNo());
             for (int i = 0; i < tEmpWorkList.size(); i++) {
@@ -226,10 +228,12 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
                         }else{
                             //有workno 有pmemployee 且不一样调用修改方法
                             edtTEmpWork(tEmpWork);}
+                        doneList.add(tEmpWork.getUseMonth());
 
                     }else{
                         //有workno 没有pmnum 调用删除方法
                         delTEmpWorkbyworkNo(tEmpWork);
+                        doneList.add(tEmpWork.getUseMonth());
                     }
 
 
@@ -237,6 +241,7 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
                     //如果workno为null 且返回PMNUM 调用增加方法
                     if (!StringUtils.isEmpty(tEmpWork.getPmEmployeeNo())) {
                         addTEmpWork(tEmpWork);
+                        doneList.add(tEmpWork.getUseMonth());
                         //未返回进入下一循环
                     } else {
                         continue;
@@ -245,11 +250,13 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
                 }
 
             }
+            return doneList;
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
+
             throw new AhiruException("数据处理失败");
         }
-        return 0;
+
     }
     //伪代码,表示重写（下面的方法名是否是你父类中所有的）
     @Override
