@@ -9,8 +9,8 @@ import com.webservice.ahiru.pojo.Result;
  *  服务类
  * </p>
  *
- * @author wanghao
- * @since 2020-12-31
+ * @author guoshilong
+ * @since 2020-05-14
  */
 //Service层业务接口类编写
 public interface UPEmpDtlService extends IService<UPEmpDtl> {
@@ -18,8 +18,10 @@ public interface UPEmpDtlService extends IService<UPEmpDtl> {
     Result getInfo(UPEmpDtl upEmpDtl);
 
     //更新表（M_EMP_DTL）
-    Result UpdateEmpInfo(UPEmpDtl uPEmpDtl);
+//    Result UpdateEmpInfo(UPEmpDtl uPEmpDtl);
 
     //更新表（M_EMP_DTL）
-    Result UpdateBpInfo(UPEmpDtl upEmpDtl);
+//    Result UpdateBpInfo(UPEmpDtl upEmpDtl);
+    //　更新表（M_EMP_DTL）
+    Result UpdateInfo(UPEmpDtl uPEmpDtl);
 }
