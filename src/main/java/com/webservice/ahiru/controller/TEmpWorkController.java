@@ -131,8 +131,8 @@ public class TEmpWorkController {
     //控制器处理“/donetempwork”的URL请求，POST请求
     @RequestMapping(value = "/donetempwork", method = RequestMethod.POST)
     public Result doneTEmpWork(@RequestBody List<TEmpWork> tEmpWorkList) {
-        tEmpWorkService.doneTempWork(tEmpWorkList);
-        return Result.ok();
+        List<String> doneList =  tEmpWorkService.doneTempWork(tEmpWorkList);
+        return Result.ok(doneList);
     }
 
     //控制器处理“/gettempworkbypmno”的URL请求，POST请求
