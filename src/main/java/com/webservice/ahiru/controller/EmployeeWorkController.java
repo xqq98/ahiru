@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,6 +63,16 @@ public class EmployeeWorkController {
         employeeWorkService.uptEmployeeWorkInfo(employeeWorkList);
         logger.info("*******uptEmployeeWorkInfo end********");
         return Result.ok();
+    }
+    @RequestMapping("/getsession")
+    public String getSession(HttpServletRequest req){
+        logger.info("*******getSession start********");
+        HttpSession session = req.getSession();
+        logger.info((String)session.getAttribute("test"));
+        session.setAttribute("test","aabbcc");
+        logger.info(session.getId());
+
+        return session.getId();
     }
 }
 
