@@ -43,8 +43,8 @@ public class UPEmpDtlServiceImpl extends ServiceImpl<UPEmpDtlMapper, UPEmpDtl> i
      * 查询表（M_EMP_DTL）的数据以列表的形式输出，调用upEmpDtlMapper的getInfo方法，返回对象result
      * 根据员工编号（EMPLOYEE_NO）来查询表（M_EMP_DTL）的数据
      *
-     * @author wanghao
-     * @since 2019-2-17
+     * @author guoshilong
+     * @since 2020-05-14
      */
     @Override
     public Result getInfo(UPEmpDtl upEmpDtl) {
@@ -67,47 +67,47 @@ public class UPEmpDtlServiceImpl extends ServiceImpl<UPEmpDtlMapper, UPEmpDtl> i
     }
 
     @Override
-    public Result UpdateEmpInfo(UPEmpDtl uPEmpDtl) {
-        Result resul = null;
-        int uei = 0;
-        try{
-            String username= UserUtil.getLoginUser();
-            uPEmpDtl.setUpdId(username);
-            uPEmpDtl.setUpdDt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
-            uei = upEmpDtlMapper.UpdateEmpInfo(uPEmpDtl);
-            if(uei == 0){
-                throw new AhiruException("修改失败");
-        }
-            resul = new Result(uei);
-        }catch (Exception e){
+    public Result UpdateInfo(UPEmpDtl uPEmpDtl) {
+        if(uPEmpDtl.getBpflg().equals("0")){ // 判断是否是本社人员 等于0 为本社人员
+            Result resul = null;
+            int uei = 0;
+            try{
+                String username= UserUtil.getLoginUser(); // 获取登陆者
+                uPEmpDtl.setUpdId(username); // 设置修改者
+                uPEmpDtl.setUpdDt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())); // 设置修改日期
+                uei = upEmpDtlMapper.UpdateEmpInfo(uPEmpDtl); // 调用修改本社人员接口
+
+                if(uei == 0){
+                    throw new AhiruException("修改失败");
+                }
+                resul = new Result(uei);
+            }catch (Exception e){
 //            logger.error(ex.getMessage(),ex);
 //            throw new AhiruException("修改失败");
-            resul = Result.error((e.getMessage()));
-            logger.info("修改失败"+e.getMessage());
-        }
-        return resul;
-    }
-
-    @Override
-    public Result UpdateBpInfo(UPEmpDtl upEmpDtl) {
-        Result resul = null;
-        int ubi = 0;
-        try{
-            String username= UserUtil.getLoginUser();
-            upEmpDtl.setUpdId(username);
-            upEmpDtl.setUpdDt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
-            ubi = upEmpDtlMapper.UpdateBpInfo(upEmpDtl);
-            if(ubi == 0){
-                throw new AhiruException("修改失败");
+                resul = Result.error((e.getMessage()));
+                logger.info("修改失败"+e.getMessage());
             }
-            resul = new Result(ubi);
-        }catch (Exception e){
+            return resul;
+        } else {
+            Result resul = null;
+            int ubi = 0;
+            try{
+                String username= UserUtil.getLoginUser();
+                uPEmpDtl.setUpdId(username);
+                uPEmpDtl.setUpdDt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
+                ubi = upEmpDtlMapper.UpdateBpInfo(uPEmpDtl); // 调用修改外派人员接口
+                if(ubi == 0){
+                    throw new AhiruException("修改失败");
+                }
+                resul = new Result(ubi);
+            }catch (Exception e){
 //            logger.error(e.getMessage(),e);
 //            throw new AhiruException("修改失败");
-            resul = Result.error((e.getMessage()));
-            logger.info("修改失败"+e.getMessage());
+                resul = Result.error((e.getMessage()));
+                logger.info("修改失败"+e.getMessage());
+            }
+            return resul;
         }
-        return resul;
     }
 
 }
