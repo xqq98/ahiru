@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 //@RestController进行标记这是一个Controller
 @RestController
-//控制器处理所有“/mproject”的URL请求
+//控制器处理所有“/mproject”的 URL请求
 @RequestMapping("/upempdtl")
 public class UPEmpDtlController<depRole> {
 
