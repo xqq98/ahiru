@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  *  前端控制器
  * </p>
  *
- * @author wanghao
- * @since 2019-12-31
+ * @author guoshilong
+ * @since 2020-05-14
  */
 //@RestController进行标记这是一个Controller
 @RestController
@@ -74,8 +74,8 @@ public class UPEmpDtlController<depRole> {
      * 判断前台传过来的数据如果是0，则是正式员工，通过员工编号（EMPLOYEE_NO），修改表（M_EMP_DTL）的数据
      * 判断前台传过来的数据如果不是0，则是协力员工，通过员工编号（EMPLOYEE_NO），修改表（M_EMP_DTL）的数据
      *
-     * @author wanghao
-     * @since 2019-2-18
+     * @author guoshilong
+     * @since 2020-05-14
      */
 
     //控制器处理“/update”的URL请求，POST请求
@@ -83,21 +83,12 @@ public class UPEmpDtlController<depRole> {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Result UpdateInfo(@RequestBody UPEmpDtl upEmpDtl) {
-
-        Result result;
-
-//        String message = "";
-
         logger.info("===============EmployeeNo:"+upEmpDtl.getId() +"=================");
         logger.info("===============DepRope:"+upEmpDtl.getBpflg() +"=================");
 
-        if(upEmpDtl.getBpflg().equals("0")){
-            result=upEmpDtlService.UpdateEmpInfo(upEmpDtl);
-        }
-        else{
-            result=upEmpDtlService.UpdateBpInfo(upEmpDtl);
-        }
-//        message = "ok";
+
+        Result result = upEmpDtlService.UpdateInfo(upEmpDtl);
+
         System.out.println("----------------------------");
         System.out.println(result);
         System.out.println("----------------------------");
