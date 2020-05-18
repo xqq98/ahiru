@@ -35,7 +35,7 @@ public interface TEmpWorkMapper {
     //修改数据库表（T_EMP_WORK）的数据，根据 PM_EMPLOYEE_NO,PROJECT_ID,CASE_NAME
     public int setTEmpWorkByNO(String newpmemployeeno, String newprojectid, String newcasename,
                                String updDt, String updId,
-                               String oldpmemployeeno, String oldprojectid, String oldcasename);
+                               String oldpmemployeeno, String oldprojectid, String oldcaseid);
 
     //获取数据库表（T_EMP_WORK）的数据，以list列表的形式，根据项目经理号去重查询
     public List<TEmpWork> getTEmpWorkByPM_NO(String pmEmployeeNo);

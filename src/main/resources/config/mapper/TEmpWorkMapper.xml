@@ -18,7 +18,9 @@
         UPD_ID,
         DEL_DT,
         DEL_ID,
-        DEL_FG
+        DEL_FG,
+        CASE_ID,
+        CASE_NAME
         FROM T_EMP_WORK
         where
         DEL_FG = '0'
@@ -42,7 +44,8 @@
         DEL_DT,
         DEL_ID,
         DEL_FG,
-        CASE_NAME
+        CASE_NAME,
+        CASE_ID
         FROM T_EMP_WORK
         where
         DEL_FG = '0'
@@ -55,6 +58,7 @@
         <result property="employeeNo" column="EMPLOYEE_NO" />
         <result property="pmEmployeeNo" column="PM_EMPLOYEE_NO" />
         <result property="projectId" column="PROJECT_ID" />
+        <result property="caseId" column="CASE_ID" />
         <result property="caseName" column="CASE_NAME" />
         <result property="year" column="YEAR" />
         <result property="useMonth" column="USE_MONTH" />
@@ -87,7 +91,9 @@
         UPD_ID,
         DEL_DT,
         DEL_ID,
-        DEL_FG)
+        DEL_FG,
+        CASE_ID,
+        CASE_NAME)
         values (
          #{workNo}
         ,#{employeeNo}
@@ -104,6 +110,8 @@
         ,#{delDt}
         ,#{delId}
         ,#{delFg}
+        ,#{caseId}
+        ,#{caseName}
         )
     </insert>
 
@@ -124,7 +132,9 @@
             UPD_ID = #{updId},
             DEL_DT = #{delDt},
             DEL_ID = #{delId},
-            DEL_FG = #{delFg}
+            DEL_FG = #{delFg},
+            CASE_ID = #{caseId},
+            CASE_NAME = #{caseName}
         </set>
         <where>
             WORK_NO = #{workNo}
@@ -145,7 +155,7 @@
             DEL_FG = '0'
             and PM_EMPLOYEE_NO = #{oldpmemployeeno}
             and PROJECT_ID = #{oldprojectid}
-            and CASE_NAME = #{oldcasename}
+            and CASE_ID = #{oldcaseid}
         </where>
     </update>
 
@@ -153,7 +163,8 @@
         select distinct
             PM_EMPLOYEE_NO,
             PROJECT_ID,
-            CASE_NAME
+            CASE_NAME,
+            CASE_ID
         from T_EMP_WORK
         where PM_EMPLOYEE_NO = #{pmEmployeeNo}
         and DEL_FG = 0
