@@ -320,7 +320,7 @@ public class MProjectServiceImpl implements MProjectService {
                     tEmpWorkService.setTEmpWorkByNO(
                             mProject.getPmemployeeno(), mProject.getProjectid(), mProject.getCasename(),
                             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), mProject.getPmemployeeno(),
-                            existMProject.getPmemployeeno(), existMProject.getProjectid(), existMProject.getCasename()
+                            existMProject.getPmemployeeno(), existMProject.getProjectid(), existMProject.getId()
                     );
                     if (mProjectMapper.setMProject(mProject) == 0) {
                         throw new AhiruException("项目登录失败");
