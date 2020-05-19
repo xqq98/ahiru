@@ -33,7 +33,7 @@ public interface TEmpWorkMapper {
 
     //韩广晨 2020-04-16 Begin
     //修改数据库表（T_EMP_WORK）的数据，根据 PM_EMPLOYEE_NO,PROJECT_ID,CASE_NAME
-    public int setTEmpWorkByNO(String newpmemployeeno, String newprojectid, String newcasename,
+    public int setTEmpWorkByNO(String newprojectid, String newcasename,
                                String updDt, String updId,
                                String oldpmemployeeno, String oldprojectid, String oldcaseid);
 

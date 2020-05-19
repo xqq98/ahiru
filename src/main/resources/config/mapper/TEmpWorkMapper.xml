@@ -145,7 +145,6 @@
     <update id="setTEmpWorkByNO">
         update T_EMP_WORK
         <set>
-            PM_EMPLOYEE_NO = #{newpmemployeeno},
             PROJECT_ID = #{newprojectid},
             CASE_NAME = #{newcasename},
             UPD_DT = #{updDt},
