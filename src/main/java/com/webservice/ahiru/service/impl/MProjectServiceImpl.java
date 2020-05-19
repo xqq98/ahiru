@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -306,33 +307,45 @@ public class MProjectServiceImpl implements MProjectService {
     public int setMProject(List<MProject> mProjectList) {
         try {
             String username = UserUtil.getLoginUser();
+            List<MProject> oldMprojects = mProjectMapper.getMProjectByPmid(username);
             for (int i = 0; i < mProjectList.size(); i++) {
                 MProject mProject = mProjectList.get(i);
+                List<MProject> existMProjects = oldMprojects.stream()
+                        .filter(item -> item.getId().equals(mProject.getId()))
+                        .collect(Collectors.toList());
 
-                mProject.setProjectname(mProject.getProjectname().substring(4));
-                MProject existMProject = getMProject(mProject.getId());
-                mProject.setEntid(username);
-                mProject.setEntdt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
-                mProject.setUpdid(username);
-                mProject.setUpddt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
-                // mProject.setDelfg("0");。。
-                if (existMProject != null) {
-                    tEmpWorkService.setTEmpWorkByNO(
-                            mProject.getPmemployeeno(), mProject.getProjectid(), mProject.getCasename(),
-                            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), mProject.getPmemployeeno(),
-                            existMProject.getPmemployeeno(), existMProject.getProjectid(), existMProject.getCasename()
-                    );
-                    if (mProjectMapper.setMProject(mProject) == 0) {
-                        throw new AhiruException("项目登录失败");
+                if (existMProjects != null && existMProjects.size() > 0) {
+                    if (existMProjects.get(0).getProjectid().equals(mProject.getProjectid())
+                            && existMProjects.get(0).getCasename().equals(mProject.getCasename())
+                            && existMProjects.get(0).getDelfg().equals(mProject.getDelfg())) {
+                        continue;
+                    } else {
+                        mProject.setProjectname(mProject.getProjectname().substring(4));
+                        mProject.setUpdid(username);
+                        mProject.setUpddt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
+                        if (mProject.getDelfg().equals('0')) {
+                            tEmpWorkService.setTEmpWorkByNO(mProject.getProjectid(), mProject.getCasename(),
+                                    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), username,
+                                    existMProjects.get(0).getPmemployeeno(), existMProjects.get(0).getProjectid(),
+                                    existMProjects.get(0).getId());
+                        }
+
+                        if (mProjectMapper.setMProject(mProject) == 0) {
+                            throw new AhiruException("项目登录失败");
+                        }
                     }
-                    ;
                 } else {
+                    mProject.setProjectname(mProject.getProjectname().substring(4));
+                    mProject.setEntid(username);
+                    mProject.setEntdt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
+                    mProject.setUpdid(username);
+                    mProject.setUpddt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
                     if (mProjectMapper.addMProject(mProject) == 0) {
                         throw new AhiruException("项目登录失败");
                     }
-                    ;
                 }
             }
+
             return 0;
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);

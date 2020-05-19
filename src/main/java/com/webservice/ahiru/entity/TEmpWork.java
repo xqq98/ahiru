@@ -26,6 +26,17 @@ public class TEmpWork {
     private String caseName;
     //韩广晨 2020-04-21 End
 
+    //作业id
+    private String caseId;
+
+    public String getCaseId() {
+        return caseId;
+    }
+
+    public void setCaseId(String caseId) {
+        this.caseId = caseId;
+    }
+
     //项目编号
     private String projectId;
 
@@ -61,6 +72,8 @@ public class TEmpWork {
 
     //删除标志
     private String delFg;
+
+
 
     public String getWorkNo() {
         return workNo;

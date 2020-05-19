@@ -131,7 +131,8 @@ public class SEVEmpListServiceImpl implements SEVEmpListService {
                     if(birthDay == null){//如果生日为空
                         result.get(i).setAge("无");//显示年龄为 “无”
                     }else{//如果生日不为空
-                        int birthDay1 = Integer.valueOf(birthDay);//把生日转换成int型
+                        String substring = birthDay.substring(0, 4);
+                        int birthDay1 = Integer.valueOf(substring);//把生日转换成int型
                         int age = nowyear1 - birthDay1;//当前年份减出生年份 算出年龄
                         String age1 = String.valueOf(age);//把算出的年龄转换成字符型
 //                        System.out.println(age1+"*******************");

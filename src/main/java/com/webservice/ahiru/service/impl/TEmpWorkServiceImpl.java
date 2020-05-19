@@ -79,8 +79,8 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
 
         for (int i = 0;i<tEmpWork.size();i++){
             TEmpWork aaa = tEmpWork.get(i);
-            //若UseStatus为0 且CaseName为null 此时为空闲人员数据处理为3
-            if(aaa.getUseStatus().equals("0") && StringUtils.isEmpty(aaa.getCaseName()) ){
+            //若UseStatus为0 且CaseId为null 此时为空闲人员数据处理为3
+            if(aaa.getUseStatus().equals("0") && StringUtils.isEmpty(aaa.getCaseId()) ){
                     aaa.setUseStatus("3");
             }
 
@@ -169,12 +169,13 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
 
     //韩广晨 2020-04-16 Begin
     //修改数据库表（T_EMP_WORK）的数据，根据 PM_EMPLOYEE_NO,PROJECT_ID,CASE_NAME
-    public int setTEmpWorkByNO(String newpmemployeeno, String newprojectid, String newcasename,
+    public int setTEmpWorkByNO(String newprojectid, String newcasename,
                                String updDt, String updId,
-                               String oldpmemployeeno, String oldprojectid, String oldcasename)
+                               String oldpmemployeeno, String oldprojectid, String oldcaseid)
     {
-        int cnt = tEmpWorkMapper.setTEmpWorkByNO(newpmemployeeno,newprojectid,newcasename,
-                                                 updDt,updId,oldpmemployeeno,oldprojectid,oldcasename);
+        int cnt = tEmpWorkMapper.setTEmpWorkByNO(newprojectid,newcasename,
+                                                updDt,updId,
+                                                oldpmemployeeno,oldprojectid,oldcaseid);
 
         return cnt;
     }
