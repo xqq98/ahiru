@@ -90,6 +90,7 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
             String usestat[] = new String[12];
             String caseId[] = new String[12];
             String caseName[] = new String[12];
+            String proId[] = new String[12];
             String pmNo[] = new String[12];
 
             for (int i=1;i<=12;i++){
@@ -101,6 +102,7 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
                     workNo[i-1]=empCol.get(0).getWorkNo()==null?"":empCol.get(0).getWorkNo();
                     usestat[i-1]=empCol.get(0).getUseStatus()==null?"":empCol.get(0).getUseStatus();
                     caseId[i-1]=empCol.get(0).getCaseId()==null?"":empCol.get(0).getCaseId();
+                    proId[i-1]=empCol.get(0).getProjectId()==null?"":empCol.get(0).getProjectId();
                     caseName[i-1]=empCol.get(0).getCaseName()==null?"":empCol.get(0).getCaseName();
                     pmNo[i-1]=empCol.get(0).getPmNo()==null?"":empCol.get(0).getPmNo();
                     if (UserUtil.getLoginUser().equals(empCol.get(0).getPmNo())){
@@ -113,11 +115,13 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
                     caseId[i-1]="";
                     caseName[i-1]="";
                     pmNo[i-1]="";
+                    proId[i-1]="";
                 }
             }
             empWork.setUseStatusArr(usestat);
             empWork.setCaseIdArr(caseId);
             empWork.setCaseNameArr(caseName);
+            empWork.setProIdArr(proId);
             empWork.setWorkNoArr(workNo);
             empWork.setPmIdArr(pmNo);
         return empWork;
