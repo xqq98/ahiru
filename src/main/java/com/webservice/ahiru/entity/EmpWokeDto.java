@@ -11,6 +11,8 @@ public class EmpWokeDto extends EmployeeWork {
 
     private String[] pmIdArr;
 
+    private String[] proIdArr;
+
     public String[] getPmIdArr() {
         return pmIdArr;
     }
@@ -51,4 +53,11 @@ public class EmpWokeDto extends EmployeeWork {
         this.caseNameArr = caseNameArr;
     }
 
+    public String[] getProIdArr() {
+        return proIdArr;
+    }
+
+    public void setProIdArr(String[] proIdArr) {
+        this.proIdArr = proIdArr;
+    }
 }
