@@ -6,6 +6,7 @@
 		T_EMP_WORK.EMPLOYEE_NO AS employeeNo,
 		T_EMP_WORK.PM_EMPLOYEE_NO AS pmNo,
 		T_EMP_WORK.USE_MONTH AS useMonth,
+		T_EMP_WORK.PROJECT_ID AS projectId,
 		T_EMP_WORK.USE_STATUS AS useStatus,
 		CONCAT(SUBSTRING(M_PROJECT.PROJECT_ID,1,2),':',M_PROJECT.CASE_NAME)  AS caseName,
 		T_EMP_WORK.USE_MEMO AS useMemo,
@@ -51,7 +52,14 @@
 						CASE_NAME=null,
 					</otherwise>
 				</choose>
-
+				<choose>
+					<when test="item.projectId!=''">
+						PROJECT_ID=#{item.projectId},
+					</when>
+					<otherwise>
+						PROJECT_ID=null,
+					</otherwise>
+				</choose>
 				USE_STATUS=#{item.useStatus},
 				USE_MEMO=#{item.useMemo},
 				UPD_DT= now(),
@@ -72,5 +80,6 @@
 		<result property="caseId" column="caseId"/>
 		<result property="caseName" column="caseName"/>
 		<result property="useMemo" column="useMemo"/>
+		<result property="projectId" column="projectId"/>
 	</resultMap>
 </mapper>
