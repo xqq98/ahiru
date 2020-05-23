@@ -1,7 +1,9 @@
 package com.webservice.ahiru.controller;
 
+import com.webservice.ahiru.entity.MProject;
 import com.webservice.ahiru.entity.OutManager;
 import com.webservice.ahiru.mapper.OutManagerMapper;
+import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.OutManagerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,15 +47,18 @@ public class OutManagerController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Object intf(@RequestBody OutManager outManager){
+    public Result intf(@RequestBody OutManager outManager){
         System.out.println("=============START=======");
 
-        Object obj = getInfo(outManager);
+        List<OutManager> obj =outManagerService.getInfo(outManager);
+//        Object obj = getInfo(outManager);
+        Result result = Result.ok(obj);
 
         System.out.println("=============END=======");
 
-        return obj;
+        return result;
     }
+
 
     //测试该方法是否通畅
     @RequestMapping("/test1")
@@ -61,26 +66,20 @@ public class OutManagerController {
         return "ok!!!";
     }
 
-    /**
-     *
-
-     * 查询视图（V_EMP_OUT）的数据以列表的形式输出，调用outManagerMapper的getInfo方法，返回对象result
-     * 根据员工编号（Manager）来查询视图（V_EMP_OUT）下的数据
-
-     */
-
-    public List<OutManager> getInfo(OutManager outManager) {
-
-//        System.out.println("===============OutManager:"+OutManager.getManager()+"=================");
 
 
-        List<OutManager> result = new ArrayList<OutManager>();
-
-        if(outManager != null){
-            result = outManagerMapper.getInfo(outManager);
-        }
-        return result;
-    }
+//    public List<OutManager> getInfo(OutManager outManager) {
+//
+////        System.out.println("===============OutManager:"+OutManager.getManager()+"=================");
+//
+//
+//        List<OutManager> result = new ArrayList<OutManager>();
+//
+//        if(outManager != null){
+//            result = outManagerMapper.getInfo(outManager);
+//        }
+//        return result;
+//    }
 
 }
 
