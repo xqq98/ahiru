@@ -37,7 +37,7 @@
         FROM M_PROJECT
         where
         DEL_FG = '0' AND  CASE_NAME != '0'
-        order by PM_EMPLOYEE_NO desc
+        order by PM_EMPLOYEE_NO,PROJECT_ID desc
     </select>
 
     <select id="getMProjectsIdAndName" resultMap="MProjectMap">
