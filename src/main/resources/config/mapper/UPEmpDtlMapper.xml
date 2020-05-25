@@ -45,6 +45,7 @@
         DEP_ROLE = #{depRole},
         TECH_DIRECTION = #{tech},
         SCHEDULED_EXIT_DT = #{outDate},
+        LEAVING_REASON = #{outRsn},
         UPD_ID = #{updId},
         UPD_DT = #{updDt}
         where
