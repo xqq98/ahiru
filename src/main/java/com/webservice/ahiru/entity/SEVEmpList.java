@@ -29,11 +29,17 @@ public class SEVEmpList {
     //级别
     private List<String> levelList;
 
-    //
+    //级别
     private String level;
 
-    //部门名称
+    //部门角色
     private String depRoleName;
+
+    //工作地点
+    private String workplace;
+
+    //部门角色
+    private String dept;
 
     //技术名称
     private String techName;
@@ -433,6 +439,22 @@ public class SEVEmpList {
 
     public void setEndDt(String endDt) {
         this.endDt = endDt;
+    }
+
+    public String getWorkplace() {
+        return workplace;
+    }
+
+    public void setWorkplace(String workplace) {
+        this.workplace = workplace;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
     }
 
 //    //编译器可以给你验证@Override下面的方法名是否是你父类中所有的，如果没有则报错。
