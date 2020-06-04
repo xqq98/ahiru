@@ -31,6 +31,12 @@ public class PmChosen {
     //部门名称
     private String hanyouValueName;
 
+    //工作地
+    private String workPlace;
+
+    //部
+    private List<String> deptList;
+
     //年
     private String year;
     //当月pmnum
@@ -276,8 +282,23 @@ public class PmChosen {
         this.a12 = a12;
     }
 
+    public String getWorkPlace() {
+        return workPlace;
+    }
 
-//    private String month;
+    public void setWorkPlace(String workPlace) {
+        this.workPlace = workPlace;
+    }
+
+    public List<String> getDeptList() {
+        return deptList;
+    }
+
+    public void setDeptList(List<String> deptList) {
+        this.deptList = deptList;
+    }
+
+    //    private String month;
 //
 //    public String getMonth() {
 //        SimpleDateFormat df = new SimpleDateFormat("MM");

@@ -44,9 +44,22 @@
         </if>
 
 
-        <!--    判断部门-->
-        <if test="hanyouValueName != '' and hanyouValueName !=null">
-            AND V_PM_CHOSEN.HANYOU_VALUE_NAME = #{hanyouValueName}
+<!--        &lt;!&ndash;    判断部门&ndash;&gt;-->
+<!--        <if test="hanyouValueName != '' and hanyouValueName !=null">-->
+<!--            AND V_PM_CHOSEN.HANYOU_VALUE_NAME = #{hanyouValueName}-->
+<!--        </if>-->
+
+
+        <!--        判断工作地-->
+        <if test="workPlace != '' and workPlace !=null">
+            AND V_PM_CHOSEN.WORK_PLACE = #{workPlace}
+        </if>
+        <!--        判断部门-->
+        <if test="deptList !=null and deptList.size > 0 ">
+        AND V_PM_CHOSEN.DEPT IN
+        <foreach collection="deptList" item="item"  open="(" close=")" separator=",">
+           #{item}
+        </foreach>
         </if>
 
         <!--    判断年月-->
@@ -99,6 +112,7 @@
         <result property="a10" column="A10"/>
         <result property="a11" column="A11"/>
         <result property="a12" column="A12"/>
+        <result property="workPlace" column="WORK_PLACE"/>
 
 
     </resultMap>
