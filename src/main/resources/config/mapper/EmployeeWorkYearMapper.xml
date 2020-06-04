@@ -36,6 +36,16 @@
         VEW.year
          ) T
 
+        LEFT JOIN M_EMP_DTL EDL
+        ON T.employeeNo = EDL.EMPLOYEE_NO
+        LEFT JOIN M_CODE WCODE
+        ON EDL.WORK_PLACE = WCODE.HANYOU_VALUE
+        AND WCODE.HANYOU_CODE='WORK_PLACE'
+        LEFT JOIN M_CODE DCODE
+        ON EDL.DEPT = DCODE.HANYOU_VALUE
+        AND DCODE.HANYOU_CODE='DEPT'
+
+
         <where>
             <if test="name !='' and name !=null " >
                 AND (T.employeeNo  like CONCAT('%',#{name},'%') or T.employeeName like CONCAT('%',#{name},'%') )
@@ -66,6 +76,15 @@
                     <property name="TBLID" value="T.employeeNo"/>
                 </include>
             </if>
+
+            <if test="workplace !='' and workplace !=null " >
+                AND WCODE.HANYOU_VALUE_NAME = #{workplace}
+            </if>
+
+            <if test="deptlist!= null and deptlist.size>0" >
+                AND DCODE.HANYOU_VALUE_NAME in <foreach collection="deptlist" index="index" item ="deptitem"  separator="," open=" (" close=")" > #{deptitem}</foreach>
+            </if>
+
         </where>
         order by pmid,caseName
 
