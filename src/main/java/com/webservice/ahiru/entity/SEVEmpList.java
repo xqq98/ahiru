@@ -38,8 +38,8 @@ public class SEVEmpList {
     //工作地点
     private String workplace;
 
-    //部门角色
-    private String dept;
+    //部门
+    private List<String> deptlist;
 
     //技术名称
     private String techName;
@@ -62,7 +62,7 @@ public class SEVEmpList {
     //
     private String BPFlg;
 
-    //部门名称
+    //部门解色名称
     private List<String> depRoleNameList;
 
     //技术名称
@@ -449,12 +449,12 @@ public class SEVEmpList {
         this.workplace = workplace;
     }
 
-    public String getDept() {
-        return dept;
+    public List<String> getDeptlist() {
+        return deptlist;
     }
 
-    public void setDept(String dept) {
-        this.dept = dept;
+    public void setDeptlist(List<String> deptlist) {
+        this.deptlist = deptlist;
     }
 
 //    //编译器可以给你验证@Override下面的方法名是否是你父类中所有的，如果没有则报错。
