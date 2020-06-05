@@ -23,6 +23,15 @@ public class VEmployeeOut implements Serializable {
     //员工编号
     private String id;
 
+
+
+
+    //工作地
+    private String  workPlaces;
+
+    //部门
+    private List<String> deptList;
+
     //员工姓名
     private String name;
 
@@ -143,6 +152,22 @@ public class VEmployeeOut implements Serializable {
 
     public void setBuList(List<String> buList) {
         this.buList = buList;
+    }
+
+    public String getWorkPlaces() {
+        return workPlaces;
+    }
+
+    public void setWorkPlaces(String workPlaces) {
+        this.workPlaces = workPlaces;
+    }
+
+    public List<String> getDeptList() {
+        return deptList;
+    }
+
+    public void setDeptList(List<String> deptList) {
+        this.deptList = deptList;
     }
 
     public String getId() {

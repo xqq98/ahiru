@@ -71,6 +71,15 @@
         <if test="endLeaving != '' and endLeaving !=null">
             and  CONCAT(#{endLeaving},'31') >= LEAVING_DATE
         </if>
+        <if test="workPlaces !='' and workPlaces !=null " >
+            AND WORKPLACE =#{workPlaces}
+        </if>
+        <if test="deptList.size > 0 and deptList !=null ">
+            AND DEPT IN
+            <foreach collection="deptList" open="(" separator="," close=")" item="aaa">
+                #{aaa}
+            </foreach>
+        </if>
         <!--        <if test="id != ''">-->
         <!--            ID = #{id} AND-->
         <!--        </if>-->
@@ -105,6 +114,7 @@
     <resultMap id="VEmployeeOutMap" type="com.webservice.ahiru.entity.VEmployeeOut">
         <result property="id" column="ID" />
         <result property="name" column="NAME" />
+        <result property="workPlaces" column="WORKPLACE" />
         <result property="company" column="COMPANY" />
         <result property="vendorCompany" column="VENDOR_COMPANY" />
         <result property="manager" column="MANAGER" />
