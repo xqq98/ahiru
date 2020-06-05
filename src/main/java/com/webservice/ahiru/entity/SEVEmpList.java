@@ -29,17 +29,21 @@ public class SEVEmpList {
     //级别
     private List<String> levelList;
 
-    //级别
-    private String level;
 
-    //部门角色
-    private String depRoleName;
 
-    //工作地点
-    private String workplace;
+    //工作地
+    private String  workPlace;
 
     //部门
-    private List<String> deptlist;
+    private List<String> deptList;
+
+
+
+    //
+    private String level;
+
+    //部门名称
+    private String depRoleName;
 
     //技术名称
     private String techName;
@@ -62,7 +66,8 @@ public class SEVEmpList {
     //
     private String BPFlg;
 
-    //部门解色名称
+
+    //部门名称
     private List<String> depRoleNameList;
 
     //技术名称
@@ -145,6 +150,23 @@ public class SEVEmpList {
         this.indepDate = indepDate;
     }
 
+    public String getWorkPlace() {
+        return workPlace;
+    }
+
+    public void setWorkPlace(String workPlace) {
+        this.workPlace = workPlace;
+    }
+
+    public List<String> getDeptList() {
+        return deptList;
+    }
+
+    public void setDeptList(List<String> deptList) {
+        this.deptList = deptList;
+    }
+
+
     public String getInDepTime() {
         return inDepTime;
     }
@@ -172,6 +194,7 @@ public class SEVEmpList {
     public String getAge() {
         return age;
     }
+
 
     public void setAge(String age) {
         this.age = age;
@@ -439,22 +462,6 @@ public class SEVEmpList {
 
     public void setEndDt(String endDt) {
         this.endDt = endDt;
-    }
-
-    public String getWorkplace() {
-        return workplace;
-    }
-
-    public void setWorkplace(String workplace) {
-        this.workplace = workplace;
-    }
-
-    public List<String> getDeptlist() {
-        return deptlist;
-    }
-
-    public void setDeptlist(List<String> deptlist) {
-        this.deptlist = deptlist;
     }
 
 //    //编译器可以给你验证@Override下面的方法名是否是你父类中所有的，如果没有则报错。

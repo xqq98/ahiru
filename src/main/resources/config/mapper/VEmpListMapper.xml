@@ -46,6 +46,15 @@
         <if test="pmName != '' and pmName !=null">
             and PMNAME = #{pmName}
         </if>
+        <if test="workPlace !='' and workPlace !=null " >
+            AND WORK_PLACE =#{workPlace}
+        </if>
+        <if test="deptList.size > 0 and deptList !=null ">
+            AND DEPT IN
+            <foreach collection="deptList" open="(" separator="," close=")" item="aaa">
+                #{aaa}
+            </foreach>
+        </if>
         order by BPFLG,ID
     </select>
 
@@ -53,6 +62,7 @@
         <result property="id" column="ID" />
         <result property="name" column="NAME" />
         <result property="job" column="JOB" />
+        <result property="workPlace" column="WORK_PLACE" />
         <result property="level" column="LEVEL" />
         <result property="inDate" column="INDATE" />
         <result property="depRole" column="DEPROLE" />

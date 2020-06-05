@@ -48,6 +48,7 @@
         <result property="id" column="ID" />
         <result property="name" column="NAME" />
         <result property="job" column="JOB" />
+        <result property="workPlace" column="WORK_PLACE" />
         <result property="level" column="LEVEL" />
         <result property="inDate" column="INDATE" />
         <result property="depRole" column="DEPROLE" />
@@ -106,12 +107,17 @@
         a11,
         a12,
         a,
+        WORK_PLACE,
+        DEPT,
         PMNAME
         FROM V_EMP_LIST
         WHERE
         BPFLG != '' and DEL_FG = 0
         <if test="name !='' and name !=null " >
             AND NAME LIKE concat('%',concat (#{name},'%'))
+        </if>
+        <if test="name !='' and name !=null " >
+            AND ( NAME LIKE CONCAT('%',concat(#{name},'%')) or ID LIKE CONCAT('%',concat(#{name},'%')))
         </if>
         <if test="levelList !=null and levelList.size>0  " >
             AND LEVEL IN
@@ -127,6 +133,15 @@
         </if>
         <if test="pmName !='' and pmName !=null " >
             AND PMNAME =#{pmName}
+        </if>
+        <if test="workPlace !='' and workPlace !=null " >
+            AND WORK_PLACE =#{workPlace}
+        </if>
+        <if test="deptList.size > 0 and deptList !=null ">
+            AND DEPT IN
+            <foreach collection="deptList" open="(" separator="," close=")" item="aaa">
+                #{aaa}
+            </foreach>
         </if>
 <!--        <if test="startDt != '' and startDt != null and endDt != '' and endDt != null ">-->
 <!--            AND ID in (SELECT-->

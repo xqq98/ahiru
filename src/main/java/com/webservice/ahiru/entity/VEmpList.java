@@ -3,6 +3,7 @@ package com.webservice.ahiru.entity;
 import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -48,6 +49,14 @@ public class VEmpList implements Serializable {
 
     //离职原因
     private String outRsn;
+
+
+
+    //工作地
+    private String  workPlace;
+
+    //部门
+    private List<String> deptList;
 
     //
     private String BPFlg;
@@ -213,6 +222,22 @@ public class VEmpList implements Serializable {
 
     public void setOutRsn(String outRsn) {
         this.outRsn = outRsn;
+    }
+
+    public String getWorkPlace() {
+        return workPlace;
+    }
+
+    public void setWorkPlace(String workPlace) {
+        this.workPlace = workPlace;
+    }
+
+    public List<String> getDeptList() {
+        return deptList;
+    }
+
+    public void setDeptList(List<String> deptList) {
+        this.deptList = deptList;
     }
 
     public String getA1() {
