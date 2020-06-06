@@ -51,7 +51,7 @@
         <if test="bu != '' and bu !=null">
             and BU = #{bu}
         </if>
-        <if test="buList.size > 0 and buList != null">
+        <if test="buList != null and buList.size > 0">
             AND BU IN
             <foreach collection="buList" open="(" separator="," close=")" item="aaa">
                 #{aaa}
@@ -74,7 +74,7 @@
         <if test="workPlaces !='' and workPlaces !=null " >
             AND WORKPLACE =#{workPlaces}
         </if>
-        <if test="deptList.size > 0 and deptList !=null ">
+        <if test="deptList !=null and deptList.size > 0 ">
             AND DEPT IN
             <foreach collection="deptList" open="(" separator="," close=")" item="aaa">
                 #{aaa}

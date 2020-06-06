@@ -49,7 +49,7 @@
         <if test="workPlace !='' and workPlace !=null " >
             AND WORK_PLACE =#{workPlace}
         </if>
-        <if test="deptList.size > 0 and deptList !=null ">
+        <if test="deptList !=null and deptList.size > 0 ">
             AND DEPT IN
             <foreach collection="deptList" open="(" separator="," close=")" item="aaa">
                 #{aaa}
