@@ -77,12 +77,12 @@
                 </include>
             </if>
 
-            <if test="workplace !='' and workplace !=null " >
-                AND WCODE.HANYOU_VALUE_NAME = #{workplace}
+            <if test="workPlace !='' and workPlace !=null " >
+                AND WCODE.HANYOU_VALUE_NAME = #{workPlace}
             </if>
 
-            <if test="deptlist!= null and deptlist.size>0" >
-                AND DCODE.HANYOU_VALUE_NAME in <foreach collection="deptlist" index="index" item ="deptitem"  separator="," open=" (" close=")" > #{deptitem}</foreach>
+            <if test="deptList!= null and deptList.size>0" >
+                AND DCODE.HANYOU_VALUE_NAME in <foreach collection="deptList" index="index" item ="deptitem"  separator="," open=" (" close=")" > #{deptitem}</foreach>
             </if>
 
         </where>
