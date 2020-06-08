@@ -114,9 +114,6 @@
         WHERE
         BPFLG != '' and DEL_FG = 0
         <if test="name !='' and name !=null " >
-            AND NAME LIKE concat('%',concat (#{name},'%'))
-        </if>
-        <if test="name !='' and name !=null " >
             AND ( NAME LIKE CONCAT('%',concat(#{name},'%')) or ID LIKE CONCAT('%',concat(#{name},'%')))
         </if>
         <if test="levelList !=null and levelList.size>0  " >
