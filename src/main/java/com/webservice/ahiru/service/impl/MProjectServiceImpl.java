@@ -323,15 +323,13 @@ public class MProjectServiceImpl implements MProjectService {
                         mProject.setProjectname(mProject.getProjectname().substring(4));
                         mProject.setUpdid(username);
                         mProject.setUpddt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date()));
-                        if (mProject.getDelfg().equals('0')) {
+
+                        mProjectMapper.setMProject(mProject);
+                        if(mProject.getDelfg().equals("0")){
                             tEmpWorkService.setTEmpWorkByNO(mProject.getProjectid(), mProject.getCasename(),
                                     new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), username,
                                     existMProjects.get(0).getPmemployeeno(), existMProjects.get(0).getProjectid(),
                                     existMProjects.get(0).getId());
-                        }
-
-                        if (mProjectMapper.setMProject(mProject) == 0) {
-                            throw new AhiruException("项目登录失败");
                         }
                     }
                 } else {
