@@ -235,6 +235,7 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
                     }else{
                         //有workno 没有pmnum 调用删除方法
                         delTEmpWorkbyworkNo(tEmpWork);
+                        tEmpWork.setUseStatus("4");
                         doneList.add(tEmpWork);
                     }
 
