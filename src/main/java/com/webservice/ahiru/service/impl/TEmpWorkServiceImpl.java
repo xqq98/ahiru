@@ -73,16 +73,16 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
             //tempworkList中每一个对象添加id
             tEmpWork1.get(i).setEmployeeNo(id);
             //tempworkList中每一个对象都设置为空闲人员
-            tEmpWork1.get(i).setUseStatus("3");
+            tEmpWork1.get(i).setUseStatus("4");
         }
 
 
         for (int i = 0;i<tEmpWork.size();i++){
             TEmpWork aaa = tEmpWork.get(i);
             //若UseStatus为0 且CaseId为null 此时为空闲人员数据处理为3
-            if(aaa.getUseStatus().equals("0") && StringUtils.isEmpty(aaa.getCaseId()) ){
-                    aaa.setUseStatus("3");
-            }
+//            if(aaa.getUseStatus().equals("0") && StringUtils.isEmpty(aaa.getCaseId()) ){
+//                    aaa.setUseStatus("3");
+//            }
 
 //            if(StringUtils.isEmpty(aaa.getUseStatus()) ){
 //                aaa.setUseStatus("3");
@@ -216,8 +216,8 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
             for (int i = 0; i < tEmpWorkList.size(); i++) {
                 TEmpWork oldTEmpWork = oldlist.get(i);
                 TEmpWork tEmpWork = tEmpWorkList.get(i);
-                if(tEmpWork.getUseStatus().equals("3")){
-                    tEmpWork.setUseStatus("0");
+                if(tEmpWork.getUseStatus().equals("4")){
+                    tEmpWork.setUseStatus("3");
                 }
                 //如果workno不为空，说明数据库存在数据，根据delfg判断调用修改还是删除方法
                 if (!StringUtils.isEmpty(tEmpWork.getWorkNo())) {

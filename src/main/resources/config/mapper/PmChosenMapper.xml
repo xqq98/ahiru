@@ -67,15 +67,19 @@
             AND V_PM_CHOSEN.YEAR = #{year}
 
             <if test="monthList !=null and monthList.size == 1 ">
-                AND ${monthList.get(0)} = 3
+                AND( ${monthList.get(0)} = 4 OR ${monthList.get(0)} = 3)
             </if>
 
             <if test="monthList !=null and monthList.size > 1 ">
-                AND
-                <foreach collection="monthList" item="item"  open="(" close="= 3)" separator="=3 OR">
-                ${item}
+                AND(
+                <foreach collection="monthList" item="item" open="(" close="= 4)" separator="=4 OR">
+                    ${item}
                 </foreach>
-
+                OR
+                <foreach collection="monthList" item="item" open="(" close=" = 3)" separator="=3 OR">
+                    ${item}
+                </foreach>
+                )
             </if>
 
         </if>
