@@ -45,5 +45,5 @@ public interface TEmpWorkService {
 
 
     //处理数据
-    List<Integer> doneTempWork(List<TEmpWork> tEmpWorkList)  throws AhiruException;
+    List<TEmpWork> doneTempWork(List<TEmpWork> tEmpWorkList)  throws AhiruException;
 }
