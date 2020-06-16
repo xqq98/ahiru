@@ -25,6 +25,8 @@ public class MEmpDtl implements Serializable {
     //微信ID
     private String weChatId;
 
+    private String agencyNo;
+
     //权限
     private String role;
 //    private String depRole;
@@ -42,6 +44,14 @@ public class MEmpDtl implements Serializable {
 
     //系统当前时间
     private String currenttime;
+
+    public String getAgencyNo() {
+        return agencyNo;
+    }
+
+    public void setAgencyNo(String agencyNo) {
+        this.agencyNo = agencyNo;
+    }
 
     public String getEmployeeNo() {
         return employeeNo;

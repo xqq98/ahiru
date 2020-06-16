@@ -1,7 +1,9 @@
 package com.webservice.ahiru.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.webservice.ahiru.entity.MEmpDtl;
 import com.webservice.ahiru.mapper.MEmpDtlMapper;
+import com.webservice.ahiru.pojo.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -135,58 +139,54 @@ public class MEmpDtlController<weChatId> {
     @RequestMapping(value = "/bind", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Object bindAndGetRole(@RequestBody MEmpDtl mEmpDtl) {
-
+    public Result bindAndGetRole(@RequestBody MEmpDtl mEmpDtl) {
         List<MEmpDtl> resList = new ArrayList<>();
-
         if(mEmpDtl != null){
-
             resList = mEmpDtlMapper.getInfo(mEmpDtl);
         }
+        Map<String , MEmpDtl > obj = new HashMap();
+        Result result = new Result(null);
 
-        String weChatId = "";
+        if(resList.size()>0)
+        {
+            if( !StringUtils.isEmpty(resList.get(0).getWeChatId()) && !mEmpDtl.getWeChatId().equals(resList.get(0).getWeChatId()))
+            {
+                System.out.println("===============mEmpDtl.getWeChatId():"+ mEmpDtl.getWeChatId() +"=================");
+                System.out.println("===============WeChatId:"+ resList.get(0).getWeChatId() +"=================");
+                result.setCode("40000");
+                result.setSuccess("NO");
+                result.setMessage("员工号已被绑定或网络错误，请联系管理员");
+            }
+            else {
+                if (StringUtils.isEmpty(resList.get(0).getWeChatId())) {
+                    int count = mEmpDtlMapper.UpdateInfo(mEmpDtl);
+                    if (count > 0) {
+                        resList.get(0).setWeChatId(mEmpDtl.getWeChatId());
+                    }
+                }
 
-        weChatId = resList.get(0).getWeChatId();
+                for (int i = 0; i < resList.size(); i++) {
+                    if (i == 0) {
+                        obj.put("currentUser", resList.get(i));
+                    } else {
+                        obj.put("agency_" + i, resList.get(i));
+                    }
+                }
 
-        Object obj =  null;
-
-        if(weChatId == null || "".equals(weChatId)){
-
-            int result = mEmpDtlMapper.UpdateInfo(mEmpDtl);
-
-//            message = resList.get(0).getRole();
-            obj = mEmpDtlMapper.getInfo(mEmpDtl);
-
-        }else if (weChatId !=null && !mEmpDtl.getWeChatId().equals(weChatId)){
-
+                result = Result.ok(obj);
+            }
+        }
+        else
+        {
             System.out.println("===============mEmpDtl.getWeChatId():"+ mEmpDtl.getWeChatId() +"=================");
+            System.out.println("===============WeChatId:"+ resList.get(0).getWeChatId() +"=================");
 
-            System.out.println("===============WeChatId:"+ weChatId +"=================");
-
-//            message = "40000";
-            obj = "40000";
-
-
-        }else{
-
-            obj = mEmpDtlMapper.getInfo(mEmpDtl);
-
-//            message = resList.get(0).getRole();
-//            TimeZone tz = TimeZone.getTimeZone("Asia/Shanghai");
-//            Date date = new Date();
-//            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");
-//            sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-//            System.out.println(sdf.format(date ));
-//
-//            message ="\'{" + "\"role\":" + "\"" +resList.get(0).getRole()  + "\"," + "\"date\":" + sdf.format(date ) +"}\'";
-
+            result.setSuccess("NO");
+            result.setMessage("员工号输入错误");
         }
 
-        System.out.println("===============WeChatId:"+ mEmpDtl.getWeChatId() +"=================");
 
-        System.out.println("===============role:"+ resList.get(0).getRole() +"=================");
-        System.out.println("===============role:"+ obj +"=================");
-        return  obj;
+        return result;
     }
 
 }

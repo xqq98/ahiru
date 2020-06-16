@@ -6,6 +6,7 @@
         EMPLOYEE_NO,
         WECHAT_ID,
         ROLE,
+        AGENCY_NO,
         date_add(now(), interval 8 hour) as CURRENTTIME
         FROM M_EMP_DTL
         where
@@ -13,7 +14,24 @@
             EMPLOYEE_NO = #{employeeNo} AND
         </if>
         DEL_FG = '0'
-        order by EMPLOYEE_NO
+        union all
+        SELECT
+        EMPLOYEE_NO,
+        WECHAT_ID,
+        ROLE,
+        AGENCY_NO,
+        date_add(now(), interval 8 hour) as CURRENTTIME
+        FROM M_EMP_DTL
+        where
+        EMPLOYEE_NO in(
+        SELECT
+        AGENCY_NO
+        FROM M_EMP_DTL
+        where
+        <if test="employeeNo != ''">
+            EMPLOYEE_NO = #{employeeNo} AND
+        </if>
+        DEL_FG = '0')
     </select>
 
     <update id="UpdateInfo" parameterType="com.webservice.ahiru.entity.MEmpDtl">
@@ -32,5 +50,6 @@
         <result property="employeeNo" column="EMPLOYEE_NO" />
         <result property="weChatId" column="WECHAT_ID" />
         <result property="role" column="ROLE" />
+        <result property="agencyNo" column="AGENCY_NO" />
     </resultMap>
 </mapper>
