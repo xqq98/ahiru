@@ -9,7 +9,7 @@
                     WHERE TEW.EMPLOYEE_NO = ${TBLID}
                     AND CONCAT(year,USE_MONTH) <![CDATA[>=]]> #{startDt}
                     AND CONCAT(year,USE_MONTH) <![CDATA[<=]]> #{endDt}
-                    AND (USE_STATUS = 0 AND CASE_ID is null )
+                    AND (USE_STATUS = 3 )
                     )
                     OR EXISTS (
 
