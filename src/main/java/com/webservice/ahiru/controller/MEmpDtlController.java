@@ -179,7 +179,8 @@ public class MEmpDtlController<weChatId> {
         else
         {
             System.out.println("===============mEmpDtl.getWeChatId():"+ mEmpDtl.getWeChatId() +"=================");
-          //  System.out.println("===============WeChatId:"+ resList.get(0).getWeChatId() +"=================");
+
+            //  System.out.println("===============WeChatId:"+ resList.get(0).getWeChatId() +"=================");
 
             result.setSuccess("NO");
             result.setMessage("员工号输入错误");
