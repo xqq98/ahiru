@@ -86,7 +86,7 @@
             </if>
 
         </where>
-        order by pmid,caseName
+        order by pmid,SUBSTRING(caseName, 3),caseName,employeeName
 
 	</select>
 
