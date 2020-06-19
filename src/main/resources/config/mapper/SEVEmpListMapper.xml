@@ -41,7 +41,6 @@
         concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) >= #{startDt}
         and
         #{endDt} >=	concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) )
-
     </select>
 
     <resultMap id="SEVEmpListMap" type="com.webservice.ahiru.entity.SEVEmpList">
@@ -172,5 +171,6 @@
             </foreach>
 
         </if>
+        ORDER BY PMUID,WORK_PLACE,DEPT,`NAME`
     </select>
 </mapper>
