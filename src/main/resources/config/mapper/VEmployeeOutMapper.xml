@@ -21,7 +21,6 @@
         EMPLOYEE_TYPE,
         IN_SOCIETY_DATE,
         TURN_POSITIVE_DATE,
---        DATE_FORMAT(`V_EMP_OUT`.LEAVING_DATE,'%Y-%m-%d') AS `LEAVING_DATE`,
         LEAVING_DATE,
         LEAVING_REASON,
         COST_CENTER,
@@ -31,7 +30,6 @@
         CCC,
         ADMISSION_DT,
         CONTRACT_DT,
-        --         SCHEDULED_EXIT_DT,
         SKILLS,
         ENT_DT,
         ENT_ID,
@@ -58,12 +56,12 @@
             </foreach>
         </if>
 
-        --         通过pm筛选
+
         <if test="manager != '' and manager !=null">
             and MANAGER = #{manager}
         </if>
 
-        --         通过离职时间筛选（起始和结束）
+
         <if test="startLeaving != '' and startLeaving !=null">
             and LEAVING_DATE >=  CONCAT(#{startLeaving},'01')
         </if>
@@ -90,7 +88,7 @@
         <!--            ID = #{manager} AND-->
         <!--        </if>-->
 
-        order by ID,DEL_FG
+        ORDER BY LEAVING_DATE DESC, `NAME`
     </select>
 
     <!--    查询部门-->
