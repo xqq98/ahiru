@@ -158,6 +158,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
+
+        <!--加入redis的启动器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+          </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -174,17 +180,13 @@
 
     <build>
         <plugins>
-
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                     <configuration>
-                    <warName>ahiru</warName>
+                    <warName>ahiruDev</warName>
                 </configuration>
             </plugin>
-
-
         </plugins>
     </build>
 
