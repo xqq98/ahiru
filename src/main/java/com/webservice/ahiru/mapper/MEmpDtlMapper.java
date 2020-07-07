@@ -29,4 +29,7 @@ public interface MEmpDtlMapper extends BaseMapper<MEmpDtl> {
     //修改数据
     public int UpdateInfo(MEmpDtl MEmpDtl);
 
+    //根据empid取得数据
+    public MEmpDtl getUserInfoById(String empid);
+
 }
