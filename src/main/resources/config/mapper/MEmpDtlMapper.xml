@@ -46,6 +46,16 @@
         order by EMPLOYEE_NO
     </update>
 
+    <select id="getUserInfoById" resultMap="MEmpDtlMap">
+        SELECT
+        EMPLOYEE_NO,
+        WECHAT_ID
+        FROM M_EMP_DTL
+        where
+        EMPLOYEE_NO = #{employeeNo} AND
+        DEL_FG = '0'
+     </select>
+
     <resultMap id="MEmpDtlMap" type="com.webservice.ahiru.entity.MEmpDtl">
         <result property="employeeNo" column="EMPLOYEE_NO" />
         <result property="weChatId" column="WECHAT_ID" />
