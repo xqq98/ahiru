@@ -9,23 +9,28 @@ import com.webservice.ahiru.entity.MEmpDtl;
 import com.webservice.ahiru.exception.AhiruException;
 import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.UserService;
+import io.lettuce.core.RedisCommandTimeoutException;
+import io.lettuce.core.RedisException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 
 @Component
 public class ServiceInterceptor implements HandlerInterceptor {
 
     private String USERNAME = "USERNAME";
     private String WECHARTID = "OPENID";
-    private long EXPIRE_TEIM = 3600;
+    private long EXPIRE_TEIM = 60;
 
     //Log文件的获取
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -52,12 +57,26 @@ public class ServiceInterceptor implements HandlerInterceptor {
             if (openid == null || openid.equals("")) {
                 throw new Exception("无权限访问资源");
             }
-
-            String resOpenid = (String) redisUtil.get(loginUser);
+            String resOpenid =null;
+            try {
+                resOpenid = (String) redisUtil.get(loginUser);
+            }catch (RedisException ex){
+                resOpenid =null;
+                logger.error("Redis error", ex);
+            }catch (RedisConnectionFailureException cex){
+                resOpenid =null;
+                logger.error("Redis error", cex);
+            }
             if (StringUtils.isEmpty(resOpenid)){
                 MEmpDtl emp = userService.getUserInfo(loginUser);
                 if (emp != null && openid.equals(emp.getWeChatId())) {
-                    redisUtil.set(loginUser,openid,EXPIRE_TEIM);
+                    try {
+                        redisUtil.set(loginUser,openid,EXPIRE_TEIM);
+                    }catch (RedisException ex){
+                        logger.error("Redis error", ex);
+                    }catch (RedisConnectionFailureException cex){
+                        logger.error("Redis error", cex);
+                    }
                     return true;
                 } else {
                     throw new Exception("无权限访问资源");
