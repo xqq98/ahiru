@@ -1,5 +1,6 @@
 package com.webservice.ahiru.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.webservice.ahiru.entity.MProject;
 import com.webservice.ahiru.entity.MProjectCaseName;
 import com.webservice.ahiru.entity.MProjectNew;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -223,22 +225,33 @@ public class MProjectController {
     }
 
     @RequestMapping(value = "/getMProjectsCaseName", method = RequestMethod.POST)
-    public Result getMProjectsCaseName() {
+    public Result getMProjectsCaseName(String year) {
+        String pYear = year;
 
+        if (StringUtils.isEmpty(year)){
+            Calendar cal = Calendar.getInstance();
+            pYear=String.valueOf( cal.get(Calendar.YEAR));
+        }
         List<MProjectCaseName> resultMprojectCaseName = new ArrayList<>();
-        resultMprojectCaseName = mProjectService.getMProjectsCaseName();
+        resultMprojectCaseName = mProjectService.getMProjectsCaseName(pYear);
         Result result = Result.ok(resultMprojectCaseName);
         return result;
     }
 
     //控制器处理“/getmprojects”的URL请求，POST请求
     @RequestMapping(value = "/getmprojectsall", method = RequestMethod.POST)
-    public Result getMProjectsAll() {
+    public Result getMProjectsAll(String year) {
+        String pYear = year;
+
+        if (StringUtils.isEmpty(year)){
+            Calendar cal = Calendar.getInstance();
+            pYear=String.valueOf( cal.get(Calendar.YEAR));
+        }
 
         List<MProject> resultall = new ArrayList<MProject>();
 
 
-        Result result = Result.ok(mProjectService.getMProjectsAll());
+        Result result = Result.ok(mProjectService.getMProjectsAll(pYear));
         return result;
 
     }
