@@ -224,9 +224,9 @@ public class MProjectServiceImpl implements MProjectService {
     }
 
     @Override
-    public List<MProjectCaseName> getMProjectsCaseName() {
+    public List<MProjectCaseName> getMProjectsCaseName(String pYear) {
         List<MProjectCaseName> resultMprojectCaseName = new ArrayList<>();
-        List<MProject> mProjectsAll = mProjectMapper.getMProjectsAll();
+        List<MProject> mProjectsAll = mProjectMapper.getMProjectsAll(pYear);
         System.out.println("----------------getAll---------------------");
         //mProjectsAll = mProjectMapper.getMProjects();
         String empNo = "";
@@ -265,9 +265,9 @@ public class MProjectServiceImpl implements MProjectService {
     }
 
     @Override
-    public List<MProject> getMProjectsAll() {
+    public List<MProject> getMProjectsAll(String year) {
         try {
-            List<MProject> mProjectsAll = mProjectMapper.getMProjectsAll();
+            List<MProject> mProjectsAll = mProjectMapper.getMProjectsAll(year);
 
             return mProjectsAll;
         } catch (Exception ex) {
