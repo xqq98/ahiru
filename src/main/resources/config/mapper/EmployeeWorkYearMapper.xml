@@ -11,9 +11,9 @@
         VEW.level,
         VEW.professional,
         VEW.year,
-        max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.pmId,'')) pmId,
-        max(if (VEW.`month`=date_format(CURDATE(),'%m'),VEW.pmName,'')) pmName,
-        max(if (VEW.`month`=date_format(CURDATE(),'%m'),CONCAT(SUBSTRING(VEW.projectId,1,2),':',VEW.caseName),'')) caseName,
+        max(if (VEW.`month`= #{searchMonth},VEW.pmId,'')) pmId,
+        max(if (VEW.`month`= #{searchMonth},VEW.pmName,'')) pmName,
+        max(if (VEW.`month`= #{searchMonth},CONCAT(SUBSTRING(VEW.projectId,1,2),':',VEW.caseName),'')) caseName,
         max(if (VEW.month = '01',VEW.useStatus,'')) useStatus01,
         max(if (VEW.month = '02',VEW.useStatus,'')) useStatus02,
         max(if (VEW.month = '03',VEW.useStatus,'')) useStatus03,
@@ -51,7 +51,7 @@
                 AND (T.employeeNo  like CONCAT('%',#{name},'%') or T.employeeName like CONCAT('%',#{name},'%') )
             </if>
 
-                AND T.year = YEAR(CURDATE())
+                AND T.year = #{searchYear}
 
             <if test="levelList!= null and levelList.size>0" >
                 AND T.LEVEL in
