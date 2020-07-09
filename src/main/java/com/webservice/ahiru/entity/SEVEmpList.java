@@ -29,17 +29,13 @@ public class SEVEmpList {
     //级别
     private List<String> levelList;
 
-
-
     //工作地
     private String  workPlace;
 
     //部门
     private List<String> deptList;
 
-
-
-    //
+    //级别
     private String level;
 
     //部门名称
@@ -72,6 +68,12 @@ public class SEVEmpList {
 
     //技术名称
     private List<String> techNameList;
+
+    //检索年
+    private String searchYear;
+
+    //检索月
+    private String searchMonth;
 
     //
     private String a1;
@@ -334,6 +336,22 @@ public class SEVEmpList {
 
     public void setTechNameList(List<String> techNameList) {
         this.techNameList = techNameList;
+    }
+
+    public String getSearchYear() {
+        return searchYear;
+    }
+
+    public void setSearchYear(String searchYear) {
+        this.searchYear = searchYear;
+    }
+
+    public String getSearchMonth() {
+        return searchMonth;
+    }
+
+    public void setSearchMonth(String searchMonth) {
+        this.searchMonth = searchMonth;
     }
 
     public String getA1() {
