@@ -20,7 +20,7 @@
         DEL_FG = '0'
     </select>
 
-    <select id="getMProjectsAll" resultMap="MProjectMap">
+    <select id="getMProjectsAll" resultMap="MProjectMap" >
         SELECT
         ID,
         PM_EMPLOYEE_NO,
@@ -36,7 +36,9 @@
         DEL_FG
         FROM M_PROJECT
         where
-        DEL_FG = '0' AND  CASE_NAME != '0'
+        YEAR = #{year}
+        AND DEL_FG = '0'
+        AND  CASE_NAME != '0'
         order by PM_EMPLOYEE_NO,PROJECT_ID desc
     </select>
 
