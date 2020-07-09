@@ -30,7 +30,7 @@ public class ServiceInterceptor implements HandlerInterceptor {
 
     private String USERNAME = "USERNAME";
     private String WECHARTID = "OPENID";
-    private long EXPIRE_TEIM = 60;
+    private long EXPIRE_TEIM = 3600;
 
     //Log文件的获取
     private Logger logger = LoggerFactory.getLogger(this.getClass());
