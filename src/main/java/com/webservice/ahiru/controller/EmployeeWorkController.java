@@ -1,5 +1,6 @@
 package com.webservice.ahiru.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.webservice.ahiru.entity.EmpWokeDto;
 import com.webservice.ahiru.entity.EmployeeWork;
 import com.webservice.ahiru.entity.EmployeeWorkYear;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,6 +44,20 @@ public class EmployeeWorkController {
             method = RequestMethod.POST)
     public Result getEmployeeWorkInfo(@RequestBody SEVEmpList sEVEmpList){
         logger.info("*******getEmployeeWorkInfo start********");
+        Calendar cal = Calendar.getInstance();
+        int sYear = cal.get(Calendar.YEAR);
+        int sMonth = cal.get(Calendar.MONTH )+1;
+
+        //检索年初始值设置
+        if (StringUtils.isEmpty(sEVEmpList.getSearchYear())){
+            sEVEmpList.setSearchYear(String.valueOf(sYear));
+        }
+
+        //检索月初始值设置
+        if (StringUtils.isEmpty(sEVEmpList.getSearchMonth())){
+            sEVEmpList.setSearchMonth((String.valueOf(100+sMonth)).substring(1));
+        }
+
         List<EmployeeWorkYear> employeeWorkYearList=employeeWorkService.getEmployeeWorkInfo(sEVEmpList);
         Result result = Result.ok(employeeWorkYearList);
         logger.info("*******getEmployeeWorkInfo start********");
