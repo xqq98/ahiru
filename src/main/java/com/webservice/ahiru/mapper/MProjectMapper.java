@@ -50,7 +50,7 @@ public interface MProjectMapper {
 
 //    public List<MProjectCaseName> getMProjectsCaseName();
 
-    public List<MProject> getMProjectsAll();
+    public List<MProject> getMProjectsAll(String year);
 
     //韩广晨 2020-04-16 Begin
     public MProject getMProject(String id);
