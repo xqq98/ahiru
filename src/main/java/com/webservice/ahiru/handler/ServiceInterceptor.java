@@ -60,23 +60,20 @@ public class ServiceInterceptor implements HandlerInterceptor {
             String resOpenid =null;
             try {
                 resOpenid = (String) redisUtil.get(loginUser);
-            }catch (RedisException ex){
+            }catch (Exception ex){
                 resOpenid =null;
                 logger.error("Redis error", ex);
-            }catch (RedisConnectionFailureException cex){
-                resOpenid =null;
-                logger.error("Redis error", cex);
             }
+
             if (StringUtils.isEmpty(resOpenid)){
                 MEmpDtl emp = userService.getUserInfo(loginUser);
                 if (emp != null && openid.equals(emp.getWeChatId())) {
                     try {
                         redisUtil.set(loginUser,openid,EXPIRE_TEIM);
-                    }catch (RedisException ex){
+                    }catch (Exception ex){
                         logger.error("Redis error", ex);
-                    }catch (RedisConnectionFailureException cex){
-                        logger.error("Redis error", cex);
                     }
+
                     return true;
                 } else {
                     throw new Exception("无权限访问资源");
