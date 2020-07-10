@@ -1,5 +1,6 @@
 package com.webservice.ahiru.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.webservice.ahiru.entity.SEVEmpList;
 import com.webservice.ahiru.pojo.Result;
 import com.webservice.ahiru.service.SEVEmpListService;
@@ -7,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Calendar;
 
 /**
  * <p>
@@ -60,13 +63,19 @@ public class SEVEmpListController {
     @RequestMapping(value = "/getInFoAll",method = RequestMethod.POST)
     public Result getInfoAll(@RequestBody SEVEmpList sevEmpList){
 
-//        System.out.println(sevEmpList.getDepRoleName()+"=========================" );
+        Calendar cal = Calendar.getInstance();
+        int sYear = cal.get(Calendar.YEAR);
+        int sMonth = cal.get(Calendar.MONTH )+1;
 
-//        String ret = "'"+sevEmpList.getDepRoleName().replace(",", "\',\'")+"'";
-//
-//        sevEmpList.setDepRoleName(ret);
-//
-//        System.out.println(sevEmpList.getDepRoleName()+"=========================" );
+        //检索年初始值设置
+        if (StringUtils.isEmpty(sevEmpList.getSearchYear())){
+            sevEmpList.setSearchYear(String.valueOf(sYear));
+        }
+
+        //检索月初始值设置
+        if (StringUtils.isEmpty(sevEmpList.getSearchMonth())){
+            sevEmpList.setSearchMonth((String.valueOf(100+sMonth)).substring(1));
+        }
 
         logger.info("name:"+sevEmpListService.getInfoAll(sevEmpList));
 
