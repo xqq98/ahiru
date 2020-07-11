@@ -24,29 +24,29 @@
                         T2.USE_MONTH
                         FROM
                         (
-                            SELECT CONCAT( YEAR(now()),'01') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'01') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'02') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'02') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'03') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'03') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'04') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'04') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'05') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'05') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'06') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'06') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'07') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'07') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'08') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'08') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'09') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'09') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'10') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'10') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'11') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'11') as USE_MONTH	FROM dual
                             UNION
-                            SELECT CONCAT( YEAR(now()),'12') as USE_MONTH	FROM dual
+                            SELECT CONCAT( #{searchYear},'12') as USE_MONTH	FROM dual
                         ) T2  JOIN
                         (
                             SELECT DISTINCT
