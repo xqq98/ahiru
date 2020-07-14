@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.TAomDtlMapper">
+    <!--    全查-->
+    <select id="getTAomDtlMap" resultMap="TAomDtlMap" >
+        SELECT
+        ID,
+        TEAM,
+        BUSINESS_FIELD,
+        CONTRACTUAL_RELATION,
+        PM_NO,
+        FIELD,
+        WORK_PLACE,
+        JAN_NO,
+        FEB_NO,
+        MAR_NO,
+        APR_NO,
+        MAY_NO,
+        JUN_NO,
+        JUL_NO,
+        AUG_NO,
+        SEP_NO,
+        OCT_NO,
+        NOV_NO,
+        DEC_NO,
+        SUM_HOURS,
+        ENT_DT,
+        ENT_ID,
+        UPD_DT,
+        UPD_ID,
+        DEL_DT,
+        DEL_ID,
+        DEL_FG
+        FROM T_AOM_DTL
+        where
+        DEL_FG = '0'
+    </select>
+
+    <select id="getTAomSingleMonth" resultMap="VAomDtlMap">
+SELECT
+	*
+FROM
+	(
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'01' AS `MONTH`,
+	JAN_NO AS TIMES
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'02' AS `MONTH`,
+	FEB_NO
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'03' AS `MONTH`,
+	MAR_NO AS TIMES
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'04' AS `MONTH`,
+	APR_NO AS TIMES
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'05' AS `MONTH`,
+	MAY_NO AS TIMES
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'06' AS `MONTH`,
+	JUN_NO AS TIMES
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'07' AS `MONTH`,
+	JUL_NO AS TIMES
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'08' AS `MONTH`,
+	AUG_NO AS TIMES
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'09' AS `MONTH`,
+	SEP_NO AS TIMES
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'10' AS `MONTH`,
+	OCT_NO AS TIMES
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'11' AS `MONTH`,
+	NOV_NO AS TIMES
+FROM
+	V_AOM_DTL UNION ALL
+SELECT
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	'12' AS `MONTH`,
+	DEC_NO AS TIMES
+FROM
+	V_AOM_DTL
+	) AS a
+GROUP BY
+	ID,
+	TEAM,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	`MONTH`,
+	TIMES
+ORDER BY
+	`MONTH`,
+	PM_NAME,
+	WORK_PLACE
+    </select>
+
+    <resultMap id="TAomDtlMap" type="com.webservice.ahiru.entity.TAomDtl">
+        <result property="id" column="ID" />
+        <result property="team" column="TEAM" />
+        <result property="businessField" column="BUSINESS_FIELD" />
+        <result property="contractualRelation" column="CONTRACTUAL_RELATION" />
+        <result property="pmNo" column="PM_NO" />
+        <result property="field" column="FIELD" />
+        <result property="workPlace" column="WORK_PLACE" />
+        <result property="year" column="YEAR" />
+        <result property="janNo" column="JAN_NO" />
+        <result property="febNo" column="FEB_NO" />
+        <result property="marNo" column="MAR_NO" />
+        <result property="aprNo" column="APR_NO" />
+        <result property="mayNo" column="MAY_NO" />
+        <result property="junNo" column="JUN_NO" />
+        <result property="julNo" column="JUL_NO" />
+        <result property="augNo" column="AUG_NO" />
+        <result property="sepNo" column="SEP_NO" />
+        <result property="octNo" column="OCT_NO" />
+        <result property="novNo" column="NOV_NO" />
+        <result property="decNo" column="DEC_NO" />
+        <result property="sumHours" column="SUM_HOURS" />
+        <result property="entDt" column="ENT_DT" />
+        <result property="entId" column="ENT_ID" />
+        <result property="updDt" column="UPD_DT" />
+        <result property="updId" column="UPD_ID" />
+        <result property="delDt" column="DEL_DT" />
+        <result property="delID" column="DEL_ID" />
+        <result property="delFg" column="DEL_FG" />
+    </resultMap>
+
+	<resultMap id="VAomDtlMap" type="com.webservice.ahiru.entity.VAomDtl">
+		<result property="id" column="ID" />
+		<result property="team" column="TEAM" />
+		<result property="businessField" column="BUSINESS_FIELD" />
+		<result property="contractualRelation" column="CONTRACTUAL_RELATION" />
+		<result property="pmNo" column="PM_NO" />
+		<result property="pmName" column="PM_NAME" />
+		<result property="field" column="FIELD" />
+		<result property="fieldName" column="FIELD_NAME" />
+		<result property="workPlace" column="WORK_PLACE" />
+		<result property="workPlaceName" column="WORK_PLACE_NAME" />
+		<result property="year" column="YEAR" />
+		<result property="month" column="MONTH" />
+		<result property="times" column="TIMES" />
+	</resultMap>
+</mapper>
