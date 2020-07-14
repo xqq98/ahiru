@@ -150,7 +150,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         return new RedisCacheManager(
                 RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
                 //半小时(秒)
-                this.getRedisCacheConfigurationWithTtl(30*60), // 默认策略，未配置的 key 会使用这个
+                this.getRedisCacheConfigurationWithTtl(60*60), // 默认策略，未配置的 key 会使用这个
                 this.getRedisCacheConfigurationMap() // 指定 key 策略
         );
     }
