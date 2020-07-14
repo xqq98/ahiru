@@ -12,6 +12,7 @@ import com.webservice.ahiru.service.EmployeeWorkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +44,7 @@ public class EmployeeServiceWorkImpl implements EmployeeWorkService {
     private Logger logger = LoggerFactory.getLogger(EmployeeServiceWorkImpl.class);
 
     // 取得全部年度工作情报
+    //@Cacheable(value = "employeeWorkYear" ,key="#sEVEmpList.pmName")
     @Override
     public List<EmployeeWorkYear> getEmployeeWorkInfo(SEVEmpList sEVEmpList) {
         logger.info("*******getEmployeeWorkInfo Start********");
