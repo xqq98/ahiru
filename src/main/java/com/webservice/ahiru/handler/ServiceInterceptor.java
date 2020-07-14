@@ -30,7 +30,6 @@ public class ServiceInterceptor implements HandlerInterceptor {
 
     private String USERNAME = "USERNAME";
     private String WECHARTID = "OPENID";
-    private long EXPIRE_TEIM = 3600;
 
     //Log文件的获取
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -38,8 +37,8 @@ public class ServiceInterceptor implements HandlerInterceptor {
     @Autowired
     private UserService userService;
 
-    @Resource
-    private RedisUtil redisUtil;
+    //@Resource
+    //private RedisUtil redisUtil;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -57,39 +56,18 @@ public class ServiceInterceptor implements HandlerInterceptor {
             if (openid == null || openid.equals("")) {
                 throw new Exception("无权限访问资源");
             }
-            String resOpenid =null;
-            try {
-                resOpenid = (String) redisUtil.get(loginUser);
-            }catch (Exception ex){
-                resOpenid =null;
-                logger.error("Redis error", ex);
-            }
-
-            if (StringUtils.isEmpty(resOpenid)){
-                MEmpDtl emp = userService.getUserInfo(loginUser);
-                if (emp != null && openid.equals(emp.getWeChatId())) {
-                    try {
-                        redisUtil.set(loginUser,openid,EXPIRE_TEIM);
-                    }catch (Exception ex){
-                        logger.error("Redis error", ex);
-                    }
-
-                    return true;
-                } else {
-                    throw new Exception("无权限访问资源");
-
-                }
-            }else if (openid.equals(resOpenid)){
+            MEmpDtl emp = userService.getUserInfo(loginUser);
+            if (emp != null && openid.equals(emp.getWeChatId())) {
                 return true;
-            }else{
+            } else {
                 throw new Exception("无权限访问资源");
+
             }
         } catch (Exception ex) {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json;charset=UTF-8");
             writer = response.getWriter();
-
-            Result result = Result.error(ex.getMessage());
+            Result result = Result.error("无权限访问资源");
             String strResult = JSONObject.toJSONString(result);
             writer.print(strResult);
             writer.flush();
