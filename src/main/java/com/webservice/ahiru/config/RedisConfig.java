@@ -29,7 +29,8 @@ import java.util.stream.Collectors;
 /**
  * redis配置类
  * @program: springbootdemo
- * @Description:
+ *
+ *  @Description:
  */
 @Configuration
 @EnableCaching //开启注解
