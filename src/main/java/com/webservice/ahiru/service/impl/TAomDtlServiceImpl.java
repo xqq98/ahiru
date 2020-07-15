@@ -2,10 +2,7 @@ package com.webservice.ahiru.service.impl;
 
 
 import com.alibaba.druid.util.StringUtils;
-import com.webservice.ahiru.entity.TAomDtlJson;
-import com.webservice.ahiru.entity.TAomDtlPMItem;
-import com.webservice.ahiru.entity.TAomDtlSeries;
-import com.webservice.ahiru.entity.VAomDtl;
+import com.webservice.ahiru.entity.*;
 import com.webservice.ahiru.mapper.TAomDtlMapper;
 import com.webservice.ahiru.service.TAomDtlService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +29,10 @@ public class TAomDtlServiceImpl implements TAomDtlService {
             }
 
             if (StringUtils.isEmpty(tAomDtlPMItem.getPmNo()) || !(tAomDtlPMItem.getPmNo().equals(tEmpWork.get(i).getPmNo())
-                    && tAomDtlPMItem.getTeam().equals( tEmpWork.get(i).getTeam()))) {
+                    && tAomDtlPMItem.getProjectName().equals( tEmpWork.get(i).getProjectName()))) {
                 tAomDtlPMItem = new TAomDtlPMItem();
                 tAomDtlPMItem.setPmNo(tEmpWork.get(i).getPmNo());
-                tAomDtlPMItem.setTeam(tEmpWork.get(i).getTeam());
+                tAomDtlPMItem.setProjectName(tEmpWork.get(i).getProjectName());
 
                 List<String> tAomDtlCategories = new ArrayList();
                 tAomDtlCategories.add(tEmpWork.get(i).getWorkPlace());
@@ -50,6 +47,29 @@ public class TAomDtlServiceImpl implements TAomDtlService {
                         tAomDtlPMItem.gettAomDtlSeries(), tAomDtlPMItem.gettAomDtlSeries().get(0), tAomDtlPMItem.gettAomDtlSeries().get(0).getData());
             }
         }
+        return result;
+    }
+
+    public LinkedHashMap<String, List<TAomPMTeams>> getTAomPMTeams(){
+        List<TAomPMTeams> tAomPMTeams= tAomDtlMapper.getTAomPMTeams();
+        LinkedHashMap<String, List<TAomPMTeams>> result = new LinkedHashMap<>();
+        String keys="";
+        for (int i=0, k=0;i<tAomPMTeams.size();i++,k++){
+            if(result.containsKey(tAomPMTeams.get(i).getProjectName())){
+                result.get(tAomPMTeams.get(i).getProjectName()).add(tAomPMTeams.get(i));
+            }else{
+                result.put(tAomPMTeams.get(i).getProjectName(),new ArrayList<TAomPMTeams>(){});
+                result.get(tAomPMTeams.get(i).getProjectName()).add(tAomPMTeams.get(i));
+                keys+=tAomPMTeams.get(i).getProjectName()+',';
+            }
+        }
+
+        keys=keys.substring(0, keys.length()-1);
+        TAomPMTeams pmt=new TAomPMTeams();
+        pmt.setProjectName(keys);
+        result.put("containskeys",new ArrayList<TAomPMTeams>(){});
+        result.get("containskeys").add(pmt);
+
         return result;
     }
 

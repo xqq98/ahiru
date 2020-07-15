@@ -43,7 +43,7 @@ FROM
 	(
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -59,7 +59,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -75,7 +75,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -91,7 +91,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -107,7 +107,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -123,7 +123,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -139,7 +139,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -155,7 +155,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -171,7 +171,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -187,7 +187,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -203,7 +203,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -219,7 +219,7 @@ FROM
 	V_AOM_DTL UNION ALL
 SELECT
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -236,7 +236,7 @@ FROM
 	) AS a
 GROUP BY
 	ID,
-	TEAM,
+	PROJECT_NAME,
 	BUSINESS_FIELD,
 	CONTRACTUAL_RELATION,
 	PM_NO,
@@ -253,6 +253,29 @@ ORDER BY
 	PM_NAME,
 	WORK_PLACE
     </select>
+
+	<select id="getTAomPMTeams" resultMap="TAomPMTeamsMap">
+		select
+PROJECT_NAME,
+PM_NO,
+`YEAR`,
+`MONTH`,
+MAX(
+CASE WHEN WORK_PLACE_NAME = 'JP' THEN MONTH_PERSON ELSE 0 END
+) as 'JP_COUNT',
+MAX(
+CASE WHEN WORK_PLACE_NAME = 'DL' THEN MONTH_PERSON ELSE 0 END
+) as 'DL_COUNT',
+MAX(
+CASE WHEN WORK_PLACE_NAME = 'WF' THEN MONTH_PERSON ELSE 0 END
+) as 'WF_COUNT'
+from V_AOM_TEAM_DTL
+GROUP BY
+PROJECT_NAME,
+PM_NO,
+`YEAR`,
+`MONTH`
+	</select>
 
     <resultMap id="TAomDtlMap" type="com.webservice.ahiru.entity.TAomDtl">
         <result property="id" column="ID" />
@@ -285,9 +308,21 @@ ORDER BY
         <result property="delFg" column="DEL_FG" />
     </resultMap>
 
+	<resultMap id="TAomPMTeamsMap" type="com.webservice.ahiru.entity.TAomPMTeams">
+		<result property="projectName" column="PROJECT_NAME" />
+		<result property="pmNo" column="PM_NO" />
+		<result property="year" column="YEAR" />
+		<result property="month" column="MONTH" />
+		<result property="jpCount" column="JP_COUNT" />
+		<result property="dlCount" column="DL_COUNT" />
+		<result property="wfCount" column="WF_COUNT" />
+	</resultMap>
+
 	<resultMap id="VAomDtlMap" type="com.webservice.ahiru.entity.VAomDtl">
 		<result property="id" column="ID" />
 		<result property="team" column="TEAM" />
+		<result property="projectName" column="PROJECT_NAME" />
+		<result property="dept" column="DEPT" />
 		<result property="businessField" column="BUSINESS_FIELD" />
 		<result property="contractualRelation" column="CONTRACTUAL_RELATION" />
 		<result property="pmNo" column="PM_NO" />
@@ -300,4 +335,6 @@ ORDER BY
 		<result property="month" column="MONTH" />
 		<result property="times" column="TIMES" />
 	</resultMap>
+
+
 </mapper>
