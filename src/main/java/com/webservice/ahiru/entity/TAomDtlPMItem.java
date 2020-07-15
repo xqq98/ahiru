@@ -6,6 +6,7 @@ public class TAomDtlPMItem {
 
     private String pmNo;
     private String team;
+    private String projectName;
     private List<String> tAomDtlCategories;
     private List<TAomDtlSeries> tAomDtlSeries;
 
@@ -25,6 +26,13 @@ public class TAomDtlPMItem {
         this.team = team;
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 
     public List<String> gettAomDtlCategories() {
         return tAomDtlCategories;

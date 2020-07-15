@@ -11,6 +11,8 @@ public class VAomDtl implements Serializable {
 
     private String id;
     private String team;
+    private String projectName;
+    private String dept;
     private String businessField;
     private String contractualRelation;
     private String pmNo;
@@ -37,6 +39,23 @@ public class VAomDtl implements Serializable {
 
     public void setTeam(String team) {
         this.team = team;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+
+    public String getDept() {
+        return dept;
+    }
+
+    public void setDept(String dept) {
+        this.dept = dept;
     }
 
     public String getBusinessField() {
