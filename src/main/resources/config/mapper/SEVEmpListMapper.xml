@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.webservice.ahiru.mapper.SEVEmpListMapper">
-    <select id="getInfoX" resultMap="SEVEmpListMap" >
+    <select id="getInfoX" resultMap="SEVEmpListMap">
         SELECT
         ID,
         NAME,
@@ -44,45 +44,45 @@
     </select>
 
     <resultMap id="SEVEmpListMap" type="com.webservice.ahiru.entity.SEVEmpList">
-        <result property="id" column="ID" />
-        <result property="name" column="NAME" />
-        <result property="job" column="JOB" />
-        <result property="workPlace" column="WORK_PLACE" />
-        <result property="level" column="LEVEL" />
-        <result property="inDate" column="INDATE" />
-        <result property="depRole" column="DEPROLE" />
-        <result property="tech" column="TECH" />
-        <result property="indepDate" column="INDEPDATE" />
-        <result property="inDepTime" column="INDEPTIME" />
-        <result property="outDate" column="OUTDATE" />
-        <result property="outRsn" column="OUTRSN" />
-        <result property="BPFlg" column="BPFLG" />
-        <result property="depRoleName" column="DEPROLENAME" />
-        <result property="techName" column="TECHNAME" />
-        <result property="a1" column="a1" />
-        <result property="a2" column="a2" />
-        <result property="a3" column="a3" />
-        <result property="a4" column="a4" />
-        <result property="a5" column="a5" />
-        <result property="a6" column="a6" />
-        <result property="a7" column="a7" />
-        <result property="a8" column="a8" />
-        <result property="a9" column="a9" />
-        <result property="a10" column="a10" />
-        <result property="a11" column="a11" />
-        <result property="a12" column="a12" />
-        <result property="a" column="a" />
-        <result property="pmName" column="PMNAME" />
-        <result property="birthDay" column="BIRTHDAY" />
+        <result property="id" column="ID"/>
+        <result property="name" column="NAME"/>
+        <result property="job" column="JOB"/>
+        <result property="workPlace" column="WORK_PLACE"/>
+        <result property="level" column="LEVEL"/>
+        <result property="inDate" column="INDATE"/>
+        <result property="depRole" column="DEPROLE"/>
+        <result property="tech" column="TECH"/>
+        <result property="indepDate" column="INDEPDATE"/>
+        <result property="inDepTime" column="INDEPTIME"/>
+        <result property="outDate" column="OUTDATE"/>
+        <result property="outRsn" column="OUTRSN"/>
+        <result property="BPFlg" column="BPFLG"/>
+        <result property="depRoleName" column="DEPROLENAME"/>
+        <result property="techName" column="TECHNAME"/>
+        <result property="a1" column="a1"/>
+        <result property="a2" column="a2"/>
+        <result property="a3" column="a3"/>
+        <result property="a4" column="a4"/>
+        <result property="a5" column="a5"/>
+        <result property="a6" column="a6"/>
+        <result property="a7" column="a7"/>
+        <result property="a8" column="a8"/>
+        <result property="a9" column="a9"/>
+        <result property="a10" column="a10"/>
+        <result property="a11" column="a11"/>
+        <result property="a12" column="a12"/>
+        <result property="a" column="a"/>
+        <result property="pmName" column="PMNAME"/>
+        <result property="birthDay" column="BIRTHDAY"/>
     </resultMap>
 
-    <select id="getInfoAll" resultMap="SEVEmpListMap" >
+    <select id="getInfoAll" resultMap="SEVEmpListMap">
         SELECT
         ID,
         BIRTHDAY,
         NAME,
         JOB,
-        LEVEL,
+        V_EMP_LIST.LEVEL,
         INDATE,
         DEPROLE,
         TECH,
@@ -108,29 +108,38 @@
         a,
         WORK_PLACE,
         DEPT,
-        PMNAME
-        FROM V_EMP_LIST
+        V_WORK_DATA.PMNAME
+        FROM V_EMP_LIST,V_WORK_DATA
         WHERE
+        V_EMP_LIST.ID = V_WORK_DATA.employeeNo
+        AND
+        V_EMP_LIST.LEVEL = V_WORK_DATA.level
+        AND
         BPFLG != '' and DEL_FG = 0
-        <if test="name !='' and name !=null " >
+        <if test="name !='' and name !=null ">
             AND ( NAME LIKE CONCAT('%',concat(#{name},'%')) or ID LIKE CONCAT('%',concat(#{name},'%')))
         </if>
-        <if test="levelList !=null and levelList.size>0  " >
-            AND LEVEL IN
-            <foreach item="level" collection="levelList" index="index" open="(" separator="," close=")">#{level}</foreach>
+        <if test="levelList !=null and levelList.size>0  ">
+            AND V_EMP_LIST.LEVEL IN
+            <foreach item="level" collection="levelList" index="index" open="(" separator="," close=")">#{level}
+            </foreach>
         </if>
-        <if test="depRoleNameList !=null and depRoleNameList.size>0   " >
-             AND DEPROLENAME IN
-            <foreach item="depRoleName" collection="depRoleNameList" index="index" open="(" separator="," close=")">#{depRoleName}</foreach>
+        <if test="depRoleNameList !=null and depRoleNameList.size>0   ">
+            AND DEPROLENAME IN
+            <foreach item="depRoleName" collection="depRoleNameList" index="index" open="(" separator="," close=")">
+                #{depRoleName}
+            </foreach>
         </if>
-        <if test="techNameList !=null and techNameList.size>0   " >
+        <if test="techNameList !=null and techNameList.size>0   ">
             AND TECHNAME IN
-            <foreach item="techName" collection="techNameList" index="index" open="(" separator="," close=")">#{techName}</foreach>
+            <foreach item="techName" collection="techNameList" index="index" open="(" separator="," close=")">
+                #{techName}
+            </foreach>
         </if>
-        <if test="pmName !='' and pmName !=null " >
-            AND PMNAME =#{pmName}
+        <if test="pmName !='' and pmName !=null ">
+            AND V_WORK_DATA.PMNAME =#{pmName}
         </if>
-        <if test="workPlace !='' and workPlace !=null " >
+        <if test="workPlace !='' and workPlace !=null ">
             AND WORK_PLACE =#{workPlace}
         </if>
         <if test="deptList !=null and deptList.size > 0 ">
@@ -139,22 +148,22 @@
                 #{aaa}
             </foreach>
         </if>
-<!--        <if test="startDt != '' and startDt != null and endDt != '' and endDt != null ">-->
-<!--            AND ID in (SELECT-->
-<!--            DISTINCT  EMPLOYEE_NO-->
-<!--            FROM-->
-<!--            `T_EMP_WORK`-->
-<!--            WHERE-->
-<!--            USE_STATUS = '0'-->
-<!--            and-->
-<!--            concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) >= #{startDt}-->
-<!--            and-->
-<!--            #{endDt} >=	concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) )-->
-<!--        </if>-->
+        <!--        <if test="startDt != '' and startDt != null and endDt != '' and endDt != null ">-->
+        <!--            AND ID in (SELECT-->
+        <!--            DISTINCT  EMPLOYEE_NO-->
+        <!--            FROM-->
+        <!--            `T_EMP_WORK`-->
+        <!--            WHERE-->
+        <!--            USE_STATUS = '0'-->
+        <!--            and-->
+        <!--            concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) >= #{startDt}-->
+        <!--            and-->
+        <!--            #{endDt} >=	concat( `T_EMP_WORK`.`YEAR`, `T_EMP_WORK`.`USE_MONTH` ) )-->
+        <!--        </if>-->
 
-        <if test="startDt !='' and startDt !=null " >
+        <if test="startDt !='' and startDt !=null ">
             AND
-            <include refid = "common.empwork.searchDate">
+            <include refid="common.empwork.searchDate">
                 <property name="TBLID" value="V_EMP_LIST.ID"/>
             </include>
         </if>
@@ -166,11 +175,13 @@
 
         <if test="monthList !=null and monthList.size > 1 ">
             AND
-            <foreach collection="monthList" item="item"  open="(" close="IS NULL)" separator="IS NULL OR">
+            <foreach collection="monthList" item="item" open="(" close="IS NULL)" separator="IS NULL OR">
                 ${item}
             </foreach>
 
         </if>
+        AND
+        V_WORK_DATA.`year` = #{searchYear} and V_WORK_DATA.`month` = #{searchMonth}
         ORDER BY PMUID,WORK_PLACE,DEPT,`NAME`
     </select>
 </mapper>
