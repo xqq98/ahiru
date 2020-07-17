@@ -4,6 +4,26 @@
 	<select id="getEmployeeWorkInfo" resultMap="EmployeeWorkYearMap" parameterType="com.webservice.ahiru.entity.SEVEmpList">
         SELECT T.*
         FROM
+        (
+            SELECT
+                vw.employeeNo
+                <if test=" pmName !=null and pmName !='' " >
+                   ,min(IF (vw.pmid = 'P0008681' and vw.month = '09', '0', '1')) ordeid
+                </if>
+            FROM
+                V_WORK_DATA vw
+            WHERE
+                vw.YEAR = #{searchYear}
+                <if test="pmName !='' and pmName !=null " >
+                    AND vw.pmId = #{pmName}
+                </if>
+                and vw.month >= #{searchMonth}
+            <if test="pmName !='' and pmName !=null " >
+                GROUP BY vw.employeeNo
+            </if>
+        ) VEW1
+
+        LEFT JOIN
         ( SELECT
         VEW.employeeNo,
         VEW.employeeName,
@@ -35,7 +55,7 @@
         VEW.professional,
         VEW.year
          ) T
-
+        ON VEW1.employeeNo = T.employeeNo
         LEFT JOIN M_EMP_DTL EDL
         ON T.employeeNo = EDL.EMPLOYEE_NO
         LEFT JOIN M_CODE WCODE
@@ -66,10 +86,6 @@
                 AND T.professional IN  <foreach collection="techNameList" index="index" item ="professional"  separator="," open=" (" close=")" >#{professional}</foreach>
             </if>
 
-            <if test="pmName !='' and pmName !=null " >
-                AND T.pmId = #{pmName}
-            </if>
-
             <if test="startDt !='' and startDt !=null " >
                 AND
                 <include refid = "common.empwork.searchDate">
@@ -86,7 +102,11 @@
             </if>
 
         </where>
-        order by pmid,SUBSTRING(caseName, 3),caseName,employeeName
+        order by
+        <if test="pmName !='' and pmName !=null " >
+            VEW1.ordeid,
+        </if>
+        pmid,SUBSTRING(caseName, 3),caseName,employeeName
 
 	</select>
 
