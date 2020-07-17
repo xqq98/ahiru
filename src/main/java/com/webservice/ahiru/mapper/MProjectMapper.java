@@ -39,8 +39,8 @@ public interface MProjectMapper {
     //删除数据（根据一个主键）
     public int delMProjectbypmid(String pmid);
 
-    //查询数据（根据一个主键）
-    public List<MProject> getMProjectByPmid(String pmid);
+    //查询数据（根据两个主键）
+    public List<MProject> getMProjectByPmid(String pmid,String year);
 
     //查询数据（根据一个主键）
     public List<MProject> getMProjectByPmNo(String pmid);

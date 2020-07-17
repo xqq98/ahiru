@@ -14,7 +14,8 @@
         UPD_ID,
         DEL_DT,
         DEL_ID,
-        DEL_FG
+        DEL_FG,
+        YEAR
         FROM M_PROJECT
         where
         DEL_FG = '0'
@@ -33,7 +34,8 @@
         UPD_ID,
         DEL_DT,
         DEL_ID,
-        DEL_FG
+        DEL_FG,
+        YEAR
         FROM M_PROJECT
         where
         YEAR = #{year}
@@ -64,7 +66,8 @@
         UPD_ID,
         DEL_DT,
         DEL_ID,
-        DEL_FG
+        DEL_FG,
+        YEAR
         FROM M_PROJECT
         where
         DEL_FG = '0'
@@ -98,7 +101,8 @@
         , UPD_ID
         , DEL_DT
         , DEL_ID
-        , DEL_FG)
+        , DEL_FG
+        ,YEAR)
         values (
          #{pmemployeeno}
         ,#{projectid}
@@ -111,7 +115,7 @@
         ,#{deldt}
         ,#{delid}
         ,#{delfg}
-        )
+        ,#{year})
     </insert>
 
     <update id="edtMProject">
@@ -126,6 +130,7 @@
             , DEL_DT = #{deldt}
             , DEL_ID = #{delid}
             , DEL_FG = #{delfg}
+            , YEAR = #{year}
         </set>
         <where>
             PM_EMPLOYEE_NO = #{pmemployeeno}
@@ -156,12 +161,13 @@
         UPD_ID,
         DEL_DT,
         DEL_ID,
-        DEL_FG
+        DEL_FG,
+        YEAR
         FROM M_PROJECT
         where
         DEL_FG = '0'AND CASE_NAME != '0'
 
-            AND PM_EMPLOYEE_NO = #{pmid}
+            AND PM_EMPLOYEE_NO = #{pmid} AND YEAR = #{year}
     </select>
 
     <select id="getMProjectByPmNo" resultMap="MProjectNameMap">
@@ -189,7 +195,8 @@
         UPD_ID,
         DEL_DT,
         DEL_ID,
-        DEL_FG
+        DEL_FG,
+        YEAR
         FROM M_PROJECT
         where
         DEL_FG = '0' and ID = #{id}
@@ -208,6 +215,7 @@
             , DEL_DT = #{deldt}
             , DEL_ID = #{delid}
             , DEL_FG = #{delfg}
+            , YEAR = #{year}
         </set>
         <where>
             ID = #{id}

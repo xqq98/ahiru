@@ -144,10 +144,10 @@ public class MProjectServiceImpl implements MProjectService {
     @Override
     //获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据主键）,返回resultMprojects
     //shy
-    public List<MProject> getMProjectByPmid() throws AhiruException {
+    public List<MProject> getMProjectByPmid(String pmid,String year) throws AhiruException {
         try {
             String username = UserUtil.getLoginUser();
-            List<MProject> resultMprojects = mProjectMapper.getMProjectByPmid(username);
+            List<MProject> resultMprojects = mProjectMapper.getMProjectByPmid(pmid,year);
             return resultMprojects;
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
@@ -307,7 +307,8 @@ public class MProjectServiceImpl implements MProjectService {
     public int setMProject(List<MProject> mProjectList) {
         try {
             String username = UserUtil.getLoginUser();
-            List<MProject> oldMprojects = mProjectMapper.getMProjectByPmid(username);
+
+            List<MProject> oldMprojects = mProjectMapper.getMProjectByPmid(username,mProjectList.get(0).getYear());
             for (int i = 0; i < mProjectList.size(); i++) {
                 MProject mProject = mProjectList.get(i);
                 List<MProject> existMProjects = oldMprojects.stream()

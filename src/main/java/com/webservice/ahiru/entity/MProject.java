@@ -51,6 +51,16 @@ public class MProject implements Serializable {
     //删除标志
     private String delfg;
 
+    //年
+    private String year;
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
 
     public String getPmemployeeno() {
         return pmemployeeno;
