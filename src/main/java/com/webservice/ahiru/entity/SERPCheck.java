@@ -11,117 +11,48 @@ import java.io.Serializable;
 * @author liliang
 * @since 2020-07-02
 */
-//视图名：SERP_DATA
-@TableName("SERP_DATA")
+//视图名：T_SERP_MEMBERS
+@TableName("T_SERP_MEMBERS")
 public class SERPCheck implements Serializable {
 
     //用来表明类的不同版本间的兼容性
     private static final long serialVersionUID = 1L;
-
-    //员工编号
+    // 	ID
     private String id;
-
-    //员工姓名
-    private String name;
-
-    //公司名称
-    private String company;
-
-    //协力公司名称
-    private String vendorCompany;
-
-    //经理
-    private String manager;
-
-    //工作场所
-    private String workPlace;
-
-    //部门
-    private String bu;
-
-    //所属部门
-    private String department;
-
-    //邮箱号
-    private String email;
-
-    //电话号
-    private String agentPhone;
-
-    //职称
-    private String job;
-
-    //级别
-    private String level;
-
-    //程度
-    private String degree;
-
-    //专业
-    private String professional;
-
-    //状态
-    private String state;
-
-    //雇佣类型
-    private String employeeType;
-
-    //入职时间
-    private String inSocietyDate;
-
-    //转正时间
-    private String turnPositiveDate;
-
-    //离职时间
-    private String leavingDate;
-
-    //成本
-    private String costCenter;
-
-    //功能
-    private String function;
-
-    //影响
-    private String effect;
-
-    //项目编号
-    private String pid;
-
-    //认证
-    private String ccc;
-
-    //准入日
-    private String admissionDt;
-
-    //合同日
-    private String contractDt;
-
-    //退出日
-    private String scheduledExitDt;
-
-    //技能
-    private String skills;
-
-    //登陆日
+    // 	プロジェクトID
+    private String projectId;
+    // 	年
+    private String projectYear;
+    // 	月
+    private String projectMonth;
+    // 	案件名
+    private String caseName;
+    // 	メンバー数
+    private String projectMembers;
+    // 	PM番号
+    private String pmEmployeeNo;
+    // 	PM名
+    private String pmName;
+    // 	PMメールアドレス
+    private String pmEmail;
+    // 	登録日
     private String entDt;
-
-    //登陆者
+    // 	登録者
     private String entId;
-
-    //更新日
+    // 	更新日
     private String updDt;
-
-    //更新者
+    // 	更新者
     private String updId;
-
-    //删除日
+    // 	削除日
     private String delDt;
-
-    //删除者
+    // 	削除者
     private String delId;
-
-    //削除フラグ
+    // 	削除フラグ
     private String delFg;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public String getId() {
         return id;
@@ -131,220 +62,68 @@ public class SERPCheck implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getProjectId() {
+        return projectId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
     }
 
-    public String getCompany() {
-        return company;
+    public String getProjectYear() {
+        return projectYear;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setProjectYear(String projectYear) {
+        this.projectYear = projectYear;
     }
 
-    public String getVendorCompany() {
-        return vendorCompany;
+    public String getProjectMonth() {
+        return projectMonth;
     }
 
-    public void setVendorCompany(String vendorCompany) {
-        this.vendorCompany = vendorCompany;
+    public void setProjectMonth(String projectMonth) {
+        this.projectMonth = projectMonth;
     }
 
-    public String getManager() {
-        return manager;
+    public String getCaseName() {
+        return caseName;
     }
 
-    public void setManager(String manager) {
-        this.manager = manager;
+    public void setCaseName(String caseName) {
+        this.caseName = caseName;
     }
 
-    public String getWorkPlace() {
-        return workPlace;
+    public String getProjectMembers() {
+        return projectMembers;
     }
 
-    public void setWorkPlace(String workPlace) {
-        this.workPlace = workPlace;
+    public void setProjectMembers(String projectMembers) {
+        this.projectMembers = projectMembers;
     }
 
-    public String getBu() {
-        return bu;
+    public String getPmEmployeeNo() {
+        return pmEmployeeNo;
     }
 
-    public void setBu(String bu) {
-        this.bu = bu;
+    public void setPmEmployeeNo(String pmEmployeeNo) {
+        this.pmEmployeeNo = pmEmployeeNo;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getPmName() {
+        return pmName;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setPmName(String pmName) {
+        this.pmName = pmName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPmEmail() {
+        return pmEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAgentPhone() {
-        return agentPhone;
-    }
-
-    public void setAgentPhone(String agentPhone) {
-        this.agentPhone = agentPhone;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public String getDegree() {
-        return degree;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public String getProfessional() {
-        return professional;
-    }
-
-    public void setProfessional(String professional) {
-        this.professional = professional;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getEmployeeType() {
-        return employeeType;
-    }
-
-    public void setEmployeeType(String employeeType) {
-        this.employeeType = employeeType;
-    }
-
-    public String getInSocietyDate() {
-        return inSocietyDate;
-    }
-
-    public void setInSocietyDate(String inSocietyDate) {
-        this.inSocietyDate = inSocietyDate;
-    }
-
-    public String getTurnPositiveDate() {
-        return turnPositiveDate;
-    }
-
-    public void setTurnPositiveDate(String turnPositiveDate) {
-        this.turnPositiveDate = turnPositiveDate;
-    }
-
-    public String getLeavingDate() {
-        return leavingDate;
-    }
-
-    public void setLeavingDate(String leavingDate) {
-        this.leavingDate = leavingDate;
-    }
-
-    public String getCostCenter() {
-        return costCenter;
-    }
-
-    public void setCostCenter(String costCenter) {
-        this.costCenter = costCenter;
-    }
-
-    public String getFunction() {
-        return function;
-    }
-
-    public void setFunction(String function) {
-        this.function = function;
-    }
-
-    public String getEffect() {
-        return effect;
-    }
-
-    public void setEffect(String effect) {
-        this.effect = effect;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
-
-    public String getCcc() {
-        return ccc;
-    }
-
-    public void setCcc(String ccc) {
-        this.ccc = ccc;
-    }
-
-    public String getAdmissionDt() {
-        return admissionDt;
-    }
-
-    public void setAdmissionDt(String admissionDt) {
-        this.admissionDt = admissionDt;
-    }
-
-    public String getContractDt() {
-        return contractDt;
-    }
-
-    public void setContractDt(String contractDt) {
-        this.contractDt = contractDt;
-    }
-
-    public String getScheduledExitDt() {
-        return scheduledExitDt;
-    }
-
-    public void setScheduledExitDt(String scheduledExitDt) {
-        this.scheduledExitDt = scheduledExitDt;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
+    public void setPmEmail(String pmEmail) {
+        this.pmEmail = pmEmail;
     }
 
     public String getEntDt() {
@@ -403,46 +182,4 @@ public class SERPCheck implements Serializable {
         this.delFg = delFg;
     }
 
-    //编译器可以给你验证@Override下面的方法名是否是你父类中所有的，如果没有则报错。
-    @Override
-    //返回参数名称和值
-    public String toString() {
-        return "VEmployeeBP{" +
-        "id=" + id +
-        ", name=" + name +
-        ", company=" + company +
-        ", vendorCompany=" + vendorCompany +
-        ", manager=" + manager +
-        ", workPlace=" + workPlace +
-        ", bu=" + bu +
-        ", department=" + department +
-        ", email=" + email +
-        ", agentPhone=" + agentPhone +
-        ", job=" + job +
-        ", level=" + level +
-        ", degree=" + degree +
-        ", professional=" + professional +
-        ", state=" + state +
-        ", employeeType=" + employeeType +
-        ", inSocietyDate=" + inSocietyDate +
-        ", turnPositiveDate=" + turnPositiveDate +
-        ", leavingDate=" + leavingDate +
-        ", costCenter=" + costCenter +
-        ", function=" + function +
-        ", effect=" + effect +
-        ", pid=" + pid +
-        ", ccc=" + ccc +
-        ", admissionDt=" + admissionDt +
-        ", contractDt=" + contractDt +
-        ", scheduledExitDt=" + scheduledExitDt +
-        ", skills=" + skills +
-        ", entDt=" + entDt +
-        ", entId=" + entId +
-        ", updDt=" + updDt +
-        ", updId=" + updId +
-        ", delDt=" + delDt +
-        ", delId=" + delId +
-        ", delFg=" + delFg +
-        "}";
-    }
 }

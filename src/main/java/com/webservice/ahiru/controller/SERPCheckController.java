@@ -68,17 +68,15 @@ public class SERPCheckController {
      *
      * @Target(ElementType.METHOD) getInfo
      * @Target(ElementType.PARAMETER) MEmpDtl mEmpDtl
-     * 查询视图（V_EMP_LIST）的数据以列表的形式输出，调用vEmployeeBPMapper的getInfo方法，返回对象result
-     * 根据员工编号（EMPLOYEE_NO）来查询视图（V_EMP_LIST）下的数据
+     * 查询视图（T_SERP_MEMBERS）的数据以列表的形式输出，调用SERPCheckMapper的getTSMInfo方法，返回对象result
      *
      */
-
     public List<SERPCheck> getInfo(SERPCheck sERPCheck) {
 
         System.out.println("===============ID:"+sERPCheck.getId() +"=================");
         List<SERPCheck> result = new ArrayList<SERPCheck>();
         if(sERPCheck != null){
-            result = serpCheckMapper.getInfo(sERPCheck);
+            result = serpCheckMapper.getTSMInfo(sERPCheck);
         }
         return result;
     }

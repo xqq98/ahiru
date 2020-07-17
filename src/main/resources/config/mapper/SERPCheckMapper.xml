@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.SERPCheckMapper">
+    <select id="getTSMInfo" resultMap="TSerpMembersMap">
+        select
+        PROJECT_ID,
+        PROJECT_YEAR,
+        PROJECT_MONTH,
+        CASE_NAME,
+        PROJECT_MEMBERS,
+        PM_EMPLOYEE_NO,
+        PM_NAME,
+        PM_EMAIL
+        from T_SERP_MEMBERS
+        where
+        DEL_FG = '0'
+        and PROJECT_YEAR = '2020'
+        and PROJECT_MONTH = '03'
+    </select>
+    <resultMap id="TSerpMembersMap" type="com.webservice.ahiru.entity.SERPCheck">
+        <result property="id" column="ID" />
+        <result property="projectId" column="PROJECT_ID" />
+        <result property="projectYear" column="PROJECT_YEAR" />
+        <result property="projectMonth" column="PROJECT_MONTH" />
+        <result property="caseName" column="CASE_NAME" />
+        <result property="projectMembers" column="PROJECT_MEMBERS" />
+        <result property="pmEmployeeNo" column="PM_EMPLOYEE_NO" />
+        <result property="pmName" column="PM_NAME" />
+        <result property="pmEmail" column="PM_EMAIL" />
+        <result property="entDt" column="ENT_DT" />
+        <result property="entId" column="ENT_ID" />
+        <result property="updDt" column="UPD_DT" />
+        <result property="updId" column="UPD_ID" />
+        <result property="delDt" column="DEL_DT" />
+        <result property="delId" column="DEL_ID" />
+        <result property="delFg" column="DEL_FG" />
+    </resultMap>
+
+</mapper>
