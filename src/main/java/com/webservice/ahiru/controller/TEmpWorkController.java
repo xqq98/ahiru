@@ -70,9 +70,9 @@ public class TEmpWorkController {
 
     //控制器处理“/getmprojectbyid”的URL请求，POST请求
     @RequestMapping(value = "/gettempworkbyid", method = RequestMethod.POST)
-    public Result getTEmpWorkById(@RequestParam("id") String id) {
+    public Result getTEmpWorkById(@RequestParam("id") String id,@RequestParam("year") String year) {
 
-        List<TEmpWork> resultTEmpWork = tEmpWorkService.getTEmpWorkById(id);
+        List<TEmpWork> resultTEmpWork = tEmpWorkService.getTEmpWorkById(id,year);
 
 //        return tEmpWorkService.getTEmpWorkById(id);
         Result result = Result.ok(resultTEmpWork);

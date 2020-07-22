@@ -51,10 +51,10 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
     //伪代码,表示重写（下面的方法名是否是你父类中所有的）
     @Override
     //获取数据库表（T_EMP_WORK）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据主键）,返回tEmpWork
-    public List<TEmpWork> getTEmpWorkById(String id)  throws AhiruException {
+    public List<TEmpWork> getTEmpWorkById(String id,String year)  throws AhiruException {
         try {
             //根据前台传过来的id 去tempwork表中检索
-            List<TEmpWork> tEmpWork = tEmpWorkMapper.getTEmpWorkById(id);
+            List<TEmpWork> tEmpWork = tEmpWorkMapper.getTEmpWorkById(id,year);
             //新建tempworkList用于处理数据
             List<TEmpWork> tEmpWork1 = new ArrayList<>();
             //设置数据格式
@@ -212,7 +212,7 @@ public class TEmpWorkServiceImpl implements TEmpWorkService{
             List<TEmpWork> doneList =new ArrayList<>();
 
             //再次查询一遍数据，待后面作比较
-            List<TEmpWork> oldlist = getTEmpWorkById(tEmpWorkList.get(0).getEmployeeNo());
+            List<TEmpWork> oldlist = getTEmpWorkById(tEmpWorkList.get(0).getEmployeeNo(),tEmpWorkList.get(0).getYear());
             for (int i = 0; i < tEmpWorkList.size(); i++) {
                 TEmpWork oldTEmpWork = oldlist.get(i);
                 TEmpWork tEmpWork = tEmpWorkList.get(i);

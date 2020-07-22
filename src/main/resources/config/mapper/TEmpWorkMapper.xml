@@ -49,7 +49,7 @@
         FROM T_EMP_WORK
         where
         DEL_FG = '0'
-          AND  EMPLOYEE_NO = #{id}
+          AND  EMPLOYEE_NO = #{id} AND YEAR = #{year}
     </select>
 
 

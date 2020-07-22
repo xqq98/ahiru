@@ -52,6 +52,7 @@
         where
         DEL_FG = '0' AND CASE_NAME = '0'
           AND PM_EMPLOYEE_NO = #{pmid}
+          AND YEAR = #{year}
     </select>
 
     <select id="getMProjectById" resultMap="MProjectMap">

@@ -23,7 +23,7 @@ public interface TEmpWorkMapper {
     public List<TEmpWork> getTEmpWork();
 
     //获取数据库表（T_EMP_WORK）的数据，以list列表的形式，把查询出来的数据保存在数据对象中（根据主键）
-    public List<TEmpWork> getTEmpWorkById(String id);
+    public List<TEmpWork> getTEmpWorkById(String id,String year);
 
     //把表（T_EMP_WORK）的所有字段的值都插入表中
     public int addTEmpWork(TEmpWork tEmpWork);

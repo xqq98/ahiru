@@ -46,7 +46,7 @@ public interface MProjectMapper {
     public List<MProject> getMProjectByPmNo(String pmid);
 
     //查询PROJECT_ID和PROJECT_NAME
-    public List<MProject> getMProjectsIdAndName(String pmid);
+    public List<MProject> getMProjectsIdAndName(String pmid ,String year);
 
 //    public List<MProjectCaseName> getMProjectsCaseName();
 
