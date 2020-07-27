@@ -1,5 +1,6 @@
 package com.webservice.ahiru.mapper;
 
+import com.webservice.ahiru.entity.TAomDtl;
 import com.webservice.ahiru.entity.TAomPMTeams;
 import com.webservice.ahiru.entity.VAomDtl;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,4 +15,5 @@ import java.util.List;
 public interface TAomDtlMapper {
     public List<VAomDtl> getTAomSingleMonth();
     public List<TAomPMTeams> getTAomPMTeams();
+    public List<TAomDtl> getTAomSumMonth(String year);
 }

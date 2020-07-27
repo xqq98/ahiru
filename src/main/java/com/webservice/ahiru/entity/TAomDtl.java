@@ -14,6 +14,7 @@ public class TAomDtl implements Serializable {
     private String businessField;
     private String contractualRelation;
     private String pmNo;
+    private String pmName;
     private String field;
     private String workPlace;
     private String year;
@@ -76,6 +77,14 @@ public class TAomDtl implements Serializable {
 
     public void setPmNo(String pmNo) {
         this.pmNo = pmNo;
+    }
+
+    public String getPmName() {
+        return pmName;
+    }
+
+    public void setPmName(String pmName) {
+        this.pmName = pmName;
     }
 
     public String getField() {

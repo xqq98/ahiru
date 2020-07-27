@@ -29,6 +29,14 @@ public class TAomDtlController {
         return Result.ok(result);
     }
 
+    //控制器处理“/gettempwork”的URL请求，POST请求
+    @RequestMapping(value = "/gettaomsummonth", method = RequestMethod.GET)
+    public Result getTAomSumMonth() {//@RequestParam("year") String year
+        List<TAomDtlPMItem> result =tAomDtlService.getTAomSumMonth("2020");
+
+        return Result.ok(result);
+    }
+
     @RequestMapping(value = "/gettaompmteams", method = RequestMethod.GET)
     public Result getTAomPMTeams(){
         LinkedHashMap<String, List<TAomPMTeams>> result  =tAomDtlService.getTAomPMTeams();

@@ -38,7 +38,19 @@
 
     <select id="getTAomSingleMonth" resultMap="VAomDtlMap">
 SELECT
-	*
+	ID,
+	PROJECT_NAME,
+	BUSINESS_FIELD,
+	CONTRACTUAL_RELATION,
+	PM_NO,
+	PM_NAME,
+	FIELD,
+	FIELD_NAME,
+	WORK_PLACE,
+	WORK_PLACE_NAME,
+	`YEAR`,
+	`MONTH`,
+  TIMES
 FROM
 	(
 SELECT
@@ -254,6 +266,30 @@ ORDER BY
 	WORK_PLACE
     </select>
 
+	<select id="getTAomSumMonth" resultMap="TAomDtlMap">
+		select
+		T_AOM_DTL.PM_NO as PM_NO,
+		M_EMPLOYEE.`NAME` as PM_NAME,
+		`YEAR`,
+		SUM(JAN_NO) as JAN_NO,
+		SUM(FEB_NO) as FEB_NO,
+		SUM(MAR_NO) as MAR_NO,
+		SUM(APR_NO) as APR_NO,
+		SUM(MAY_NO) as MAY_NO,
+		SUM(JUN_NO) as JUN_NO,
+		SUM(JUL_NO) as JUL_NO,
+		SUM(AUG_NO) as AUG_NO,
+		SUM(SEP_NO) as SEP_NO,
+		SUM(OCT_NO) as OCT_NO,
+		SUM(NOV_NO) as NOV_NO,
+		SUM(DEC_NO) as DEC_NO
+		FROM T_AOM_DTL
+		JOIN M_EMPLOYEE
+		ON `T_AOM_DTL`.`PM_NO` = `M_EMPLOYEE`.`EMPLOYEE_NO` AND `T_AOM_DTL`.DEL_FG = '0' AND `YEAR` = #{year}
+		GROUP BY PM_NO, `YEAR`
+		ORDER BY PM_NO
+	</select>
+
 	<select id="getTAomPMTeams" resultMap="TAomPMTeamsMap">
 		select
 PROJECT_NAME,
@@ -283,6 +319,7 @@ PM_NO,
         <result property="businessField" column="BUSINESS_FIELD" />
         <result property="contractualRelation" column="CONTRACTUAL_RELATION" />
         <result property="pmNo" column="PM_NO" />
+		<result property="pmName" column="PM_NAME" />
         <result property="field" column="FIELD" />
         <result property="workPlace" column="WORK_PLACE" />
         <result property="year" column="YEAR" />

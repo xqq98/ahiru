@@ -10,4 +10,5 @@ public interface TAomDtlService {
     public LinkedHashMap<String, List<TAomDtlPMItem>> getTAomSingleMonth();
 
     public LinkedHashMap<String, List<TAomPMTeams>> getTAomPMTeams();
+    public  List<TAomDtlPMItem> getTAomSumMonth(String year);
 }
