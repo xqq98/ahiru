@@ -45,7 +45,7 @@ public interface MProjectService  {
     public List<MProjectNew> getAllMProject();
 
     //获取数据库表（M_PROJECT）的PROJECT_ID和PROJECT_NAME，以list列表的形式，把查询出来的数据保存在数据对象中
-    public List<MProject> getMProjectsIdAndName();
+    public List<MProject> getMProjectsIdAndName(String pmid ,String year);
 
     public List<MProjectCaseName> getMProjectsCaseName(String year);
 

@@ -216,9 +216,9 @@ public class MProjectController {
 
     //控制器处理“/getMProjectsIdAndName”的URL请求，POST请求
     @RequestMapping(value = "/getMProjectsIdAndName", method = RequestMethod.POST)
-    public Result getMProjectsIdAndName() {
+    public Result getMProjectsIdAndName(@RequestParam("pmid")String pmid,@RequestParam("year")String year) {
 
-        List<MProject> resultMProjectsIdAndName = mProjectService.getMProjectsIdAndName();
+        List<MProject> resultMProjectsIdAndName = mProjectService.getMProjectsIdAndName(pmid,year);
         Result result = Result.ok(resultMProjectsIdAndName);
         return result;
 

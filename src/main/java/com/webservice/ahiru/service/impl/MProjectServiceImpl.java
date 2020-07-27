@@ -210,10 +210,10 @@ public class MProjectServiceImpl implements MProjectService {
 
     @Override
     //获取数据库表（M_PROJECT）的数据，以list列表的形式，把查询出来的数据保存在数据对象中，返回mProjects
-    public List<MProject> getMProjectsIdAndName() {
+    public List<MProject> getMProjectsIdAndName(String pmid,String year) {
         try {
             String username = UserUtil.getLoginUser();
-            List<MProject> mProjectsIdAndName = mProjectMapper.getMProjectsIdAndName(username);
+            List<MProject> mProjectsIdAndName = mProjectMapper.getMProjectsIdAndName(username,year);
 
             return mProjectsIdAndName;
         } catch (Exception ex) {
