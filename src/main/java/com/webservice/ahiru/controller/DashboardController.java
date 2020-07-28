@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/dashboard")
-public class  DashboardController {
+public class DashboardController {
 
     //Log文件的获取
     private Logger logger = LoggerFactory.getLogger(DashboardController.class);
