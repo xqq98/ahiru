@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webservice.ahiru.mapper.DashboardMapper">
+    <select id="getProjectSituation" resultMap="DashboardMap" parameterType="string">
+        SELECT sum(case when useStatus = '2' or useStatus = null then 1 else 0 end) as fullMonth,
+        sum(case when useStatus = '1' then 1 else 0 end) as notFull,
+        sum(case when useStatus = '0' then 1 else 0 end) as idle,
+        sum(case when useStatus = '3' then 1 else 0 end) as backUp
+        FROM `V_WORK_DATA`
+        WHERE employeeNo != 'P0000480'
+        <if test="_parameter.get('changeMonth') !='' and _parameter.get('changeMonth') !=null ">
+            and month = #{changeMonth}
+        </if>
+        <if test="_parameter.get('pmId') !='' and _parameter.get('pmId') !=null ">
+            and pmId = #{pmId}
+        </if>
+        <if test="_parameter.get('department') !='' and _parameter.get('department') !=null ">
+            and department like "%"#{department}"%"
+        </if>
+    </select>
+
+	<select id="getAllProjectByMonth" resultMap="DashboardMap" parameterType="string">
+		select `month`, useStatus, count(1) as count from V_WORK_DATA
+		where `month` is not null and `useStatus` is not null
+		<if test="_parameter.get('pmId') != '' and _parameter.get('pmId') != null">
+			and pmId = #{pmId}
+		</if>
+		<if test="_parameter.get('department') != '' and _parameter.get('department') != null">
+			and department = #{department}
+		</if>
+		GROUP BY `month`, useStatus
+		ORDER BY `month`, useStatus
+	</select>
+
+	<select id="getAllAidedByMonth" resultMap="DashboardMap" parameterType="string">
+		SELECT WORK_PLACE_NAME as place,
+			sum(JAN_NO) as one,
+			sum(FEB_NO) as two,
+			sum(MAR_NO) as three,
+			sum(APR_NO) as four,
+			sum(MAY_NO) as five,
+			sum(JUN_NO) as six,
+			sum(JUL_NO) as seven,
+			sum(AUG_NO) as eight,
+			sum(SEP_NO) as nine,
+			sum(OCT_NO) as ten,
+			sum(NOV_NO) as eleven,
+			sum(DEC_NO) as twelve
+		FROM `V_AOM_DTL`
+		WHERE true
+		<if test="_parameter.get('pmId') !='' and _parameter.get('pmId') != null">
+			and PM_NO = #{pmId}
+		</if>
+		<if test="_parameter.get('department') != '' and _parameter.get('department') != null">
+			and DEPT = #{department}
+		</if>
+		GROUP BY WORK_PLACE_NAME
+	</select>
+
+    <select id="getAidedData" resultMap="DashboardMap" parameterType="string">
+		SELECT sum(case
+			when #{changeMonth} = '01' and WORK_PLACE_NAME = 'JP' then JAN_NO
+			when #{changeMonth} = '02' and WORK_PLACE_NAME = 'JP' then FEB_NO
+			when #{changeMonth} = '03' and WORK_PLACE_NAME = 'JP' then MAR_NO
+			when #{changeMonth} = '04' and WORK_PLACE_NAME = 'JP' then APR_NO
+			when #{changeMonth} = '05' and WORK_PLACE_NAME = 'JP' then MAY_NO
+			when #{changeMonth} = '06' and WORK_PLACE_NAME = 'JP' then JUN_NO
+			when #{changeMonth} = '07' and WORK_PLACE_NAME = 'JP' then JUL_NO
+			when #{changeMonth} = '08' and WORK_PLACE_NAME = 'JP' then AUG_NO
+			when #{changeMonth} = '09' and WORK_PLACE_NAME = 'JP' then SEP_NO
+			when #{changeMonth} = '10' and WORK_PLACE_NAME = 'JP' then OCT_NO
+			when #{changeMonth} = '11' and WORK_PLACE_NAME = 'JP' then NOV_NO
+			when #{changeMonth} = '12' and WORK_PLACE_NAME = 'JP' then DEC_NO
+			when #{changeMonth} = '' and WORK_PLACE_NAME = 'JP' then SUM_HOURS
+			else  0
+			end) as jpAided,
+			   sum(case
+			when #{changeMonth} = '01' and WORK_PLACE_NAME = 'WF' then JAN_NO
+			when #{changeMonth} = '02' and WORK_PLACE_NAME = 'WF' then FEB_NO
+			when #{changeMonth} = '03' and WORK_PLACE_NAME = 'WF' then MAR_NO
+			when #{changeMonth} = '04' and WORK_PLACE_NAME = 'WF' then APR_NO
+			when #{changeMonth} = '05' and WORK_PLACE_NAME = 'WF' then MAY_NO
+			when #{changeMonth} = '06' and WORK_PLACE_NAME = 'WF' then JUN_NO
+			when #{changeMonth} = '07' and WORK_PLACE_NAME = 'WF' then JUL_NO
+			when #{changeMonth} = '08' and WORK_PLACE_NAME = 'WF' then AUG_NO
+			when #{changeMonth} = '09' and WORK_PLACE_NAME = 'WF' then SEP_NO
+			when #{changeMonth} = '10' and WORK_PLACE_NAME = 'WF' then OCT_NO
+			when #{changeMonth} = '11' and WORK_PLACE_NAME = 'WF' then NOV_NO
+			when #{changeMonth} = '12' and WORK_PLACE_NAME = 'WF' then DEC_NO
+			when #{changeMonth} = '' and WORK_PLACE_NAME = 'WF' then SUM_HOURS
+			else  0
+			end) as wfAided,
+			   sum(case
+			when #{changeMonth} = '01' and WORK_PLACE_NAME = 'DL' then JAN_NO
+			when #{changeMonth} = '02' and WORK_PLACE_NAME = 'DL' then FEB_NO
+			when #{changeMonth} = '03' and WORK_PLACE_NAME = 'DL' then MAR_NO
+			when #{changeMonth} = '04' and WORK_PLACE_NAME = 'DL' then APR_NO
+			when #{changeMonth} = '05' and WORK_PLACE_NAME = 'DL' then MAY_NO
+			when #{changeMonth} = '06' and WORK_PLACE_NAME = 'DL' then JUN_NO
+			when #{changeMonth} = '07' and WORK_PLACE_NAME = 'DL' then JUL_NO
+			when #{changeMonth} = '08' and WORK_PLACE_NAME = 'DL' then AUG_NO
+			when #{changeMonth} = '09' and WORK_PLACE_NAME = 'DL' then SEP_NO
+			when #{changeMonth} = '10' and WORK_PLACE_NAME = 'DL' then OCT_NO
+			when #{changeMonth} = '11' and WORK_PLACE_NAME = 'DL' then NOV_NO
+			when #{changeMonth} = '12' and WORK_PLACE_NAME = 'DL' then DEC_NO
+			when #{changeMonth} = '' and WORK_PLACE_NAME = 'DL' then SUM_HOURS
+			else  0
+			end) as dlAided
+		FROM `V_AOM_DTL`
+		WHERE true
+		<if test="_parameter.get('pmId') !='' and _parameter.get('pmId') != null">
+			and PM_NO = #{pmId}
+		</if>
+		<if test="_parameter.get('department') != '' and _parameter.get('department') != null">
+			and DEPT like "%"#{department}"%"
+		</if>
+	</select>
+
+	<select id="getLevelByPmId" resultMap="DashboardMap" parameterType="string">
+		SELECT level,count(1) as levelCount FROM (
+			SELECT DISTINCT(employeeNo),`level` FROM `V_WORK_DATA`
+			WHERE true
+			<if test="_parameter != '' and _parameter != null" >
+				and pmId = #{pmId}
+			</if>
+			) LevelCount
+		GROUP BY `level`
+	</select>
+
+	<select id="getOnOff" resultMap="DashboardMap">
+		SELECT a.HANYOU_VALUE_NAME as onOff,
+			count(1) as onOffCount
+			FROM (
+				SELECT DISTINCT
+				work.employeeNo,
+				work.employeeName,
+				work.pmId,
+				aom.WORK_PLACE,
+				aom.TEAM,
+				code.HANYOU_VALUE_NAME
+				FROM V_WORK_DATA as work
+					LEFT JOIN T_AOM_DTL as aom
+						ON aom.TEAM = work.projectId and aom.FIELD = '01'
+					LEFT JOIN M_CODE as code
+						ON code.HANYOU_VALUE = aom.WORK_PLACE and code.HANYOU_CODE = 'WORK_PLACE'
+				WHERE aom.WORK_PLACE is not null
+			) as a
+			GROUP BY ONOFF
+	</select>
+    <resultMap id="DashboardMap" type="com.webservice.ahiru.entity.Dashboard">
+        <result property="fullMonth" column="fullMonth"/>
+        <result property="notFull" column="notFull"/>
+        <result property="idle" column="idle"/>
+        <result property="backUp" column="backUp"/>
+		<result property="jpAided" column="jpAided"/>
+		<result property="dlAided" column="dlAided"/>
+		<result property="wfAided" column="wfAided"/>
+		<result property="month" column="month" />
+		<result property="useStatus" column="useStatus"/>
+		<result property="count" column="count"/>
+		<result property="place" column="place"/>
+		<result property="one" column="one"/>
+		<result property="two" column="two"/>
+		<result property="three" column="three"/>
+		<result property="four" column="four"/>
+		<result property="five" column="five"/>
+		<result property="six" column="six"/>
+		<result property="seven" column="seven"/>
+		<result property="eight" column="eight"/>
+		<result property="nine" column="nine"/>
+		<result property="ten" column="ten"/>
+		<result property="eleven" column="eleven"/>
+		<result property="twelve" column="twelve"/>
+		<result property="level" column="level"/>
+		<result property="levelCount" column="levelCount"/>
+		<result property="onOff" column="onoff" />
+		<result property="onOffCount" column="onOffCount" />
+    </resultMap>
+
+</mapper>
